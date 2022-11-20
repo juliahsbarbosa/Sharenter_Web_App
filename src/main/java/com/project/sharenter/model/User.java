@@ -11,7 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -26,26 +27,26 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_sequence")
     private Long id;
 
-    @NotNull(message = "Please enter your first name. Field cannot be empty!")
+    @NotBlank(message = "Please enter your first name")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull(message = "Please enter your last name. Field cannot be empty!")
+    @NotBlank(message = "Please enter your last name")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull(message = "Please enter your email. Field cannot be empty!")
-    @Email(message = "Please enter a valid email address")
+    @NotEmpty (message = "Please enter your email")
+    @Email
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotNull(message = "Please enter your password. Field cannot be empty!")
+    @NotBlank(message = "Please enter your password")
     @Length(min = 8, message = "Password should have at least 8 characters")
     @Column(name = "password")
     private String password;
 
     @Column(name = "phone")
-    @NotNull(message = "Please enter your phone number. Field cannot be empty!")
+    @NotBlank(message = "Please enter your phone number")
     private String phone;
 
     @Enumerated(EnumType.STRING)

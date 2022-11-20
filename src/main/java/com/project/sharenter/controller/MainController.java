@@ -11,7 +11,7 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/acess-denied")
+    @GetMapping("/access-denied")
     public String denied() {
         return "access-denied";
     }
@@ -28,7 +28,7 @@ public class MainController {
 
     @GetMapping("/forgot-credentials")
     public String forgot() {
-        return "forgot-credentials";
+        return "auth/forgot-credentials";
     }
 
 

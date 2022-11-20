@@ -2,6 +2,7 @@ package com.project.sharenter.service;
 
 import com.project.sharenter.model.Role;
 import com.project.sharenter.model.User;
+import com.project.sharenter.model.UserDto;
 import com.project.sharenter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,19 +34,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
+//    public void registerUser( UserDto userDto) {
+//        User user = new User();
+//
+//        user.setFirstName(userDto.getFirstName());
+//        user.setLastName(userDto.getLastName());
+//        user.setEmail(userDto.getEmail());
+//
+//        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+//        user.setPassword(encodedPassword);
+//
+////        user.setRole(Role.valueOf(role.toUpperCase()));
+//        userRepository.save(user);
+//    }
 
-    //Method displays message if existing user in the database has the same phone number or email registered
-    @Override
-    public List<Object> isUserRegistered(User user) {
-        boolean userExists = false;
-        String message = null;
+
+    public boolean isUserRegistered(User user) {
         Optional<User> existingUserEmail = userRepository.findByEmail(user.getEmail());
         if(existingUserEmail.isPresent()){
-            userExists = true;
-            message = "User already registered with this email!";
+            return true;
         }
-//        System.out.println("existingUserEmail.isPresent() - "+existingUserEmail.isPresent()+"existingUserMobile.isPresent() - "+existingUserPhone.isPresent());
-        return Arrays.asList(userExists, message);
+        return false;
     }
 
     //
