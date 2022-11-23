@@ -35,10 +35,8 @@ public class AuthController {
     public String registerUser(Model model, @Valid User user, BindingResult bindingResult){
 
         if(userService.isUserRegistered(user)){
-//            model.addAttribute("errorMessage", "Email already registered");
             bindingResult.rejectValue("email", null, "There is already an account registered with that email");
-
-//            return "auth/register";
+            return "auth/register";
         }
 
         if(bindingResult.hasErrors()){
@@ -47,9 +45,15 @@ public class AuthController {
         }
 
         userService.registerUser(user);
-        model.addAttribute("successMessage", "User registered successfully!");
+        model.addAttribute("userCreated", "User registered successfully!");
 
         return "redirect:register?success";
     }
+
+    @GetMapping("/forgot-password")
+    public String forgot() {
+        return "forgot-password";
+    }
+
 
 }

@@ -1,0 +1,45 @@
+
+h1, h2, h3, h4, h5{
+    color: #2a340d;
+    text-align: center;
+}
+
+.teste{
+    background-color: #2a340d;
+}
+
+.btn{
+    border: 1px solid  #9FC131;
+    color: #2a340d;
+    font-weight: bold;
+}
+
+.btn:hover{
+    background-color: #9FC131;
+}
+
+.nav-link a:hover {
+    border-bottom: 3px solid #9FC131;
+}
+
+.nav-item a{
+    color: #2a340d;
+    font-weight: normal;
+}
+
+.navbar-nav {
+    float:none;
+    margin:0 auto;
+    display: block;
+    text-align: center;
+}
+
+.navbar-nav > li {
+    display: inline-block;
+    float:none;
+}
+
+.nav-link:hover,
+.nav-link:active {
+    border-bottom: 3px solid #9FC131;
+}

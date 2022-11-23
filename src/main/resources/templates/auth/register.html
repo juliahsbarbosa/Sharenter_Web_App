@@ -56,14 +56,17 @@
                         to our app!</div>
                 </div>
 
-
-                <div class="pt-4 pb-2">
-                    <div th:utext="${successMessage}"></div>
+                <div th:if="${param.error}" class="pt-4 pb-2">
+                    <div class="alert alert-danger" th:utext="${existingEmail}"></div>
                 </div>
 
-                <div class="pt-4 pb-2">
-                    <div th:utext="${errorMessage}"></div>
-                </div>
+<!--                <div class="pt-4 pb-2">-->
+<!--                    <div th:utext="${successMessage}"></div>-->
+<!--                </div>-->
+
+<!--                <div class="pt-4 pb-2">-->
+<!--                    <div th:utext="${errorMessage}"></div>-->
+<!--                </div>-->
 
 
                     <!-- Card body-->
@@ -71,8 +74,7 @@
                     <h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
 
                     <!--Register form -->
-                    <!--Register form -->
-                    <form th:action="@{/register}" th:object="${user}" method="post" th:autocomplete="off">
+                    <form th:action="@{/register}" th:object="${user}" method="post">
 
                         <!--First Name-->
                         <div class="mb-3">
@@ -117,7 +119,7 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                         </div>
 
-                        <!--User Role-->
+                        <!--RegisterForm Role-->
                         <div class="mb-3">
                             <label class="mb-2 text-muted" for="password">Are you a Sharer or a Renter?</label>
                             <select th:field="*{role}" class="w-100 form-control" th:required="required">

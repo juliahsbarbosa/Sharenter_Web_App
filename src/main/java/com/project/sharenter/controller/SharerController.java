@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class SharerController {
 
-//    @RequestMapping(value = {"sharer/dashboard"}, method = RequestMethod.GET)
     @GetMapping("/sharer/dashboard")
     public String sharerDashboard(){
         return "sharer/dashboard";
     }
-
 
     @GetMapping("/sharer/edit-listing")
     public String editListing(){

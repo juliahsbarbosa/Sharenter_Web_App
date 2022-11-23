@@ -11,25 +11,20 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/access-denied")
-    public String denied() {
-        return "access-denied";
-    }
-
-    @GetMapping("/contact")
-    public String contact() {
-        return "contact";
-    }
-
-    @GetMapping("/about")
-    public String about() {
-        return "about";
-    }
-
-    @GetMapping("/forgot-credentials")
-    public String forgot() {
-        return "auth/forgot-credentials";
-    }
+//    @GetMapping("/access-denied")
+//    public String denied() {
+//        return "access-denied";
+//    }
+//
+//    @GetMapping("/contact")
+//    public String contact() {
+//        return "contact";
+//    }
+//
+//    @GetMapping("/about")
+//    public String about() {
+//        return "about";
+//    }
 
 
 }

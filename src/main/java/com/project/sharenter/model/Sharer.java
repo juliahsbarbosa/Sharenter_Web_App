@@ -4,10 +4,7 @@
 //import lombok.*;
 //import lombok.experimental.SuperBuilder;
 //
-//import javax.persistence.DiscriminatorValue;
-//import javax.persistence.Entity;
-//import javax.persistence.FetchType;
-//import javax.persistence.OneToMany;
+//import javax.persistence.*;
 //import java.util.List;
 //
 //@Entity
@@ -15,15 +12,18 @@
 //@Data
 //@AllArgsConstructor
 //@NoArgsConstructor
-//@ToString(exclude = {"listings"}, callSuper = true)
-//@EqualsAndHashCode(callSuper = true)
-//@SuperBuilder
+//@ToString
 //public class Sharer extends User{
+//    @Id
+//    private String email;
+//
 //    private String name;
 //
-//    private String creci;
-//
-//    @JsonIgnore
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sharer")
 //    private List<Listing> listings;
+//
+////    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sharer")
+////    private List<Viewing> viewings;
+//
+//
 //}

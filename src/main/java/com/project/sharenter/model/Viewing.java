@@ -10,9 +10,16 @@
 //    @Id
 //    @GeneratedValue(strategy= GenerationType.AUTO)
 //    private Long id;
-//    @ManyToOne(cascade=CascadeType.ALL)
+//
 //    private Listing listing;
-//    @ManyToOne(cascade= CascadeType.ALL)
+//
 //    private Renter renter;
+//
+//    private Date dateBooking;
+////    private TimeSlot timeSlot;
+//
+//    private Sharer sharer;
+//
+//    private String phone;
 //
 //}

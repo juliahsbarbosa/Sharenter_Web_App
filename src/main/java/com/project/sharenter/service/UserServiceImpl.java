@@ -2,7 +2,7 @@ package com.project.sharenter.service;
 
 import com.project.sharenter.model.Role;
 import com.project.sharenter.model.User;
-import com.project.sharenter.model.UserDto;
+//import com.project.sharenter.model.RegisterForm;
 import com.project.sharenter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-//    public void registerUser( UserDto userDto) {
-//        User user = new User();
+//    public void registerUser( RegisterForm userDto) {
+//        RegisterForm user = new RegisterForm();
 //
 //        user.setFirstName(userDto.getFirstName());
 //        user.setLastName(userDto.getLastName());

@@ -6,12 +6,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/renter")
 public class RenterController {
 
-//    @RequestMapping(value = {"/renter/dashboard"}, method = RequestMethod.GET)
-    @GetMapping("/renter/dashboard")
+    @GetMapping("/dashboard")
     public String renterDashboard(){
         return "renter/dashboard";
+    }
+    @GetMapping("/browse-listings")
+    public String listingDetails() {
+        return "renter/browse-listings";
+    }
+
+    @GetMapping("/listing-details")
+    public String listing() {
+        return "renter/listing-detail";
     }
 
 }

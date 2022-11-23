@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface UserService {
     public void registerUser(User user);
-//    public List<Object> isUserRegistered(User user);
+//    public List<Object> isUserRegistered(RegisterForm user);
     public boolean isUserRegistered(User user);
 }
