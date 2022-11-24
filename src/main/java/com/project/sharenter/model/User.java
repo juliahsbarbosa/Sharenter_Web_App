@@ -25,26 +25,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Please enter your first name")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank(message = "Please enter your last name")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotEmpty (message = "Please enter your email")
-    @Email
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotBlank(message = "Please enter your password")
-    @Length(min = 8, message = "Password should have at least 8 characters")
     @Column(name = "password")
     private String password;
 
     @Column(name = "phone")
-    @NotBlank(message = "Please enter your phone number")
     private String phone;
 
     @Enumerated(EnumType.STRING)
@@ -55,6 +48,7 @@ public class User implements UserDetails {
 
     @Column(name = "enabled")
     private Boolean enabled = true;
+
 
     //Implementing UserDetails custom methods
     @Override

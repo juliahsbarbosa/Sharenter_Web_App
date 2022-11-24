@@ -1,21 +1,29 @@
 package com.project.sharenter.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 
 public enum Role {
     SHARER("Sharer"),//user
     RENTER("Renter");//admin
 
-    private final String value;
+    private final String name;
 
-    private Role(String value) {
-        this.value = value;
+    private Role(String name) {
+        this.name = name;
     }
-    public String getValue() {
-        return value;
+
+    public String getName() {
+        return name;
     }
+
+//    public static Role parse(String id) {
+//        Role role = null; // Default
+//        for (Role item : Role.values()) {
+//            if (item.name.equals(id)) {
+//                role = item;
+//                break;
+//            }
+//        }
+//        return role;
+//    }
 }

@@ -50,11 +50,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-                http.authorizeRequests()
+        http.authorizeRequests()
                 // URL matching for accessibility
                 .antMatchers("/", "/login", "/register").permitAll()
                 .antMatchers("/renter/**").hasAnyAuthority("RENTER")
                 .antMatchers("/sharer/**").hasAnyAuthority("SHARER")
+                .antMatchers("/listings/**").hasAnyAuthority("SHARER", "RENTER")
                 .anyRequest().authenticated()
                 .and()
                 // form login
@@ -73,10 +74,10 @@ public class WebSecurityConfig {
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");
 
-                http.authenticationProvider(authenticationProvider());
-                http.headers().frameOptions().sameOrigin();
+        http.authenticationProvider(authenticationProvider());
+        http.headers().frameOptions().sameOrigin();
 
-                return http.build();
+        return http.build();
     }
 
     @Bean

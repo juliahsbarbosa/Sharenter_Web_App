@@ -1,16 +1,14 @@
 package com.project.sharenter.controller;
 
 
+import com.project.sharenter.dto.UserDto;
 import com.project.sharenter.model.User;
 import com.project.sharenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -32,20 +30,22 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(Model model, @Valid User user, BindingResult bindingResult){
+    public String registerUser(Model model, @Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult){
 
-        if(userService.isUserRegistered(user)){
+        if(userService.isUserRegistered(userDto)){
+//            model.addAttribute("errorMessage", "Email already registered");
             bindingResult.rejectValue("email", null, "There is already an account registered with that email");
-            return "auth/register";
+
+//            return "auth/register";
         }
 
         if(bindingResult.hasErrors()){
-            model.addAttribute("user", user);
+            model.addAttribute("user", userDto );
             return  "auth/register";
         }
 
-        userService.registerUser(user);
-        model.addAttribute("userCreated", "User registered successfully!");
+        userService.registerUser(userDto);
+        model.addAttribute("successMessage", "UserDto registered successfully!");
 
         return "redirect:register?success";
     }

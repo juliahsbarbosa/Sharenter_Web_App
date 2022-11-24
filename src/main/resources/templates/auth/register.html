@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
+    <!-- Custom CSS Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
     <title>Register</title>
 </head>
 <body>
@@ -43,7 +46,7 @@
             <!-- Logo - redirects to homepage -->
             <div class="text-center my-5">
                 <a th:href="@{/}">
-                    <img th:src="@{/img/logo.jpg}" width="300">
+                    <img th:src="@{/img/logo.png}" width="300">
                 </a>
             </div>
 
@@ -124,8 +127,8 @@
                             <label class="mb-2 text-muted" for="password">Are you a Sharer or a Renter?</label>
                             <select th:field="*{role}" class="w-100 form-control" th:required="required">
                                 <option value="" th:errorclass="is-invalid text-muted" >Select</option>
-                                <option value="RENTER">Renter</option>
-                                <option value="SHARER">Sharer</option>
+                                <option value="SHARER" name="Sharer">Sharer</option>
+                                <option value="RENTER" name="Renter">Renter</option>
                             </select>
                             <div class="error-message" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
 
@@ -138,7 +141,7 @@
                         <!--                        </div>-->
 
                         <div class="align-items-center d-flex">
-                            <button type="submit" class="btn btn-primary ms-auto">
+                            <button type="submit" class="btn ms-auto">
                                 Register
                             </button>
                         </div>
@@ -155,14 +158,13 @@
 
 
             </div><!--End card-->
-            <!--Footer-->
-            <div class="text-center mt-5 text-muted">
-                Copyright &copy; 2022 &mdash; Sharenter
-            </div>
 
         </div><!--End col-->
     </div><!--End row-->
 </div><!--End container-->
+
+<!--Footer Fragment-->
+<footer th:replace="fragments/footer.html :: footer"></footer>
 
 
 <!--  &lt;!&ndash; Navbar&ndash;&gt;-->
