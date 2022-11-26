@@ -1,5 +1,6 @@
 package com.project.sharenter.model;
 
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -15,6 +16,10 @@ import java.util.Date;
 import static java.sql.JDBCType.TIMESTAMP;
 
 @MappedSuperclass
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable<T> {
 

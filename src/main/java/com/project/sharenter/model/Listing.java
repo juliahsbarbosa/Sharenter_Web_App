@@ -1,64 +1,66 @@
 package com.project.sharenter.model;
 
-import com.sun.istack.NotNull;
+
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.awt.*;
-import java.io.Serializable;
+
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Listing extends Auditable<String>{
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_listing")
-    @SequenceGenerator(name = "seq_listing", sequenceName = "listing_id_seq", schema = "public", allocationSize = 1)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "rent")
-    private Double rent;
+    private double rent;
 
     @Column(name = "room_Type")
     private RoomType roomType;
+
+    private String image;
+
     @Embedded
     private Address address;
 
     @Embedded
     private Geocoding geocoding;
 
-    private Boolean geoProcessed = false;
+    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean geoProcessed = false;
 
     private int housemates;
 
-    private Boolean privateBathroom;
+    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean privateBathroom;
 
-    private Boolean petFriendly;
+    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean petFriendly = true;
 
-    private Boolean suitableForCouples;
+    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean suitableForCouples;
 
-    private Boolean billsIncluded;
+    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean billsIncluded;
 
-    private Boolean parking;
+    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean parking;
 
-    private Boolean landlordOccupied;
+    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean landlordOccupied;
 
-    @DateTimeFormat
     private String availability;
 
-    public Listing(final String title, final Double rent, final Address address) {
-        this.title = title;
-        this.rent = rent;
-        this.address = address;
-    }
+
 }

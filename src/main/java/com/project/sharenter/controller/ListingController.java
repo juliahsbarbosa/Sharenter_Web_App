@@ -5,39 +5,87 @@ import com.project.sharenter.model.Listing;
 import com.project.sharenter.service.ListingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class LisController {
-
+public class ListingController {
     @Autowired
     private ListingService listingService;
 
-    @GetMapping("/listings")
+
+    @GetMapping("renter/browse-listings")
+    public String browseListings(Model model) {
+        return findPaginated(1, "title", "asc", model);
+    }
+
+
+    @GetMapping("/renter/listing-details")
+    public String listingDetails() {
+        return "renter/listing-details";
+    }
+
+
+    @GetMapping("/renter/browse-listings/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortBy") String sortBy,
+                                Model model) {
+        int pageSize = 3;
+
+        Page<Listing> listingPage = listingService.findPaginated(pageNo, pageSize, sortField, sortBy);
+        List<Listing> displayListings = listingPage.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", listingPage.getTotalPages());
+        model.addAttribute("totalItems", listingPage.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("reverseSortBy", sortBy.equals("asc") ? "desc" : "asc");
+        model.addAttribute("displayListings", displayListings);
+        return "renter/browse-listings";
+    }
+
+    @GetMapping("/sharer/new-listing")
     public String newListing(Model model) {
+        //Model attribute to bind form data
         model.addAttribute("listing", new Listing());
-        return "form";
+        return "sharer/new-listing";
     }
 
-
-    @PostMapping("/listings")
-    public String createNewListing(Model model, @Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
+    @PostMapping("/sharer/new-listing")
+    public String saveNewListing(Model model, @Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("listing", listingDto );
-            return "form";
+            return "sharer/new-listing";
         }
-        model.addAttribute("successListing", listingDto);
+
         listingService.createListing(listingDto);
-        return "redirect:listings?success";
+        return "redirect:/sharer/new-listing?success";
     }
+
+    @GetMapping("/sharer/edit-listing")
+    public String editListing(@PathVariable ( value = "id") long id, Model model) {
+        Listing listing = listingService.getListingById(id);
+        model.addAttribute("listing", listing);
+        return "sharer/edit-listing";
+    }
+
+    //Method handler to delete an employee
+    @GetMapping("/sharer/delete-listing/{id}")
+    public String deleteListing(@PathVariable (value = "id") long id) {
+
+        // call delete employee method
+        this.listingService.deleteListingById(id);
+        return "redirect:/sharer/dashboard";
+    }
+
 }
 //
 //    @Autowired

@@ -5,6 +5,99 @@
     <title>Title</title>
 </head>
 <body>
+<div class="container d-flex mt-50 mb-50">
+    <h1>Browse listings</h1>
+    <table class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>
+                <a th:href="@{'/renter/browse-listings/' + ${currentPage} + '?sortField=title&sortBy=' + ${reverseSortBy}}">
+                    Title</a>
+            </th>
+            <th>
+                <a th:href="@{'/renter/browse-listings/' + ${currentPage} + '?sortField=rent&sortBy=' + ${reverseSortBy}}">
+                    Rent</a>
+            </th>
+            <th>Created by</th>
+            <th>Posted on</th>
+            <th>Number of housemates</th>
+            <th>Room type</th>
+            <th>Landlord Occupied</th>
+            <th>Bills included</th>
+            <th>Parking</th>
+            <th>Pet-friendly</th>
+            <th>Private Bathroom</th>
+            <th>Suitable for couples</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="listing : ${displayListings}">
+            <td th:text="${listing.title}"></td>
+            <td th:text="${listing.rent}"></td>
+            <td th:text="${listing.getCreatedBy()}"></td>
+            <td th:text="${listing.getCreationDate()}"></td>
+            <td th:text="${listing.housemates}"></td>
+            <td th:text="${listing.getRoomType()}"></td>
+            <td th:text="${listing.landlordOccupied}"></td>
+            <td th:text="${listing.billsIncluded}"></td>
+            <td th:text="${listing.parking}"></td>
+            <td th:text="${listing.petFriendly}"></td>
+            <td th:text="${listing.privateBathroom}"></td>
+            <td th:text="${listing.suitableForCouples}"></td>
+
+
+            <td><a th:href="@{//sharer/edit-listing/{id}(id=${listing.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{//sharer/edit-listing/{id}(id=${listing.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <!-- property area -->
+    <div class="content-area recent-property">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-9 pr-30 padding-top-40 properties-page user-properties">
+
+                    <div class="section">
+                        <div class="page-subheader sorting pl0 pr-10">
+
+                            <div th:if="${totalPages > 1}">
+                                <div class="row col-sm-10">
+                                    <div class="col-sm-2">
+                                        Total Rows: [[${totalItems}]]
+                                    </div>
+                                    <div class="col-sm-1">
+     <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}"
+         th:href="@{'/renter/browse-listings/' + ${i}+ '?sortField=' + ${sortField} + '&sortBy=' + ${sortBy}}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+     </span>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <a th:if="${currentPage < totalPages}"
+                                           th:href="@{'/renter/browse-listings/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortBy=' + ${sortBy}}">Next</a>
+                                        <span th:unless="${currentPage < totalPages}">Next</span>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <a th:if="${currentPage < totalPages}"
+                                           th:href="@{'/renter/browse-listings/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortBy=' + ${sortBy}}">Last</a>
+                                        <span th:unless="${currentPage < totalPages}">Last</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

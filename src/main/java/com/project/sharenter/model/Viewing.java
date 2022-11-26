@@ -1,25 +1,22 @@
-//package com.project.sharenter.model;
-//
-//import com.sun.istack.NotNull;
-//import org.springframework.format.annotation.DateTimeFormat;
-//
-//import javax.persistence.*;
-//import java.util.Date;
-//
-//public class Viewing {
-//    @Id
-//    @GeneratedValue(strategy= GenerationType.AUTO)
-//    private Long id;
-//
-//    private Listing listing;
-//
-//    private Renter renter;
-//
-//    private Date dateBooking;
-////    private TimeSlot timeSlot;
-//
-//    private Sharer sharer;
-//
-//    private String phone;
-//
-//}
+package com.project.sharenter.model;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+public class Viewing {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "listing_id")
+    private Listing listing;
+
+    @Column
+    private LocalDateTime date;
+
+}

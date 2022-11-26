@@ -11,6 +11,16 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/sharer/dashboard")
+    public String sharerDashboard(){
+        return "sharer/dashboard";
+    }
+
+    @GetMapping("/renter/dashboard")
+    public String renterDashboard(){
+        return "renter/dashboard";
+    }
+
 //    @GetMapping("/access-denied")
 //    public String denied() {
 //        return "access-denied";

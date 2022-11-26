@@ -1,19 +1,17 @@
 package com.project.sharenter.model;
 
-import lombok.*;
-
 public enum Role {
-    SHARER("Sharer"),//user
-    RENTER("Renter");//admin
+    SHARER("Sharer"),
+    RENTER("Renter");
 
-    private final String name;
+    private final String value;
 
-    private Role(String name) {
-        this.name = name;
+    Role(String value) {
+        this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
 //    public static Role parse(String id) {
