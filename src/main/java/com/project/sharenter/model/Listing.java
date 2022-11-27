@@ -11,14 +11,13 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Listing extends Auditable<String>{
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "title")
     private String title;
@@ -31,14 +30,17 @@ public class Listing extends Auditable<String>{
 
     private String image;
 
-    @Embedded
-    private Address address;
+    private String address;
 
-    @Embedded
-    private Geocoding geocoding;
+    private double lat;
 
-    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean geoProcessed = false;
+    private double lng;
+
+    private String placeId;
+
+    private String walkscore;
+
+    private String description;
 
     private int housemates;
 
@@ -59,8 +61,5 @@ public class Listing extends Auditable<String>{
 
     @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean landlordOccupied;
-
-    private String availability;
-
 
 }

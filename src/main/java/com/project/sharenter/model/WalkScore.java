@@ -1,6 +1,7 @@
 package com.project.sharenter.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -10,6 +11,10 @@ import lombok.*;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WalkScore {
-    private String score;
+    @JsonProperty("walkscore")
+    private String walkscore;
+
+    @JsonProperty("description")
     private String description;
+
 }

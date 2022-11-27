@@ -15,15 +15,12 @@ public class ListingDto {
     private Double rent;
 
     @NotNull
-    private RoomType roomType;
+    private String roomType;
 
-//    @Embedded
-//    private Address address;
-//
-//    @Embedded
-//    private Geocoding geocoding;
-//
-//    private boolean geoProcessed = false;
+    private String address;
+
+    private double lat;
+    private double lng;
 
     @NotNull
     private int housemates;

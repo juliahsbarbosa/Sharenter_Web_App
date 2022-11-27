@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface UserService {
     public void registerUser(UserDto user);
-    public boolean isUserRegistered(UserDto user);
 }
