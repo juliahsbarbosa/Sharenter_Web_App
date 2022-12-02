@@ -2,28 +2,33 @@ package com.project.sharenter.dto;
 
 import com.project.sharenter.model.*;
 import lombok.Data;
+import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NegativeOrZero;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 public class ListingDto {
-    @NotBlank
+    @NotBlank(message = "Please enter a title for your Listing")
     private String title;
 
-    @NotNull
-    private Double rent;
+    @NotNull (message = "Please enter the monthly rent")
+    private double rent;
 
-    @NotNull
-    private String roomType;
+    @NotNull(message = "You must select the type of room")
+    private RoomType roomType;
 
+    @NotBlank(message = "Please search and enter the house address")
     private String address;
 
-    private double lat;
-    private double lng;
+    @NotBlank(message = "Please enter the URL for an image of the room")
+    private String imageUrl;
 
-    @NotNull
-    private int housemates;
+    @NotNull(message = "Please inform how many people are in the house")
+    private int numHousemates;
 
     private boolean privateBathroom;
 

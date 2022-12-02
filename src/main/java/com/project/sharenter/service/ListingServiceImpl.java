@@ -4,8 +4,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.project.sharenter.dto.ListingDto;
-import com.project.sharenter.model.Listing;
-import com.project.sharenter.model.WalkScore;
+import com.project.sharenter.model.*;
 import com.project.sharenter.repository.ListingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +15,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -40,9 +47,10 @@ public class ListingServiceImpl implements ListingService {
 
 
     @Override
-    public void createListing(ListingDto listingDto) {
-        final Listing listing = new Listing();
+    public void createListing(ListingDto listingDto){
+        Listing listing = new Listing();
 
+        //Saving the new listing in the database
         listing.setTitle(listingDto.getTitle());
         listing.setRent(listingDto.getRent());
         listing.setLandlordOccupied(listingDto.isLandlordOccupied());
@@ -51,13 +59,19 @@ public class ListingServiceImpl implements ListingService {
         listing.setPetFriendly(listingDto.isPetFriendly());
         listing.setPrivateBathroom(listingDto.isPrivateBathroom());
         listing.setSuitableForCouples(listingDto.isSuitableForCouples());
-        listing.setHousemates(listingDto.getHousemates());
-        listing.setAddress(listingDto.getAddress());
+        listing.setNumHousemates(listingDto.getNumHousemates());
+        listing.setImageUrl(listingDto.getImageUrl());
 
+        switch (listingDto.getRoomType()) {
+            case Single -> listing.setRoomType(RoomType.Single);
+            case Double -> listing.setRoomType(RoomType.Double);
+            case Twin -> listing.setRoomType(RoomType.Twin);
+            case Triple -> listing.setRoomType(RoomType.Triple);
+        }
 //        String mapsUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
 //                listingDto.getAddress() + "&key=" + mapsApiKey;
 
-        //Google Maps Geocoding API config
+        //Google Maps Geocoding API set up
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(mapsApiKey)
                 .maxRetries(2)
@@ -67,30 +81,33 @@ public class ListingServiceImpl implements ListingService {
         GeocodingResult[] results;
 
         try {
-            results = GeocodingApi.geocode(context, listing.getAddress()).await();
+            results = GeocodingApi.geocode(context, listingDto.getAddress()).await();
             listing.setLat(results[0].geometry.location.lat);
             listing.setLng(results[0].geometry.location.lng);
             listing.setAddress(results[0].formattedAddress);
+            listing.setCounty(results[0].addressComponents[4].longName);
         } catch (Exception e) {
             listing.setLat(0);
             listing.setLng(0);
+            listing.setAddress(null);
         }
 
-
-        //Walkscore API config
-
+        //Walkscore API set up
         String walkUrl = "https://api.walkscore.com/score?format=json&address=" +
                 listing.getAddress() +"&lat=" + listing.getLat() + "&lon=" + listing.getLng() + "&wsapikey=" + walkApiKey;
 
         RestTemplate restTemplate = new RestTemplate();
         WalkScore walkScore = restTemplate.getForObject(walkUrl, WalkScore.class);
+
+        //Saving Walkscore results on Listing database
         listing.setWalkscore(walkScore.getWalkscore());
-        listing.setDescription(walkScore.getDescription());
+        listing.setWalkscoreDescription(walkScore.getDescription());
 
         listingRepository.save(listing);
     }
 
 
+    //Display all listings
     @Override
     public List< Listing > getAllListings() {
         final List<Listing> listings = listingRepository.findAll();
@@ -99,6 +116,7 @@ public class ListingServiceImpl implements ListingService {
     }
 
 
+    //Get Listing by id
     @Override
     public Listing getListingById(long id) {
         Optional<Listing> optional = listingRepository.findById(id);
@@ -111,17 +129,23 @@ public class ListingServiceImpl implements ListingService {
         return listing;
     }
 
+
+    //Delete Listing by id
     @Override
     public void deleteListingById(long id) {
         this.listingRepository.deleteById(id);
     }
 
+
+    //Implements pagination
     @Override
     public Page<Listing> findPaginated(int pageNo, int pageSize, String sortField, String sortBy) {
         Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
 
+
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.listingRepository.findAll(pageable);
     }
+
 }

@@ -6,9 +6,10 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.List;
 
 
-@Entity
+@Entity(name = "listings")
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -25,30 +26,45 @@ public class Listing extends Auditable<String>{
     @Column(name = "rent")
     private double rent;
 
-    @Column(name = "room_Type")
+    @Enumerated(EnumType.STRING)
     private RoomType roomType;
 
-    private String image;
+    @Column(name = "imageUrl")
+    private String imageUrl;
 
+    @Column(name = "address")
+    //Google Geocoding API results
     private String address;
 
+    private String street;
+
+    private String city;
+
+    private String county;
+
+    private String neighborhood;
+
+    @Column(name = "lat")
     private double lat;
 
+    @Column(name = "lng")
     private double lng;
 
-    private String placeId;
-
+    //Walkscore API results
+    @Column(name = "walkscore")
     private String walkscore;
 
-    private String description;
+    @Column(name = "walkscoreDescription")
+    private String walkscoreDescription;
 
-    private int housemates;
+    @Column(name = "numHousemates")
+    private int numHousemates;
 
     @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean privateBathroom;
 
     @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean petFriendly = true;
+    private boolean petFriendly;
 
     @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean suitableForCouples;
@@ -61,5 +77,13 @@ public class Listing extends Auditable<String>{
 
     @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean landlordOccupied;
+
+//    @OneToMany(mappedBy = "listing")
+//    private List<Viewing> viewings;
+
+    private Boolean available = true;
+
+
+
 
 }
