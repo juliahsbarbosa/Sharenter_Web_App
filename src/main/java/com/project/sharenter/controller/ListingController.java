@@ -2,18 +2,25 @@ package com.project.sharenter.controller;
 
 import com.project.sharenter.dto.ListingDto;
 import com.project.sharenter.model.Listing;
+import com.project.sharenter.repository.ListingRepository;
 import com.project.sharenter.service.ListingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.criteria.Order;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,12 +33,12 @@ public class ListingController {
     @Value("${maps.api.key}")
     private String mapsApiKey;
 
-    //Calling the pagination method and mapping browse listings
-    @GetMapping("renter/browse-listings")
-    public String browseListings(Model model) {
-        return findPage(1, "title", "asc", model);
-
-    }
+//
+//    @GetMapping("renter/browse-listings")
+//    public String browseListings(Model model, String searchedCounty) {
+////        return listingPaginated(1, "title", "asc", "searchedCounty", model);
+//
+//    }
 
     //Mapping the indidual listing details page with path variable by id
     @GetMapping("/renter/listing-details/{id}")
@@ -44,21 +51,31 @@ public class ListingController {
         return "renter/listing-details";
     }
 
+    @Autowired
+    ListingRepository listingRepository;
 
-    //Mapping the Browse listings with pagination
-    @GetMapping("/renter/browse-listings/{pageNo}")
-    public String findPage(@PathVariable(value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortBy") String sortBy,
-                                Model model) {
-        int pageSize = 3;
+    @GetMapping("/renter/browse-listings")
+    public String listingPaginated(Model model, @RequestParam(required = false) String searchedCounty,
+                                   @RequestParam(defaultValue = "1") int page,
+                                   @RequestParam(defaultValue = "5") int size,
+                                   @RequestParam(defaultValue = "creationDate") String sortField,
+                                   @RequestParam(defaultValue = "sortBy") String sortBy) {
 
-        Page<Listing> listingPage = listingService.findPaginated(pageNo, pageSize, sortField, sortBy);
+
+        Page<Listing> listingPage;
+        if (searchedCounty == null) {
+            listingPage = listingService.listingsPaginated(page, size, sortField, sortBy);
+
+        } else {
+            listingPage = listingService.searchPaginated(searchedCounty, page, size, sortField, sortBy);
+            model.addAttribute("searchedCounty", searchedCounty);
+        }
         List<Listing> allListings = listingPage.getContent();
 
-        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", listingPage.getTotalPages());
         model.addAttribute("totalItems", listingPage.getTotalElements());
+        model.addAttribute("pageSize", size);
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("reverseSortBy", sortBy.equals("asc") ? "desc" : "asc");
@@ -67,7 +84,6 @@ public class ListingController {
 
         return "renter/browse-listings";
     }
-
 
     //Mapping the create new listing
     @GetMapping("/sharer/new-listing")

@@ -15,16 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -139,13 +131,23 @@ public class ListingServiceImpl implements ListingService {
 
     //Implements pagination
     @Override
-    public Page<Listing> findPaginated(int pageNo, int pageSize, String sortField, String sortBy) {
+    public Page<Listing> listingsPaginated(int pageNo, int pageSize, String sortField, String sortBy) {
         Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
 
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
+
+        return this.listingRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Listing> searchPaginated(String searchedCounty, int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return this.listingRepository.findAll(pageable);
+        return this.listingRepository.findByAddressContainingIgnoreCase(searchedCounty, pageable);
     }
 
 }

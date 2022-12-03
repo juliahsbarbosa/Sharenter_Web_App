@@ -14,7 +14,7 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <!--Select2  CAA-->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- Custom CSS Stylesheet -->
@@ -35,23 +35,25 @@
         <div class="row justify-content-center py-5">
             <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                 <h1 class="display-3 mb-3">Find your room in a shared accommodation</h1>
-                    <form th:action="@{/renter/browse-listings}" method="post" th:object="${listings}" class="position-relative w-75 mx-auto">
-                        <select class="form-control select2 border-0 rounded-pill w-100 py-3 ps-4 pe-5" th:value="${listing.county}">
-                            <option class="text-muted" value="">Search by County</option>
-                            <option value="Dublin">Dublin County</option>
-                            <option value="Wicklow">Wicklow County</option>
-                            <option value="Galway">Galway County</option>
-                            <option value="Cork">Cork County</option>
-                            <option value="Limerick">Limerick County</option>
-                        </select>
-                        <button type="submit" class="btn rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2 mt-2">Search
-                        </button>
-                    </form>
+                <form th:action="@{/renter/browse-listings}" method="get" class="position-relative w-75 mx-auto">
+                    <select class="form-control select2 border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text"
+                            name="searchedCounty" id="searchedCounty" placeholder="Title" th:value="${searchedCounty}">
+                        <option class="text-muted" value="">Search by County</option>
+                        <option th:value="'Dublin'" name="Dublin">Dublin County</option>
+                        <option th:value="'Wicklow'" name="searchedCounty">Wicklow County</option>
+                        <option th:value="'Galway'" name="searchedCounty">Galway County</option>
+                        <option th:value="'Cork'" name="searchedCounty">Cork County</option>
+                        <option th:value="'Limerick'" name="searchedCounty">Limerick County</option>
+                    </select>
+                    <button type="submit" class="btn rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2 mt-2">
+                        Search
+                    </button>
+                </form>
 
-                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -71,8 +73,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-1.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Appartment</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Appartment
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -80,9 +86,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -90,8 +99,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-2.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Villa</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Villa
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -99,9 +112,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -109,8 +125,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-3.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Office</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Office
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -118,9 +138,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -128,8 +151,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-4.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Building</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Building
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -137,9 +164,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -147,8 +177,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-5.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Home</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Home
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -156,9 +190,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -166,8 +203,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-6.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Shop</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Shop
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -175,9 +216,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -192,8 +236,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-1.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Appartment</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Appartment
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -201,9 +249,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -211,8 +262,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-2.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Villa</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Villa
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -220,9 +275,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -230,8 +288,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-3.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Office</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Office
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -239,9 +301,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -249,8 +314,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-4.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Building</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Building
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -258,9 +327,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -268,8 +340,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-5.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Home</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Home
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -277,9 +353,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -287,8 +366,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-6.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Shop</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Shop
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -296,9 +379,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -313,8 +399,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-1.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Appartment</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Appartment
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -322,9 +412,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -332,8 +425,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-2.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Villa</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Villa
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -341,9 +438,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -351,8 +451,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-3.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Office</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Office
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -360,9 +464,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -370,8 +477,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-4.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Building</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Building
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -379,9 +490,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -389,8 +503,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-5.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Home</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Sell
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Home
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -398,9 +516,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -408,8 +529,12 @@
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="img/property-6.jpg" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Shop</div>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    For Rent
+                                </div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Shop
+                                </div>
                             </div>
                             <div class="p-4 pb-0">
                                 <h5 class="text-primary mb-3">$12,345</h5>
@@ -417,9 +542,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
                             </div>
                             <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                <small class="flex-fill text-center border-end py-2"><i
+                                        class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2
+                                    Bath</small>
                             </div>
                         </div>
                     </div>
@@ -432,9 +560,6 @@
     </div>
 </div>
 <!-- Property List End -->
-
-
-
 
 
 <h2>Welcome to Homepage</h2>
@@ -461,7 +586,6 @@
 
 <!--Footer Fragment-->
 <footer th:replace="fragments/footer.html :: footer"></footer>
-
 
 
 <!--Bootstrap Bundle (JavaScript and Popper)-->

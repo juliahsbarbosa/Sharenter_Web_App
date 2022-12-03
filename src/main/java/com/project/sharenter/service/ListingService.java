@@ -22,8 +22,14 @@ public interface ListingService {
     //create method to delete an employee
     void deleteListingById(long id);
 
+    //Implements pagination
+    Page<Listing> listingsPaginated(int pageNo, int pageSize, String sortField, String sortBy);
+
+    Page<Listing> searchPaginated(String searchedCounty, int pageNo, int pageSize, String sortField, String sortBy);
+
+
     //Pagination using Spring Data JPA and sorting
-    Page<Listing> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+
 
 }
 

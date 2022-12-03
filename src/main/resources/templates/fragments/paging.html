@@ -1,0 +1,18 @@
+
+
+<a th:fragment="paging(pageNum, label, tooltip)" class="page-link"
+   th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
+                           + 'page=' + ${pageNum} + '&size=' + ${pageSize}
+                           + ${sortField!=null ? '&sort=' + sortField + ',' + sortDirection : ''}}"
+   th:title="${tooltip}" rel="tooltip">
+  [[${label}]]
+</a>
+
+
+<th scope="col" th:fragment="sorting(field, label)">
+  <a th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
+                + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=' + ${field}+
+                '&sortBy=' + ${reverseSortBy }}">[[${label}]] </a>
+<!--  <span th:if="${sortField == field}"-->
+<!--        th:class="${sortBy == 'asc' ? 'fas fa-arrow-down-short-wide' : 'fas fa-arrow-down-wide-short'}"></span>-->
+</th>
