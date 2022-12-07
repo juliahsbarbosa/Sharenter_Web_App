@@ -15,6 +15,7 @@ import java.util.Date;
 
 import static java.sql.JDBCType.TIMESTAMP;
 
+//Class
 @MappedSuperclass
 @Getter
 @Setter

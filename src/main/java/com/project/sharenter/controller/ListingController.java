@@ -2,25 +2,18 @@ package com.project.sharenter.controller;
 
 import com.project.sharenter.dto.ListingDto;
 import com.project.sharenter.model.Listing;
-import com.project.sharenter.repository.ListingRepository;
 import com.project.sharenter.service.ListingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.criteria.Order;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,12 +26,6 @@ public class ListingController {
     @Value("${maps.api.key}")
     private String mapsApiKey;
 
-//
-//    @GetMapping("renter/browse-listings")
-//    public String browseListings(Model model, String searchedCounty) {
-////        return listingPaginated(1, "title", "asc", "searchedCounty", model);
-//
-//    }
 
     //Mapping the indidual listing details page with path variable by id
     @GetMapping("/renter/listing-details/{id}")
@@ -46,28 +33,25 @@ public class ListingController {
         Listing listing = listingService.getListingById(id);
         model.addAttribute("listing", listing);
         model.addAttribute("mapsApiKey", mapsApiKey);
-
-
         return "renter/listing-details";
     }
 
-    @Autowired
-    ListingRepository listingRepository;
 
+    //Mapping the browse-listings page with pagination, search and filtering options
     @GetMapping("/renter/browse-listings")
     public String listingPaginated(Model model, @RequestParam(required = false) String searchedCounty,
                                    @RequestParam(defaultValue = "1") int page,
-                                   @RequestParam(defaultValue = "5") int size,
+                                   @RequestParam(defaultValue = "3") int size,
                                    @RequestParam(defaultValue = "creationDate") String sortField,
                                    @RequestParam(defaultValue = "sortBy") String sortBy) {
 
 
         Page<Listing> listingPage;
         if (searchedCounty == null) {
-            listingPage = listingService.listingsPaginated(page, size, sortField, sortBy);
+            listingPage = listingService.allListingsPaginated(page, size, sortField, sortBy);
 
         } else {
-            listingPage = listingService.searchPaginated(searchedCounty, page, size, sortField, sortBy);
+            listingPage = listingService.countySearchPaginated(searchedCounty, page, size, sortField, sortBy);
             model.addAttribute("searchedCounty", searchedCounty);
         }
         List<Listing> allListings = listingPage.getContent();
@@ -80,7 +64,6 @@ public class ListingController {
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("reverseSortBy", sortBy.equals("asc") ? "desc" : "asc");
         model.addAttribute("allListings", allListings);
-        model.addAttribute("mapsApiKey", mapsApiKey);
 
         return "renter/browse-listings";
     }
@@ -104,6 +87,7 @@ public class ListingController {
         return "redirect:/sharer/new-listing?success";
     }
 
+    //Mapping for the editing a listing by path variable id
     @GetMapping("/sharer/edit-listing/{id}")
     public String editListing(@PathVariable(value = "id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
@@ -111,7 +95,7 @@ public class ListingController {
         return "sharer/edit-listing";
     }
 
-    //Mapping to delete a listing
+    //Mapping for the deleting a listing by path variable id
     @GetMapping("/sharer/delete-listing/{id}")
     public String deleteListing(@PathVariable(value = "id") long id) {
 
@@ -120,7 +104,7 @@ public class ListingController {
         return "redirect:/sharer/dashboard";
     }
 
-    //Returns form results as JSON
+    //Returns form results as JSON in order to create markers in the Google Maps Javascript API
     @GetMapping("/api/listings")
     @ResponseBody
     public ResponseEntity<List<Listing>> getAllUsers() {
@@ -129,42 +113,3 @@ public class ListingController {
     }
 
 }
-
-//////
-//////    @GetMapping("/api/listings")
-//////    @ResponseBody
-//////    public ResponseEntity<List<Listing>> getAllUsers() {
-//////        final List<Listing> listings = listingService.getAll().stream().filter(e -> e.getGeocoding() != null).collect(Collectors.toList());
-//////        return ResponseEntity.ok(listings);
-//////    }
-////
-////    private final String UPLOAD_DIR = "./uploads/";
-////
-////
-////    @PostMapping("/upload")
-////    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attributes) {
-////
-////        // check if file is empty
-////        if (file.isEmpty()) {
-////            attributes.addFlashAttribute("message", "Please select a file to upload.");
-////            return "redirect:/";
-////        }
-////
-////        // normalize the file path
-////        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-////
-////        // save the file on the local file system
-////        try {
-////            Path path = Paths.get(UPLOAD_DIR + fileName);
-////            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-////        } catch (IOException e) {
-////            e.printStackTrace();
-////        }
-////
-////        // return success response
-////        attributes.addFlashAttribute("message", "You successfully uploaded " + fileName + '!');
-////
-////        return "redirect:/";
-////    }
-////}
-

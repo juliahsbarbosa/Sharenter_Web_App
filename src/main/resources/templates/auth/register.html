@@ -67,7 +67,7 @@
                         <!--Phone-->
                         <div class="mb-3">
                             <label class="mb-2" for="phone">Phone number</label>
-                            <input id="phone" type="number" class="form-control"
+                            <input id="phone" type="tel" class="form-control"
                                    th:field="*{phone}" th:errorclass="is-invalid">
                             <p class="invalid-feedback"
                                  th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
@@ -89,13 +89,13 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                         </div>
 
-                        <!--RegisterForm Role-->
+                        <!--Register Form Role-->
                         <div class="mb-3">
                             <label class="mb-2" for="role">Are you a Sharer or a Renter?</label>
-                            <select id="role" th:field="*{role}" class="w-100 form-control" th:required="required">
-                                <option value="" th:errorclass="is-invalid text-muted" >Select</option>
-                                <option value="SHARER" name="Sharer">Sharer</option>
-                                <option value="RENTER" name="Renter">Renter</option>
+                            <select id="role" class="w-100 form-control" th:field="*{role}" th:errorclass="is-invalid">
+                                <option value="" class="text-muted">Select</option>
+                                <option value="ROLE_SHARER" name="Sharer">Sharer</option>
+                                <option value="ROLE_RENTER" name="Renter">Renter</option>
                             </select>
                             <div class="error-message" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
                         </div>

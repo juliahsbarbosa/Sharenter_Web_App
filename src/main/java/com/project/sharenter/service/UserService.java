@@ -2,10 +2,10 @@ package com.project.sharenter.service;
 
 import com.project.sharenter.dto.UserDto;
 import com.project.sharenter.model.User;
-import org.springframework.http.ResponseEntity;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
-    public void registerUser(UserDto user);
+    void registerUser(UserDto user);
+
 }

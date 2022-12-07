@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -22,6 +20,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
+
+    //Registering User
     @Override
     public void registerUser(UserDto userDto) {
         User user = new User();
@@ -34,21 +34,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String encodedPassword = bCryptPasswordEncoder.encode(userDto.getPassword());
         user.setPassword(encodedPassword);
 
-        //Mapping Enum role according to inputed value
-
+        //Mapping Enum role according to inputted value
         switch (userDto.getRole()) {
-            case SHARER -> user.setRole(Role.SHARER);
-            case RENTER -> user.setRole(Role.RENTER);
+            case ROLE_SHARER -> user.setRole(Role.ROLE_SHARER);
+            case ROLE_RENTER -> user.setRole(Role.ROLE_RENTER);
         }
 
         userRepository.save(user);
     }
 
-
-    //
+    //Implementing UserDetailsService method
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(
                 ()-> new UsernameNotFoundException(email));
     }
+
 }

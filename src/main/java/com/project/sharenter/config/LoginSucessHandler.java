@@ -34,9 +34,9 @@ public class LoginSucessHandler extends SimpleUrlAuthenticationSuccessHandler {
         for(GrantedAuthority a : authorities){
             roles.add(a.getAuthority());
         }
-        if(roles.contains("RENTER")){
+        if(roles.contains("ROLE_RENTER")){
             url = "/renter/dashboard";
-        }else if(roles.contains("SHARER")) {
+        }else if(roles.contains("ROLE_SHARER")) {
             url = "/sharer/dashboard";
         }
         return url;

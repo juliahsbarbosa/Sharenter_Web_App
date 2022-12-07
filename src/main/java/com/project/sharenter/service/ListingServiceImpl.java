@@ -7,6 +7,7 @@ import com.project.sharenter.dto.ListingDto;
 import com.project.sharenter.model.*;
 import com.project.sharenter.repository.ListingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +25,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class ListingServiceImpl implements ListingService {
-    private final ListingRepository listingRepository;
+
+    @Autowired
+    private ListingRepository listingRepository;
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder){
@@ -38,11 +41,12 @@ public class ListingServiceImpl implements ListingService {
     private String walkApiKey;
 
 
+    //Method creates a listing
     @Override
     public void createListing(ListingDto listingDto){
         Listing listing = new Listing();
 
-        //Saving the new listing in the database
+        //Map ListingDto to entity Listing, saving the record in the database
         listing.setTitle(listingDto.getTitle());
         listing.setRent(listingDto.getRent());
         listing.setLandlordOccupied(listingDto.isLandlordOccupied());
@@ -54,16 +58,15 @@ public class ListingServiceImpl implements ListingService {
         listing.setNumHousemates(listingDto.getNumHousemates());
         listing.setImageUrl(listingDto.getImageUrl());
 
+        //Role is set according to the specific Role Enum
         switch (listingDto.getRoomType()) {
             case Single -> listing.setRoomType(RoomType.Single);
             case Double -> listing.setRoomType(RoomType.Double);
             case Twin -> listing.setRoomType(RoomType.Twin);
             case Triple -> listing.setRoomType(RoomType.Triple);
         }
-//        String mapsUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-//                listingDto.getAddress() + "&key=" + mapsApiKey;
 
-        //Google Maps Geocoding API set up
+        //Google Maps Geocoding API Set uo
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(mapsApiKey)
                 .maxRetries(2)
@@ -72,43 +75,43 @@ public class ListingServiceImpl implements ListingService {
 
         GeocodingResult[] results;
 
+        //The listingDto address is inputted based on the Google Maps Javascript API Autocomplete query
+        //The listingDto address is used to get the geocoding results and these are saved in the Listing Entity
         try {
             results = GeocodingApi.geocode(context, listingDto.getAddress()).await();
+            listing.setAddress(results[0].formattedAddress);
             listing.setLat(results[0].geometry.location.lat);
             listing.setLng(results[0].geometry.location.lng);
-            listing.setAddress(results[0].formattedAddress);
-            listing.setCounty(results[0].addressComponents[4].longName);
         } catch (Exception e) {
-            listing.setLat(0);
-            listing.setLng(0);
-            listing.setAddress(null);
+            e.printStackTrace(System.out);
         }
 
         //Walkscore API set up
-        String walkUrl = "https://api.walkscore.com/score?format=json&address=" +
-                listing.getAddress() +"&lat=" + listing.getLat() + "&lon=" + listing.getLng() + "&wsapikey=" + walkApiKey;
+        try {
+            String walkUrl = "https://api.walkscore.com/score?format=json&address=" +
+                    listing.getAddress() + "&lat=" + listing.getLat() + "&lon=" + listing.getLng() + "&wsapikey=" + walkApiKey;
 
-        RestTemplate restTemplate = new RestTemplate();
-        WalkScore walkScore = restTemplate.getForObject(walkUrl, WalkScore.class);
+            RestTemplate restTemplate = new RestTemplate();
+            WalkScore walkScore = restTemplate.getForObject(walkUrl, WalkScore.class);
 
-        //Saving Walkscore results on Listing database
-        listing.setWalkscore(walkScore.getWalkscore());
-        listing.setWalkscoreDescription(walkScore.getDescription());
-
+            //Saving Walkscore results on the Listing database
+            listing.setWalkscore(walkScore.getWalkscore());
+            listing.setWalkscoreDescription(walkScore.getDescription());
+        }catch (Exception e){
+            e.printStackTrace(System.out);
+        }
         listingRepository.save(listing);
     }
 
-
-    //Display all listings
+    //Returns a list with all the listings
     @Override
-    public List< Listing > getAllListings() {
+    public List<Listing> getAllListings() {
         final List<Listing> listings = listingRepository.findAll();
-
         return listings;
     }
 
 
-    //Get Listing by id
+    //Returns a listing based on its id
     @Override
     public Listing getListingById(long id) {
         Optional<Listing> optional = listingRepository.findById(id);
@@ -116,38 +119,59 @@ public class ListingServiceImpl implements ListingService {
         if (optional.isPresent()) {
             listing = optional.get();
         } else {
-            throw new RuntimeException(" Listing not found for id : " + id);
+            throw new RuntimeException("Listing not found for id : " + id);
         }
         return listing;
     }
 
 
-    //Delete Listing by id
+    //Delete a Listing based on its id
     @Override
     public void deleteListingById(long id) {
         this.listingRepository.deleteById(id);
     }
 
 
-    //Implements pagination
+    //Implements pagination and sorting for all the listings
     @Override
-    public Page<Listing> listingsPaginated(int pageNo, int pageSize, String sortField, String sortBy) {
+    public Page<Listing> allListingsPaginated(int pageNo, int pageSize, String sortField, String sortBy) {
         Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
 
-
         return this.listingRepository.findAll(pageable);
     }
 
+
+    //Implementes pagination ans sorting for listings that match the county searched
     @Override
-    public Page<Listing> searchPaginated(String searchedCounty, int pageNo, int pageSize, String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+    public Page<Listing> countySearchPaginated(String searchedCounty, int pageNo, int pageSize, String sortField, String sortBy) {
+        Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return this.listingRepository.findByAddressContainingIgnoreCase(searchedCounty, pageable);
+        return this.listingRepository.findListingByAddressContainingIgnoreCase(searchedCounty, pageable);
+
     }
+
+//    public Page<Listing> rentSearchPricePaginated(int min, int max,  int pageNo, int pageSize, String sortField, String sortBy){
+//        Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+//                Sort.by(sortField).descending();
+//
+//        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+//        return this.listingRepository.findByRentBetween(min, max, pageable);
+//    }
+
+    //Implements pagination and sorting on listings of the same user
+    public Page<Listing> getAllByUserEmail(String email, int pageNo, int pageSize, String sortField, String sortBy){
+        Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return this.listingRepository.findListingByCreatedBy(email, pageable);
+    }
+
+
 
 }

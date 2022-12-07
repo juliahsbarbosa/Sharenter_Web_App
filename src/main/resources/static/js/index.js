@@ -1,13 +1,14 @@
 const uluru = {lat: 53.1424, lng: -7.6921};
 
-
+var map;
 //Google Maps autocomplete search box in New Listing form
 function initAutocomplete() {
 
-    const map = new google.maps.Map(document.getElementById('new-listing'), {
-        center: uluru, zoom: 7, mapTypeId: 'roadmap'
+    map = new google.maps.Map(document.getElementById('new-listing'), {
+        center: uluru,
+        zoom: 7,
+        mapTypeId: 'roadmap',
     });
-
 
     // Create the search box and link it to the UI element.
     const input = document.getElementById('addressInput');
@@ -70,60 +71,60 @@ function initAutocomplete() {
 }
 
 window.initAutocomplete = initAutocomplete;
-
-const image =
-    "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
-
-function initMap() {
-    const map = new google.maps.Map(document.getElementById("listings-map"), {
-        zoom: 7,
-        center: uluru,
-    });
-
-
-    $.getJSON('http://localhost:7777/api/listings',
-        function (listings) {
-            if (listings.length > 0) {
-                var markers = [];
-                for (var i = 0; i < listings.length; i++) {
-                    var latLng =
-                        new google.maps.LatLng(listings[i].lat, listings[i].lng);
-
-
-                    const marker = new google.maps.Marker({
-                        position: latLng,
-                        icon: image
-                    });
-
-                    let listingDescription = getListingDescription(listings[i].title, listings[i].rent);
-
-                    const infoWindow = new google.maps.InfoWindow({
-                        content: listingDescription,
-                    });
-
-                    (function (m, infoWindow, idx) {
-                        google.maps.event.addListener(m, 'click', function (evt) {
-                            infoWindow.setContent(listingDescription);
-                            infoWindow.open(map, m);
-                        })
-                    })(marker, infoWindow, i);
-
-                    markers.push(marker);
-                }
-                var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-            }
-        });
-
-}
-window.initMap = initMap;
-
-function getListingDescription(title, rent) {
-    return '<div style="align-content: center; align-items: center; text-align: center;" id="content">' +
-        '<h4>' + title + '</h4>' +
-        '<div id="bodyContent">' +
-        "<p>" + rent + "</p>" +
-        "</div>" + "</div>";
-}
+//
+// const image =
+//     "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+//
+// function initMap() {
+//     const map = new google.maps.Map(document.getElementById("listings-map"), {
+//         zoom: 7,
+//         center: uluru,
+//     });
+//
+//
+//     $.getJSON('http://localhost:7777/api/listings',
+//         function (listings) {
+//             if (listings.length > 0) {
+//                 var markers = [];
+//                 for (var i = 0; i < listings.length; i++) {
+//                     var latLng =
+//                         new google.maps.LatLng(listings[i].lat, listings[i].lng);
+//
+//
+//                     const marker = new google.maps.Marker({
+//                         position: latLng,
+//                         icon: image
+//                     });
+//
+//                     let listingDescription = getListingDescription(listings[i].title, listings[i].rent);
+//
+//                     const infoWindow = new google.maps.InfoWindow({
+//                         content: listingDescription,
+//                     });
+//
+//                     (function (m, infoWindow, idx) {
+//                         google.maps.event.addListener(m, 'click', function (evt) {
+//                             infoWindow.setContent(listingDescription);
+//                             infoWindow.open(map, m);
+//                         })
+//                     })(marker, infoWindow, i);
+//
+//                     markers.push(marker);
+//                 }
+//                 var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+//             }
+//         });
+//
+// }
+// window.initMap = initMap;
+//
+// function getListingDescription(title, rent) {
+//     return '<div style="align-content: center; align-items: center; text-align: center;" id="content">' +
+//         '<h4>' + title + '</h4>' +
+//         '<div id="bodyContent">' +
+//         "<p>" + rent + "</p>" +
+//         "</div>" + "</div>";
+// }
 
 // $(document).ready(function() {
 //     $('.js-example-basic-multiple').select2();
