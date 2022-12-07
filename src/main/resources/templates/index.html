@@ -84,80 +84,53 @@
     </div>
 </section>
 
-<section class="full_section">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-xs-12">
-                <h3>Anúncios em Destaque</h3>
-                <div class="border center-block m-b-30"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-6">
-                <div class="property-card">
-                    <img class="img-thumbnail" th:src="${recentListings.imageUrl}">
-                    <div class="property-image"
-                             style="background: url(https://www.webquarto.com.br/img/v2/property/thumb/2022-12/79844_QQPT45Yh5ODE62mb.jpg) center center / cover no-repeat;">
-                        </div>
-                    </a>
+<div class="container">
+    <h1 class="text-center pt-2">Last Added Listings</h1>
+    <div class="row">
+        <div class="col-sm-4" th:each="listings : ${recentListings}">
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img class="img-card" th:src="${listings.imageUrl}">
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${listings.title}"></h5>
+                            <p class="mt-3 mb-0 text-sm col-3">
+                                <span class="card-text">Rent: <i class="bi bi-currency-euro"></i></span>
+                                <span class="card-text" th:text="${listings.rent}"></span>
+                            </p>
+                            <p>
+                                <span class="card-text">Type of room:</span>
+                                <span class="card-text" th:text="${listings.roomType}"></span>
+                            </p>
 
-                    <div class="property-content">
-                        <div class="listingInfo">
-                            <div class="">
-                                <h5 class="text-success m-t-0" th:text="${recentListings.rent}"></h5>
-                            </div>
-                            <div class="">
-                                <h3 class="text-overflow">
-                                    <a th:href="@{/img/favicon.png}"></a> <div th:text="${recentListings.roomType}"></div>
-                                </h3>
+                            <p>
+                                <span class="card-text">Number of housemates:</span>
+                                <span class="card-text" th:text="${listings.numHousemates}"></span>
+                            </p>
 
-                                <p class="text-muted text-overflow"><i class="fas fa-map-marker-alt m-r-5"></i>Jardim
-                                    Paulista, São Paulo - SP</p>
-
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <p class="description font-13 text-muted m-b-0">•Rua Capitão Frederico Pradel
-                                            117
-                                            - Estação de metrô Butantã (10 minutos)
-                                            - Suíte de 1.150,00
-                                            Disponível para reserva e entrada a partir de 18/12
-
-                                            •R...</p>
-                                    </div>
-                                </div>
-
-                                <div class="row m-t-20">
-                                    <div class="col-xs-12 m-b-15 property-action">
-                                                                                                    <span class="icons"
-                                                                                                          data-toggle="tooltip"
-                                                                                                          data-placement="top"
-                                                                                                          title="Disponível para homens e mulheres">
-                                <i class="fas fa-restroom"></i>
-                                <span>Qualquer sexo</span>
-                            </span>
-                                        <span class="icons pull" data-toggle="tooltip" data-placement="top"
-                                              title="Número de quartos no imóvel">
-                            <i class="fas fa-bed m-r-10"></i><span>5</span>
-                        </span>
-
-                                        <span class="icons" data-toggle="tooltip" data-placement="top"
-                                              title="Número de banheiros no imóvel">
-                            <i class="fa fa-bath m-r-10"></i><span>4</span>
-                        </span>
-                                    </div>
-
-                                    <a href="https://www.webquarto.com.br/quarto/79844/quartos-e-suites-individuais-pinheirosbutantamorumbi"
-                                       class="btn btn-success btn-bordered btn-block waves-effect waves-light">Ver
-                                        Detalhes</a>
-                                </div>
-                            </div>
+                            <p>
+                                <span class="card-text">Created by:</span>
+                                <span class="card-text" th:text="${listings.createdBy}"></span>
+                            </p>
+                            <p>
+                                <span class="card-text">Created on:</span>
+                                <span class="card-text" th:text="${listings.creationDate}"></span>
+                            </p>
+                            <!--              <a th:href="@{/renter/listing-details/{id}(id=${listings.id})}"-->
+                            <!--                     class="btn">Details</a>-->
+                            <!--              <a th:href="@{//sharer/edit-listing/{id}(id=${listing.id})}" class="btn btn-primary">Update</a>-->
+                            <a th:href="@{/sharer/delete-listing/{id}(id=${listings.id})}"
+                               class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+
 
 <!--Footer Fragment-->
 <footer th:replace="fragments/footer.html :: footer"></footer>

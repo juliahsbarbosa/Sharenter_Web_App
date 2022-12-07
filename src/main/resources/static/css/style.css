@@ -95,9 +95,14 @@ input:-webkit-autofill:active{
     color: white;
 }
 
-.img-thumbnail {
-    display: block;
+/*.img-thumbnail {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    height: 500px; //change as per your requirement*/
+/*}*/
+
+img-card{
     width: 100%;
-    height: 500px; //change as per your requirement
+    height: 100%;
 }
 

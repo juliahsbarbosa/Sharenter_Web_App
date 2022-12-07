@@ -15,10 +15,9 @@ import java.util.Optional;
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Long> {
 
-    //Find listings by createdBy
+//    Long countByCount();
 
-    @Query("SELECT * WHERE a.arcustno<='?1' ORDER BY a.arcustno DESC")
-    List<Listing> findTopByCreationDate();
+    //Find listings by createdBy
     Page<Listing> findListingByCreatedBy(String createdByEmail, Pageable pageable);
 
     //Find all listings

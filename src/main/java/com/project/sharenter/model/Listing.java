@@ -18,7 +18,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Listing extends Auditable<String>{
     @Id
-    @Column(name = "id")
+    @Column(name = "id", updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -73,6 +73,8 @@ public class Listing extends Auditable<String>{
     private boolean landlordOccupied;
 
     private Boolean available = true;
+
+    private int count;
 
 
 }

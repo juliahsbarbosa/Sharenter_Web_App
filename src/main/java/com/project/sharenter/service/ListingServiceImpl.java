@@ -46,6 +46,11 @@ public class ListingServiceImpl implements ListingService {
     public void createListing(ListingDto listingDto){
         Listing listing = new Listing();
 
+        //Handles the update
+        if (listingDto.getId() != null){
+            listing.setId(listingDto.getId());
+        }
+
         //Map ListingDto to entity Listing, saving the record in the database
         listing.setTitle(listingDto.getTitle());
         listing.setRent(listingDto.getRent());
@@ -66,7 +71,7 @@ public class ListingServiceImpl implements ListingService {
             case Triple -> listing.setRoomType(RoomType.Triple);
         }
 
-        //Google Maps Geocoding API Set uo
+        //Google Maps Geocoding API Set up
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(mapsApiKey)
                 .maxRetries(2)
@@ -144,7 +149,7 @@ public class ListingServiceImpl implements ListingService {
     }
 
 
-    //Implementes pagination ans sorting for listings that match the county searched
+    //Implements pagination and sorting for listings that match the county searched
     @Override
     public Page<Listing> countySearchPaginated(String searchedCounty, int pageNo, int pageSize, String sortField, String sortBy) {
         Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
@@ -155,14 +160,6 @@ public class ListingServiceImpl implements ListingService {
 
     }
 
-//    public Page<Listing> rentSearchPricePaginated(int min, int max,  int pageNo, int pageSize, String sortField, String sortBy){
-//        Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-//                Sort.by(sortField).descending();
-//
-//        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-//        return this.listingRepository.findByRentBetween(min, max, pageable);
-//    }
-
     //Implements pagination and sorting on listings of the same user
     public Page<Listing> getAllByUserEmail(String email, int pageNo, int pageSize, String sortField, String sortBy){
         Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
@@ -171,7 +168,5 @@ public class ListingServiceImpl implements ListingService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.listingRepository.findListingByCreatedBy(email, pageable);
     }
-
-
 
 }

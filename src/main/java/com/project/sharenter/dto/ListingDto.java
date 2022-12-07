@@ -14,6 +14,9 @@ import java.util.List;
 //Dto with validation for creating a new listing form
 @Data
 public class ListingDto {
+
+    private Long Id;
+
     @NotBlank(message = "Please enter a title for your Listing")
     private String title;
 

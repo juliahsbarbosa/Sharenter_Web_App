@@ -78,8 +78,8 @@ public class ListingController {
     }
 
     //Post mapping for the new listing
-    @PostMapping("/sharer/new-listing")
-    public String saveNewListing(Model model, @Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
+    @PostMapping(value = "/sharer/new-listing")
+    public String saveListing(Model model, @Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sharer/new-listing";
         }
@@ -92,7 +92,17 @@ public class ListingController {
     public String editListing(@PathVariable(value = "id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
         model.addAttribute("listing", listing);
+        model.addAttribute("mapsApiKey", mapsApiKey);
         return "sharer/edit-listing";
+    }
+
+    @PostMapping(value = "/sharer/edit-listing")
+    public String updateListing(Model model, @Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "sharer/edit-listing";
+        }
+        listingService.createListing(listingDto);
+        return "redirect:/sharer/dashboard";
     }
 
     //Mapping for the deleting a listing by path variable id

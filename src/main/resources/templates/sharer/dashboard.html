@@ -97,15 +97,15 @@
               </p>
 <!--              <a th:href="@{/renter/listing-details/{id}(id=${listings.id})}"-->
 <!--                     class="btn">Details</a>-->
-<!--              <a th:href="@{//sharer/edit-listing/{id}(id=${listing.id})}" class="btn btn-primary">Update</a>-->
+              <a th:href="@{/sharer/edit-listing/{id}(id=${listings.id})}" class="btn btn-primary">Update</a>
               <a th:href="@{/sharer/delete-listing/{id}(id=${listings.id})}" class="btn btn-danger">Delete</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
+
   <nav aria-label="Pagination" th:if="${totalPages > 1}">
     <ul class="pagination">
       <li class="page-item">

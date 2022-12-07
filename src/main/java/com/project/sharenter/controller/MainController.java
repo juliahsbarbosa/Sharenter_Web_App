@@ -28,17 +28,6 @@ public class MainController {
     @Value("${maps.api.key}")
     private String mapsApiKey;
 
-    @Autowired
-    ListingRepository listingRepository;
-
-    //Controller method to display the homepage and the search form
-    @GetMapping("/")
-    public String home(Model model){
-        Page<Listing> listingPage = listingService.allListingsPaginated(1, 3, "asc", "creationDate");
-        List<Listing> recentListings = listingPage.getContent();
-        model.addAttribute("recentListings", recentListings);
-        return "index";
-    }
 
     @Autowired
     UserService userService;
@@ -47,6 +36,15 @@ public class MainController {
     ListingService listingService;
 
 
+    //Controller method to display the homepage and the search form
+    @GetMapping("/")
+    public String home(Model model){
+
+        Page<Listing> listingPage = listingService.allListingsPaginated(1, 3, "creationDate", "asc");
+        List<Listing> recentListings = listingPage.getContent();
+        model.addAttribute("recentListings", recentListings);
+        return "index";
+    }
 
     @GetMapping("/sharer/dashboard")
     public String sharerDashboard(Model model, Principal principal,
@@ -73,14 +71,6 @@ public class MainController {
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("reverseSortBy", sortBy.equals("asc") ? "desc" : "asc");
         model.addAttribute("listingsByUser", listingsByUser);
-//        String email = principal.getName();
-//
-//        String listingsByUser = listingService.getAllByUserEmail(email);
-//
-//
-////        model.addAttribute("listing", listing);
-//        model.addAttribute("listingsByUser", listingsByUser);
-
         return "sharer/dashboard";
     }
 
@@ -88,21 +78,5 @@ public class MainController {
     public String renterDashboard() {
         return "renter/dashboard";
     }
-
-//    @GetMapping("/access-denied")
-//    public String denied() {
-//        return "access-denied";
-//    }
-//
-//    @GetMapping("/contact")
-//    public String contact() {
-//        return "contact";
-//    }
-//
-//    @GetMapping("/about")
-//    public String about() {
-//        return "about";
-//    }
-
 
 }
