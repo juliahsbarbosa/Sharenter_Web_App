@@ -1,8 +1,9 @@
 package com.project.sharenter.model;
 
+//This class implements the user role
 public enum Role {
-    SHARER("Sharer"),
-    RENTER("Renter");
+    ROLE_SHARER("Sharer"),
+    ROLE_RENTER("Renter");
 
     private final String value;
 
@@ -14,14 +15,4 @@ public enum Role {
         return value;
     }
 
-//    public static Role parse(String id) {
-//        Role role = null; // Default
-//        for (Role item : Role.values()) {
-//            if (item.name.equals(id)) {
-//                role = item;
-//                break;
-//            }
-//        }
-//        return role;
-//    }
 }

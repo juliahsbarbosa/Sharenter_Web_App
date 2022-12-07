@@ -8,20 +8,23 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NegativeOrZero;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 
+//Dto with validation for creating a new listing form
 @Data
 public class ListingDto {
     @NotBlank(message = "Please enter a title for your Listing")
     private String title;
 
     @NotNull (message = "Please enter the monthly rent")
-    private double rent;
+    @DecimalMin(message = "Value must be greater than 300", value = "100")
+    private BigDecimal rent;
 
-    @NotNull(message = "You must select the type of room")
+    @NotNull(message = "You must select the type of room you are listing")
     private RoomType roomType;
 
-    @NotBlank(message = "Please search and enter the house address")
+//    @NotBlank(message = "Please search and enter the house address")
     private String address;
 
     @NotBlank(message = "Please enter the URL for an image of the room")

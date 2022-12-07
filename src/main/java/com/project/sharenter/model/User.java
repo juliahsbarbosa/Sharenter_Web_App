@@ -1,18 +1,16 @@
 package com.project.sharenter.model;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.Collections;
 
+
+//User Entity, which can be Sharer  or a Renter type of user
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -39,7 +37,6 @@ public class User implements UserDetails {
 
     @Column(name = "phone")
     private String phone;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -49,8 +46,7 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private Boolean enabled = true;
 
-
-    //Implementing UserDetails custom methods
+    //Implementing custom UserDetails methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
@@ -62,11 +58,14 @@ public class User implements UserDetails {
         return password;
     }
 
+
+    //Return email as username
     @Override
     public String getUsername() {
         return email;
     }
 
+    //Return all booleans as true
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -74,7 +73,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return true;
     }
 
     @Override
@@ -84,7 +83,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
 
 }

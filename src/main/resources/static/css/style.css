@@ -1,25 +1,29 @@
 /*Global styling*/
 
-body{
-    color: #2a340d;
+*{
+    color: #192f44;
 }
 
-h1, h2, h3, h4, h5{
-    color: #2a340d;
-    text-align: center;
+h1, h2, h3, h4, h5, h6{
+    color: #192f44;
 }
-
 
 /*Defining default style to buttons*/
-.btn{
-    border: 1px solid  #9FC131;
-    color: #2a340d;
-    font-weight: bold;
+.btn:hover{
+    background-color: #008080;
+    color: white;
 }
 
-.btn:hover{
-    background-color: #9FC131;
+.btn{
+    background-color:#00ca90;
+    color:white ;
 }
+
+.blue-btn{
+    background-color: #00596c;
+    color: white;
+}
+
 
 /*Default style for navbar*/
 header{
@@ -27,11 +31,11 @@ header{
 }
 
 .nav-link a:hover {
-    border-bottom: 3px solid #9FC131;
+    border-bottom: 3px solid #00ca90;
 }
 
 .nav-item a{
-    color: #2a340d;
+    color: #192f44;
     font-weight: normal;
 }
 
@@ -49,35 +53,37 @@ header{
 
 .nav-link:hover,
 .nav-link:active {
-    border-bottom: 3px solid #9FC131;
+    border-bottom: 3px solid #00ca90;
 }
 
 
 /*Footer Styling*/
 footer{
-    background-color: #2a340d;
+    background-color: #192f44;
     color: white;
 }
 
 /*Default styling for form input*/
 .form-control:focus {
-    border-color: #9FC131;
-    box-shadow: 0 0 0 0.2rem #9FC131;
+    border-color: #00ca90;
+    box-shadow: 0 0 0 0.2rem #00ca90;
 }
 
-/*input:-webkit-autofill,*/
-/*input:-webkit-autofill:hover,*/
-/*input:-webkit-autofill:focus,*/
-/*input:-webkit-autofill:active{*/
-/*    -webkit-box-shadow: 0 0 0 30px white inset !important;*/
-/*}*/
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
 
 
 /*Index page styling*/
-.search-header {
-    background: url(../img/room-4.jpg) no-repeat center center;
+.index-container{
+    background: url(../img/room.jpg) no-repeat center center;
     background-size: cover;
 }
+
 
 /*New Listing styling*/
 .new-listing{
@@ -85,15 +91,13 @@ footer{
 
 }
 
-
-.fa {
-    color: #9FC131;
+.index-header {
+    color: white;
 }
-
-
 
 .img-thumbnail {
     display: block;
     width: 100%;
     height: 500px; //change as per your requirement
 }
+

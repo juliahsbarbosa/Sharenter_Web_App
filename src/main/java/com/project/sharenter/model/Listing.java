@@ -6,10 +6,12 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 
-@Entity(name = "listings")
+@Entity
+@Table(name = "listings")
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class Listing extends Auditable<String>{
     private String title;
 
     @Column(name = "rent")
-    private double rent;
+    private BigDecimal rent;
 
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
@@ -35,14 +37,6 @@ public class Listing extends Auditable<String>{
     @Column(name = "address")
     //Google Geocoding API results
     private String address;
-
-    private String street;
-
-    private String city;
-
-    private String county;
-
-    private String neighborhood;
 
     @Column(name = "lat")
     private double lat;
@@ -78,12 +72,7 @@ public class Listing extends Auditable<String>{
     @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean landlordOccupied;
 
-//    @OneToMany(mappedBy = "listing")
-//    private List<Viewing> viewings;
-
     private Boolean available = true;
-
-
 
 
 }

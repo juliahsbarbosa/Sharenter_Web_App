@@ -37,11 +37,14 @@ public class WebSecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
+
+    //Configures authentication
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
         authProvider.setUserDetailsService(userDetailsService());
+        //Encrypts password
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
@@ -51,38 +54,45 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                // URL matching for accessibility
+
+                //Based on a user's role, defines the request permissions to specified URL paths.
                 .antMatchers("/", "/login", "/register", "/api").permitAll()
-                .antMatchers("/renter/**").hasAnyAuthority("RENTER")
-                .antMatchers("/sharer/**").hasAnyAuthority("SHARER")
-                .antMatchers("/listings/**").hasAnyAuthority("SHARER", "RENTER")
+                .antMatchers("/renter/**").hasAnyAuthority("ROLE_RENTER")
+                .antMatchers("/sharer/**").hasAnyAuthority("ROLE_SHARER")
                 .anyRequest().authenticated()
                 .and()
-                // form login
-                .csrf().disable().formLogin()
+                .csrf().disable()
+
+                //Redirect based on authentication success or failure
+                .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
                 .successHandler(sucessHandler)
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
-                // logout
+
+                //Logout
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .and()
+
+                //Access denied for users without authorization
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");
 
+        //Authentication
         http.authenticationProvider(authenticationProvider());
-        http.headers().frameOptions().sameOrigin();
+//        http.headers().frameOptions().sameOrigin();
 
         return http.build();
     }
 
+    //Ignore paths, like images or scripts, to avoid errors in the view
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/img/**", "/css/**");
+        return (web) -> web.ignoring().antMatchers("/img/**", "/css/**", "/js/**");
     }
 
 }

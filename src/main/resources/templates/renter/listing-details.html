@@ -7,30 +7,45 @@
 <body>
 
 
-<p th:text="'Hello, ' + ${listing.getWalkscore()} + '!'" />
-
-<p th:text="'Hello, ' + ${listing.getWalkscore()} + '!'" />
 
 
-
-
-
-
-<div onload="showIndividualMap(this)">
-    <div th:data-title="${listing.title}"></div>
-    <div th:data-latitude="${listing.lat}"></div>
-    <div th:data-latitude="${listing.lng}"></div>
-    <div th:data-address="${listing.address}"></div>
-<div id="listing-map" style="width:500px; height: 550px; margin-bottom: 30px;"></div>
+<div class="api-branding text-center" style="width: 190px;">
+    <div id="walkscore" class="justify-between">
+        <img src="https://cdn.walk.sc/images/api-logo.png"><p th:text="${listing.getWalkscore()}">
+        <p th:text="${listing.getWalkscoreDescription()}" />
+    </div>
+</div>
 </div>
 
 
 
 
 
+<!--<div onload="showIndividualMap(this)">-->
+<!--    <div th:data-title="${listing.title}"></div>-->
+<!--    <div th:data-latitude="${listing.lat}"></div>-->
+<!--    <div th:data-latitude="${listing.lng}"></div>-->
+<!--    <div th:data-address="${listing.address}"></div>-->
+<!--<div id="listing-map" style="width:500px; height: 550px; margin-bottom: 30px;"></div>-->
+<!--</div>-->
+
+<!--<p>-->
+<!--                                <span class="card-text"-->
+<!--                                      th:if="${listings.privateBathroom == true }">Private Bathroom</span>-->
+<!--    <span class="card-text" th:unless="${listings.privateBathroom == true}"></span>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--    <span class="card-text" th:if="${listings.parking == true }">Have Parking</span>-->
+<!--    <span class="card-text" th:unless="${listings.parking == true}">No Parking</span>-->
+<!--</p>-->
 
 
-    <!--<div class="container d-flex mt-50 mb-50">-->
+
+
+
+
+<!--<div class="container d-flex mt-50 mb-50">-->
 <!--    <h1>Browse listings</h1>-->
 <!--    <table class="table table-striped table-responsive-md">-->
 <!--        <thead>-->

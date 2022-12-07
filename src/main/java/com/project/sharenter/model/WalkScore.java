@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+
+//Walkscore API JSON Properties
+//Returns the results wanted from the Walkscore API
 @Getter
 @Setter
 @NoArgsConstructor

@@ -1,6 +1,7 @@
 package com.project.sharenter.repository;
 
 import com.project.sharenter.model.Listing;
+import com.project.sharenter.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,15 +9,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Long> {
 
+    //Find listings by createdBy
+
+    @Query("SELECT * WHERE a.arcustno<='?1' ORDER BY a.arcustno DESC")
+    List<Listing> findTopByCreationDate();
+    Page<Listing> findListingByCreatedBy(String createdByEmail, Pageable pageable);
+
+    //Find all listings
     Page<Listing> findAll(Pageable pageable);
 
-    Page<Listing> findByAddressContainingIgnoreCase(String searchedCounty,Pageable pageable);
-//    Page<Listing> findByRentBetween(double min, int max, Pageable pageable);
+    //Find listing if the address contains the seached county
+    Page<Listing> findListingByAddressContainingIgnoreCase(String searchedCounty,Pageable pageable);
+
+//    Page<Listing> findByRentBetween(int min, int max, Pageable pageable);
 
 
 }
