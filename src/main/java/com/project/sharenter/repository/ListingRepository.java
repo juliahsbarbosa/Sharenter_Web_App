@@ -15,18 +15,13 @@ import java.util.Optional;
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Long> {
 
-//    Long countByCount();
-
-    //Find listings by createdBy
+    //Find listings by createdBy with pagination
     Page<Listing> findListingByCreatedBy(String createdByEmail, Pageable pageable);
 
-    //Find all listings
+    //Find all listings with pagination
     Page<Listing> findAll(Pageable pageable);
 
-    //Find listing if the address contains the seached county
+    //Find listing if the address contains the seached county, with pagination
     Page<Listing> findListingByAddressContainingIgnoreCase(String searchedCounty,Pageable pageable);
-
-//    Page<Listing> findByRentBetween(int min, int max, Pageable pageable);
-
 
 }

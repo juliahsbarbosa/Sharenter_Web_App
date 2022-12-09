@@ -1,3 +1,4 @@
+<!--Default Header fragment-->
 <header th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg border-bottom px-3 py-4 fixed-top navbar-light bg-white">
         <div class="container-fluid">
@@ -15,26 +16,37 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 aligh-items-center">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
                     <li class="nav-item">
                         <a class="nav-link px-4" th:href="@{/}">HOME</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-4" th:href="@{/renter/browse-listings}">LISTINGS</a>
+                        <a class="nav-link px-4" th:href="@{/about}" sec:authorize="!isAuthenticated()">ABOUT</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-4" th:href="@{/renter/dashboard}">RENTER</a>
+                        <a class="nav-link px-4" th:href="@{/how}" sec:authorize="!isAuthenticated()">HOW IT WORKS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-4" th:href="@{/sharer/dashboard}">SHARER</a>
+                        <a class="nav-link px-4" th:href="@{/renter/browse-listings}" sec:authorize="hasRole('ROLE_RENTER')">LISTINGS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-4" th:href="@{/renter/dashboard}" sec:authorize="hasRole('ROLE_RENTER')">DASHBOARD</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-4" th:href="@{/sharer/new-listing}" sec:authorize="hasRole('ROLE_SHARER')">NEW LISTING</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-4" th:href="@{/sharer/dashboard}" sec:authorize="hasRole('ROLE_SHARER')">DASHBOARD</a>
                     </li>
                 </ul>
+
                 <div class="login align-items-end">
                     <a th:href="@{/login}"><button class="btn rounded-pill mx-3" type="button" sec:authorize="!isAuthenticated()">Login</button></a>
                     <a th:href="@{/logout}" ><button class="btn rounded-pill mx-3" type="button" sec:authorize="isAuthenticated()">Logout</button></a>
                     <a th:href="@{/register}"><button class="btn rounded-pill blue-btn" type="button">Register</button></a>
                 </div>
-            </div>
-        </div>
-    </nav>
+
+            </div><!--End navbar collapse-->
+        </div><!--End container fluid-->
+    </nav><!--End nav-->
 </header>

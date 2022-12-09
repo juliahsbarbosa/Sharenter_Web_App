@@ -1,5 +1,6 @@
 package com.project.sharenter.model;
 
+//Defines the type of room type a listing can have
 public enum RoomType {
     Single("Single"),
     Double("Double"),

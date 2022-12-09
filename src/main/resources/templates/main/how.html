@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:fill="http://www.w3.org/1999/xhtml"></html>
+<head>
+    <!--Required Meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+
+    <!--Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!-- Custom CSS Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <title> Sharenter - FAQ</title>
+
+</head>
+<body>
+
+<!--Header Fragment-->
+<header th:replace="fragments/header.html :: header"></header>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img th:src="@{/img/sharer.jpg}" width="700px" height="500px" alt="renter">
+            </div>
+            <div class="col-sm-6">
+                <h1 class="py-2 text-center">Renter</h1>
+                <p>1. Register/Login: Create an account and login to the app.</p>
+                <p>2. Browse Listings: Look through listings of houseshares in your area.</p>
+                <p>3. Send Message: Once you've found a listing you're interested in, send the owner a message.</p>
+            </div>
+            <div class="col-sm-6">
+                <h1 class="py-2 text-center">Sharer</h1>
+                <p>1. Register or Login: You can register for free as a sharer. After you login, you will be able to add
+                    your house .</p>
+                <p>2. Add your house vancancy: Once you are logged in, click on "Add your house vancancy". Fill out the
+                    form
+                    with as many details as possible.</p>
+                <p>3. Receive messages: After you submit your form, you will start receiving messages from potential
+                    sharers.</p>
+            </div>
+            <div class="col-sm-6">
+                <img th:src="@{/img/renter.jpg}" width="700px" height="500px" alt="sharer">
+            </div>
+        </div>
+    </div>
+</main>
+<!--Footer Fragment-->
+<footer th:replace="fragments/footer.html :: footer"></footer>
+</body>
+</html>

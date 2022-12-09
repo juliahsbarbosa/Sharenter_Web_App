@@ -92,11 +92,22 @@
 
                         </div>
 
+
+                        <!-- Listing Description-->
+                        <div class="mb-3">
+                            <label class="mb-2" for="title">Listing description: </label>
+                            <textarea id="description" rows="10" class="form-control"
+                                      th:field="*{description}" th:errorclass="is-invalid"></textarea>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                        </div>
+
                         <!-- Room Type-->
                         <div class="mb-3">
-                            <label class="mb-2" for="roomType">What type of room?</label>
-                            <select id="roomType" th:field="*{roomType}" th:errorclass="is-invalid" class="w-100 form-control">
-                                <option value=""  class="text-muted">Select</option>
+                            <label class="mb-2" for="roomType">What type of room are you adverting?</label>
+                            <select id="roomType" th:field="*{roomType}" th:errorclass="is-invalid"
+                                    class="w-100 form-control">
+                                <option value="" class="text-muted">Select</option>
                                 <option value="Single" name="Single">Single Room</option>
                                 <option value="Double" name="Double">Double Room</option>
                                 <option value="Twin" name="Twin">Twin Room</option>
@@ -108,7 +119,7 @@
 
                         <!-- Image URL -->
                         <div class="mb-3">
-                            <label class="mb-2" for="rent">Room Image URL: </label>
+                            <label class="mb-2" for="rent">Add an image of the room by entering an image URL: </label>
                             <input id="imageUrl" type="url" class="form-control"
                                    th:field="*{imageUrl}" th:errorclass="is-invalid">
                             <div class="invalid-feedback"
@@ -125,7 +136,7 @@
                         </div>
 
                         <!-- Accommodation amenities -->
-                        <p>Please select which amenities the accommodation has: </p>
+                        <p>Please select the amenities and features of the room: </p>
                         <div class="form-check">
                             <input class="form-check-input " th:field="*{privateBathroom}"
                                    th:checked="${isPrivateBathroom}" type="checkbox" id="privateBathroom">
@@ -141,7 +152,6 @@
                                 Pet-friendly
                             </label>
                         </div>
-
 
                         <div class="form-check">
                             <input class="form-check-input " th:field="*{suitableForCouples}"

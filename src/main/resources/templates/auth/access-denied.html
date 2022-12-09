@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:fill="http://www.w3.org/1999/xhtml"></html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <!--Required Meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+
+    <!--Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!-- Custom CSS Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <title> Sharenter - Access Denied</title>
+
+</head>
+<body class="denied">
+<div class="denied-wrapper align-items-center justify-content-middle">
+    <div class="denied-title" data-content="403">
+        403 - ACCESS DENIED
+    </div>
+
+    <div class="denied-subtitle">
+        <p>You don't have permission to access this page.</p>
+    </div>
+
+    <div class="align-items-center">
+        <a th:href="@{/}"><button class="btn rounded-pill mx-3" type="button">Go to Homepage</button></a>
+    </div>
+</div>
 </body>
 </html>

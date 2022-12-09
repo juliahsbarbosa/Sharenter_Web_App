@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,8 +24,7 @@ public class ListingController {
     @Value("${maps.api.key}")
     private String mapsApiKey;
 
-
-    //Mapping the indidual listing details page with path variable by id
+    //GET method, display a specific listing details according to its id
     @GetMapping("/renter/listing-details/{id}")
     public String listingDetails(@PathVariable("id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
@@ -37,7 +34,7 @@ public class ListingController {
     }
 
 
-    //Mapping the browse-listings page with pagination, search and filtering options
+    //GET method, displays the browse listings page with pagination, search and sorting functionalities
     @GetMapping("/renter/browse-listings")
     public String listingPaginated(Model model, @RequestParam(required = false) String searchedCounty,
                                    @RequestParam(defaultValue = "1") int page,
@@ -68,7 +65,7 @@ public class ListingController {
         return "renter/browse-listings";
     }
 
-    //Mapping the create new listing
+    //GET method display the new listing form
     @GetMapping("/sharer/new-listing")
     public String newListing(Model model) {
         //Model attribute to bind form data
@@ -77,9 +74,9 @@ public class ListingController {
         return "sharer/new-listing";
     }
 
-    //Post mapping for the new listing
+    //POST method saves the new listing
     @PostMapping(value = "/sharer/new-listing")
-    public String saveListing(Model model, @Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
+    public String saveListing(@Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sharer/new-listing";
         }
@@ -87,7 +84,7 @@ public class ListingController {
         return "redirect:/sharer/new-listing?success";
     }
 
-    //Mapping for the editing a listing by path variable id
+    //GET method display the edit listing form, according to the listing id
     @GetMapping("/sharer/edit-listing/{id}")
     public String editListing(@PathVariable(value = "id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
@@ -96,8 +93,9 @@ public class ListingController {
         return "sharer/edit-listing";
     }
 
+    //POST method, saves the edited listing
     @PostMapping(value = "/sharer/edit-listing")
-    public String updateListing(Model model, @Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
+    public String updateListing(@Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sharer/edit-listing";
         }
@@ -105,7 +103,7 @@ public class ListingController {
         return "redirect:/sharer/dashboard";
     }
 
-    //Mapping for the deleting a listing by path variable id
+    //GET method, deletes a listing according to its id
     @GetMapping("/sharer/delete-listing/{id}")
     public String deleteListing(@PathVariable(value = "id") long id) {
 
@@ -114,12 +112,5 @@ public class ListingController {
         return "redirect:/sharer/dashboard";
     }
 
-    //Returns form results as JSON in order to create markers in the Google Maps Javascript API
-    @GetMapping("/api/listings")
-    @ResponseBody
-    public ResponseEntity<List<Listing>> getAllUsers() {
-        final List<Listing> listings = listingService.getAllListings().stream().collect(Collectors.toList());
-        return ResponseEntity.ok(listings);
-    }
 
 }

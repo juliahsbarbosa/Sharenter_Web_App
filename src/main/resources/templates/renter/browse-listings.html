@@ -24,139 +24,170 @@
 <!--Header Fragment-->
 <header th:replace="fragments/header.html :: header"></header>
 
+<main>
 
-<!--Listings-->
-<div class="container browsing">
-    <h1 class="text-center pt-2 mb-5">Browse listings</h1>
-    <div class="row">
-        <div class="col-6">
-            <form th:action="@{/renter/browse-listings}" method="get" class="d-flex w-100" role="search">
-                <select class="form-control me-2 rounded-pill w-100" type="text"
-                        name="searchedCounty" id="searchedCounty" th:value="${searchedCounty}">
-                    <option class="text-muted" value="">Search by County</option>
-                    <option th:value="'Dublin'" name="Dublin">Dublin County</option>
-                    <option th:value="'Wicklow'" name="Wicklow">Wicklow County</option>
-                    <option th:value="'Galway'" name="Galway">Galway County</option>
-                    <option th:value="'Cork'" name="Cork">Cork County</option>
-                    <option th:value="'Limerick'" name="Limerick">Limerick County</option>
-                </select>
-                <button type="submit" class="btn rounded-pill">
-                    Search
-                </button>
-            </form>
-        </div>
+    <!--Search Box-->
+    <div class="container browsing">
+        <h1 class="text-center pt-2 mb-5">Browse listings</h1>
+        <div class="row">
+            <div class="col-6">
+                <form th:action="@{/renter/browse-listings}" method="get" class="d-flex w-100" role="search">
+                    <select class="form-control me-2 rounded-pill w-100" type="text"
+                            name="searchedCounty" id="searchedCounty" th:value="${searchedCounty}">
+                        <option class="text-muted" value="" disabled selected="true">Search by County</option>
+                        <option th:value="'Dublin'" name="Dublin">Dublin County</option>
+                        <option th:value="'Wicklow'" name="Wicklow">Wicklow County</option>
+                        <option th:value="'Galway'" name="Galway">Galway County</option>
+                        <option th:value="'Cork'" name="Cork">Cork County</option>
+                        <option th:value="'Limerick'" name="Limerick">Limerick County</option>
+                    </select>
+                    <button type="submit" class="btn rounded-pill">
+                        Search
+                    </button>
+                </form>
+            </div>
 
-
-        <div class="col-6">
             <!--Page sorting-->
-            <table class="table table-responsive-md">
-                <thead>
-                <tr>
-                    <th><a th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
-                + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=creationDate' +
-                '&sortBy=' + ${reverseSortBy }}">Creation Date</a></th>
-                    <th><a th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
-                + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=rent' +
-                '&sortBy=' + ${reverseSortBy }}">Rent</a></th>
-                </tr>
-                </thead>
-            </table>
-        </div>
+            <div class="col sorting d-flex justify-content-around">
+                <p class="fw-bold">Sort by:</p>
 
-        <div class="col">
-            <!--Listing info card-->
-            <div class="card mt-3 " style="width: 1300px;" th:each="listings : ${allListings}">
+                <div class="pl-3">
+                    <a th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty='
+                        + searchedCounty + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=creationDate' +
+                        '&sortBy=' + ${reverseSortBy}}">Creation Date<img th:src="@{/img/sort.png}" aria-label="logo"
+                                                                          alt="sort"></a>
+                </div>
+
+                <div class="pl-3">
+                    <a th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty='
+                        + searchedCounty + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=rent'
+                        +'&sortBy=' + ${reverseSortBy }}">Rent<img th:src="@{/img/sort.png}" aria-label="logo"
+                                                                   alt="sort"></a>
+                </div>
+
+            </div><!--End col sorting-->
+        </div><!--End of row-->
+
+        <!--Listings info card-->
+        <div class="col-12">
+            <div class="card mt-3" th:each="listings : ${allListings}">
                 <div class="row g-0">
                     <div class="col-md-6">
-                        <img class="img-thumbnail" th:src="${listings.imageUrl}">
+                        <img class="img-browse" th:src="${listings.imageUrl}">
                     </div>
                     <div class="col-md-6">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${listings.title}"></h5>
-                            <p class="mt-3 mb-0 text-sm col-3">
-                                <span class="card-text">Rent: <i class="bi bi-currency-euro"></i></span>
-                                <span class="card-text" th:text="${listings.rent}"></span>
-                            </p>
-                            <p>
-                                <span class="card-text">Type of room:</span>
-                                <span class="card-text" th:text="${listings.roomType}"></span>
+                            <h3 class="card-title text-center" th:text="${listings.title}"></h3>
+                            <p class="mt-3 mb-0">
+                                <span class="card-text fw-bold">Address:</span>
+                                <span class="card-text" th:text="${listings.address}"></span>
                             </p>
 
-                            <p>
-                                <span class="card-text">Number of housemates:</span>
-                                <span class="card-text" th:text="${listings.numHousemates}"></span>
-                            </p>
+                            <div>
+                                <span class="d-block pb-5">
+                                    <span class="card-text fw-bold">Rent: </span>
+                                    <span class="h6">&euro;<span class="rent"
+                                                                 th:text="${listings.rent} + '/month'"></span></span>
+                                        <span class="card-text" th:if="${listings.billsIncluded == true }">, bills included</span>
+                                        <span class="card-text" th:unless="${listings.billsIncluded == true}">, bills not included</span>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-around pb-5">
+                                <div>
+                                    <img class="pl-5" th:src="@{/img/bed.png}" alt="roomType">
+                                    <span class="card-text" th:text="${listings.roomType} + ' Room'"></span>
+                                </div>
 
-                            <p>
-                                <span class="card-text">Created by:</span>
-                                <span class="card-text" th:text="${listings.createdBy}"></span>
-                            </p>
-                            <p>
-                                <span class="card-text">Created on:</span>
-                                <span class="card-text" th:text="${listings.creationDate}"></span>
-                            </p>
-                            <td><a th:href="@{/renter/listing-details/{id}(id=${listings.id})}"
-                                   class="btn">Details</a>
+                                <div>
+                                    <img class="pl-5" th:src="@{/img/housemates.png}" alt="housemates">
+                                    <span class="card-text" th:text="${listings.numHousemates}"></span>
+                                </div>
+
+                                <div>
+                                    <img class="pl-5" th:src="@{/img/bathroom.png}" alt="bathroom">
+                                    <span class="card-text" th:if="${listings.privateBathroom == true }">Bills included</span>
+                                    <span class="card-text" th:unless="${listings.privateBathroom == true}">Bills not included</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="card-text fw-bold">Created by:</span>
+                                    <span class="card-text" th:text="${listings.createdBy}"></span>
+                                </div>
+                                <div>
+                                    <span class="card-text fw-bold">Created on:</span>
+                                    <span class="card-text" th:text="${listings.creationDate}"></span>
+                                </div>
+                            </div>
+
+                            <!--Redirects to details page of the listing, according to its id-->
+                            <a class="d-flex align-items-center justify-content-center pt-5"
+                               th:href="@{/renter/listing-details/{id}(id=${listings.id})}">
+                                <button class="btn rounded-pill mx-3" type="button">More Details</button>
+                            </a>
+
                         </div><!--End card-body-->
                     </div><!--End col-->
                 </div><!--End row-->
             </div><!--End card-->
-        </div><!--End col-->
-    </div><!--End row-->
 
 
-    <!--Pagination-->
-    <nav aria-label="Pagination" class="pt-5" th:if="${totalPages > 1}">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link"
-                   th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
+            <!--Pagination-->
+            <nav aria-label="Pagination" class="pt-5" th:if="${totalPages > 1}">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link"
+                           th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
                            + 'page=1' + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
-                    <<
-                </a>
-            </li>
-            <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
+                            <<
+                        </a>
+                    </li>
+                    <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
                            + 'page=' + ${currentPage - 1} + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
-                    Previous
-                </a>
-            </li>
-            <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
-                <a class="page-link" href="#">...</a>
-            </li>
-            <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
-                th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
-                <a class="page-link"
-                   th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
+                            Previous
+                        </a>
+                    </li>
+                    <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+                        <a class="page-link" href="#">...</a>
+                    </li>
+                    <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                        th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                        <a class="page-link"
+                           th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
                            + 'page=' + ${page} + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
-                    [[${page}]]
-                </a>
+                            [[${page}]]
+                        </a>
 
-            </li>
-            <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
-                <a class="page-link" href="#">...</a>
-            </li>
-            <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
+                    </li>
+                    <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+                        <a class="page-link" href="#">...</a>
+                    </li>
+                    <li class="page-item font-weight-bold"
+                        th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
                            + 'page=' + ${currentPage + 1} + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
-                    Next
-                </a>
-            </li>
-            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
+                            Next
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{'/renter/browse-listings?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
                            + 'page=' + ${totalPages} + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">Last Page</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+                    </li>
+                </ul>
+            </nav>
+        </div><!--End col-->
+    </div><!--End row-->
+</main>
 
 
 <!--Footer Fragment-->

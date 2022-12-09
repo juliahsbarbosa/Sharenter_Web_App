@@ -25,121 +25,142 @@
 <!--Header Fragment-->
 <header th:replace="fragments/header.html :: header"></header>
 
-
-<!--Search listings by county - Redirects user to renter/browse-listings-->
-<div class="container-fluid index-container">
-    <div class="container py-5">
-        <div class="row justify-content-center py-5">
-            <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                <h1 class="index-header mb-3">Find a private or shared room</h1>
-                <form th:action="@{/renter/browse-listings}" method="get" class="position-relative w-75 mx-auto">
-                    <select class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text"
-                            name="searchedCounty" id="searchedCounty" th:value="${searchedCounty}">
-                        <option class="text-muted" value="">Search by County</option>
-                        <option th:value="'Dublin'" name="Dublin">Dublin County</option>
-                        <option th:value="'Wicklow'" name="Wicklow">Wicklow County</option>
-                        <option th:value="'Galway'" name="Galway">Galway County</option>
-                        <option th:value="'Cork'" name="Cork">Cork County</option>
-                        <option th:value="'Limerick'" name="Limerick">Limerick County</option>
-                    </select>
-                    <button type="submit" class="btn rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2 mt-2">
-                        Search
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Section about how the -->
-<section class="bg-light">
-    <div class="container pt-5">
-        <div class="row d-flex justify-content-around">
-            <div class="col-sm-3 py-5">
-                <div class="renter-box  text-center">
-                    <div class="feature-icon">
-                        <img th:src="@{/img/renter.png}" alt="">
-                    </div>
-                    <h4>Are you a Renter?</h4>
-                    <p class="text-muted">Find a shared place to live</p>
-                    <a th:href="@{/renter/browse-listings}">
-                        <button class="btn rounded-pill blue-btn" type="submit">Find a place</button>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-sm-3 py-5">
-                <div class="text-center">
-                    <div class="feature-icon">
-                        <img th:src="@{/img/sharer.png}" alt="">
-                    </div>
-                    <h4>Are you a Sharer?</h4>
-                    <p class="text-muted">Share your place with a new housemate</p>
-                    <a th:href="@{/sharer/new-listing}">
-                        <button class="btn rounded-pill" type="button">List your place</button>
-                    </a>
+<main>
+    <!--Search listings by county - Redirects user to renter/browse-listings-->
+    <div class="container-fluid index-container">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5">
+                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="index-header mb-3">Find a private or shared room</h1>
+                    <form th:action="@{/renter/browse-listings}" method="get" class="position-relative w-75 mx-auto">
+                        <select class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text"
+                                name="searchedCounty" id="searchedCounty" th:value="${searchedCounty}">
+                            <option class="text-muted" value="">Search by County</option>
+                            <option th:value="'Dublin'" name="Dublin">Dublin County</option>
+                            <option th:value="'Wicklow'" name="Wicklow">Wicklow County</option>
+                            <option th:value="'Galway'" name="Galway">Galway County</option>
+                            <option th:value="'Cork'" name="Cork">Cork County</option>
+                            <option th:value="'Limerick'" name="Limerick">Limerick County</option>
+                        </select>
+                        <button type="submit"
+                                class="btn rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2 mt-2">
+                            Search
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</section>
 
-<div class="container">
-    <h1 class="text-center pt-2">Last Added Listings</h1>
-    <div class="row">
-        <div class="col-sm-4" th:each="listings : ${recentListings}">
-            <div class="card mb-3">
-                <div class="row">
-                    <div class="col-md-12">
-                        <img class="img-card" th:src="${listings.imageUrl}">
+    <!--Section about what type of user -->
+    <section class="section-user">
+        <div class="container pt-5">
+            <div class="row d-flex justify-content-around">
+
+                <div class="col-sm-6 py-5 text-center">
+                    <div class="renter-img">
+                        <img th:src="@{/img/renter.png}" alt="renter">
                     </div>
-                    <div class="col-md-12">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${listings.title}"></h5>
-                            <p class="mt-3 mb-0 text-sm col-3">
-                                <span class="card-text">Rent: <i class="bi bi-currency-euro"></i></span>
-                                <span class="card-text" th:text="${listings.rent}"></span>
-                            </p>
-                            <p>
-                                <span class="card-text">Type of room:</span>
-                                <span class="card-text" th:text="${listings.roomType}"></span>
-                            </p>
+                    <div>
+                        <h4>Are you a Renter?</h4>
+                        <p>Find a shared place to live</p>
 
-                            <p>
-                                <span class="card-text">Number of housemates:</span>
-                                <span class="card-text" th:text="${listings.numHousemates}"></span>
-                            </p>
+                        <!--Redirects to the Browse listings page, if renter is logged in-->
+                        <!--Redirects to the login page of the user is not logged in-->
+                        <!--Redirects to access denied page, if the sharer tries to access it-->
+                        <a th:href="@{/renter/browse-listings}">
+                            <button class="btn rounded-pill blue-btn" type="submit">Find a place</button>
+                        </a>
+                    </div>
+                </div>
 
-                            <p>
-                                <span class="card-text">Created by:</span>
-                                <span class="card-text" th:text="${listings.createdBy}"></span>
-                            </p>
-                            <p>
-                                <span class="card-text">Created on:</span>
-                                <span class="card-text" th:text="${listings.creationDate}"></span>
-                            </p>
-                            <!--              <a th:href="@{/renter/listing-details/{id}(id=${listings.id})}"-->
-                            <!--                     class="btn">Details</a>-->
-                            <!--              <a th:href="@{//sharer/edit-listing/{id}(id=${listing.id})}" class="btn btn-primary">Update</a>-->
-                            <a th:href="@{/sharer/delete-listing/{id}(id=${listings.id})}"
-                               class="btn btn-danger">Delete</a>
-                        </div>
+                <div class="col-sm-6 py-5 text-center">
+                    <div class="sharer-img">
+                        <img th:src="@{/img/sharer.png}" alt="sharer">
+                    </div>
+                    <div>
+                        <h4>Are you a Sharer?</h4>
+                        <p class="text-muted">Share your place with a new housemate</p>
+
+                        <!--Redirects to the New Listing page, if sharer user is logged in-->
+                        <!--Redirects to the login page of the user is not logged in-->
+                        <!--Redirects to access denied page, if the renter tries to access it-->
+                        <a th:href="@{/sharer/new-listing}">
+                            <button class="btn rounded-pill" type="button">List your place</button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
+    <!--Section for last added listings, display the 3 last added rooms-->
+    <section class="section-recent bg-light">
+        <h1 class="text-center pt-3">Last Added Listings</h1>
+        <div class="container">
+            <div class="row d-flex justify-content-around mt-3 mx-2">
+                <div class="col-sm-4" th:each="listings : ${recentListings}">
+                    <div class="card mb-3 card-index">
+                        <div class="row">
+
+                            <!--Room Image-->
+                            <div class="col-md-12">
+                                <img class="img-index" th:src="${listings.imageUrl}">
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <!--Listing title-->
+                                    <h5 class="card-title text-center" th:text="${listings.title}"></h5>
+
+                                    <!--Listing rent price-->
+                                    <p class="my-0 py-0 text-start">
+                                        <span class="card-text fw-bold">Rent: </span>
+                                        <span class="card-text" th:text="${listings.rent}"></span>
+                                    </p>
+
+                                    <!--Listing address-->
+                                    <p class="my-0 py-0 text-start">
+                                        <span class="card-text fw-bold">Address:</span>
+                                        <span class="card-text" th:text="${listings.address}"></span>
+                                    </p>
+
+
+                                    <!--Info about some of the room's features-->
+                                    <div class="my-0 py-0 d-flex justify-content-around">
+                                        <div>
+                                            <img class="pr-1" th:src="@{/img/bed.png}" alt="bed">
+                                            <span class="card-text" th:text="${listings.roomType}"></span>
+                                        </div>
+                                        <div>
+                                            <img class="pl-5" th:src="@{/img/bathroom.png}" alt="bathroom">
+                                            <span class="card-text" th:if="${listings.privateBathroom == true }">Private</span>
+                                            <span class="card-text" th:unless="${listings.privateBathroom == true}">Shared</span>
+                                        </div>
+                                        <div>
+                                            <img class="pl-5" th:src="@{/img/housemates.png}" alt="bathroom">
+                                            <span class="card-text" th:text="${listings.numHousemates}"></span>
+                                        </div>
+                                    </div>
+
+
+                                    <!--Redirects to details page of the listing, according to its id-->
+                                    <a class="d-flex align-items-center justify-content-center mt-3"
+                                       th:href="@{/renter/listing-details/{id}(id=${listings.id})}">
+                                        <button class="btn rounded-pill mx-3" type="button">More Details</button>
+                                    </a>
+
+                                </div><!--End of card body-->
+                            </div><!--End of col-->
+                        </div><!--End of row-->
+                    </div><!--End of card-->
+                </div><!--End of col-->
+            </div><!--End of row-->
+        </div>
+    </section><!--End of recent section-->
+</main>
 
 <!--Footer Fragment-->
 <footer th:replace="fragments/footer.html :: footer"></footer>
-
-<!--Bootstrap Bundle (JavaScript and Popper)-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-
-
 </body>
 </html>

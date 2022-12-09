@@ -4,9 +4,7 @@ import com.project.sharenter.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -20,7 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
 
     @Autowired
-    private LoginSucessHandler sucessHandler;
+    private CustomAuthSuccessHandler authSuccessHandler;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -30,11 +28,6 @@ public class WebSecurityConfig {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
     }
 
 
@@ -50,24 +43,26 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
+    //Configures HTTP Security
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
+        //CSRF is disabled because tags are not being used in the login form
+        http.csrf().disable()
 
-                //Based on a user's role, defines the request permissions to specified URL paths.
-                .antMatchers("/", "/login", "/register", "/api").permitAll()
+                //Based on a user's role, it defines the access permissions to specified URL paths
+                .authorizeRequests()
+                .antMatchers("/", "/login", "/register", "/about", "/how").permitAll()
                 .antMatchers("/renter/**").hasAnyAuthority("ROLE_RENTER")
                 .antMatchers("/sharer/**").hasAnyAuthority("ROLE_SHARER")
                 .anyRequest().authenticated()
-                .and()
-                .csrf().disable()
 
-                //Redirect based on authentication success or failure
+                //After login authentication redirect is based on the authentication success or failure
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
-                .successHandler(sucessHandler)
+                .successHandler(authSuccessHandler)
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
@@ -84,12 +79,11 @@ public class WebSecurityConfig {
 
         //Authentication
         http.authenticationProvider(authenticationProvider());
-//        http.headers().frameOptions().sameOrigin();
 
         return http.build();
     }
 
-    //Ignore paths, like images or scripts, to avoid errors in the view
+    //Debug level - ignore paths, like images or scripts, to avoid errors in the view when not authenticated
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().antMatchers("/img/**", "/css/**", "/js/**");

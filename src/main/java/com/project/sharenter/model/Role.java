@@ -1,6 +1,6 @@
 package com.project.sharenter.model;
 
-//This class implements the user role
+//Defines the types of role an user can have
 public enum Role {
     ROLE_SHARER("Sharer"),
     ROLE_RENTER("Renter");

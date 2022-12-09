@@ -40,7 +40,7 @@ public class MainController {
     @GetMapping("/")
     public String home(Model model){
 
-        Page<Listing> listingPage = listingService.allListingsPaginated(1, 3, "creationDate", "asc");
+        Page<Listing> listingPage = listingService.allListingsPaginated(1, 3, "creationDate", "desc");
         List<Listing> recentListings = listingPage.getContent();
         model.addAttribute("recentListings", recentListings);
         return "index";
@@ -57,6 +57,7 @@ public class MainController {
         //Returns the email of the current logged in user
         String currentEmail = principal.getName();
 
+
         Page<Listing> findByEmail = listingService.getAllByUserEmail(currentEmail, page, size, sortField, sortBy);
 
         model.addAttribute("email", currentEmail);
@@ -70,13 +71,29 @@ public class MainController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("reverseSortBy", sortBy.equals("asc") ? "desc" : "asc");
+        model.addAttribute("currentEmail", currentEmail);
         model.addAttribute("listingsByUser", listingsByUser);
         return "sharer/dashboard";
     }
 
     @GetMapping("/renter/dashboard")
-    public String renterDashboard() {
+    public String renterDashboard(Model model, Principal principal) {
+        String currentEmail = principal.getName();
+        model.addAttribute("currentEmail", currentEmail);
+
+
         return "renter/dashboard";
     }
+
+    @GetMapping("/about")
+    public String aboutUs() {
+        return "main/about";
+    }
+
+    @GetMapping("/how")
+    public String howItWorks() {
+        return "main/how";
+    }
+
 
 }

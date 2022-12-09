@@ -1,5 +1,7 @@
 package com.project.sharenter.config;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,25 +16,34 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
+//Customizes the successes handler to choose the destination URL of the user based on its role and authority
 @Configuration
-public class LoginSucessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    private final Log logger = LogFactory.getLog(this.getClass());
+
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
-    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-    throws IOException {
+    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         String targetUrl = determineTargetUrl(authentication);
-        if(response.isCommitted()) return;
-        RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+        if(response.isCommitted()){
+            logger.debug(
+                    "Response has already been committed. Unable to redirect to "
+                            + targetUrl);
+        return;
+        }
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
-    //Examines the type of user (as indicated by the authority) and chooses the destination URL based on this role
     protected String determineTargetUrl(Authentication authentication){
         String url = "/login?error=true";
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        List<String> roles = new ArrayList<String>();
-        for(GrantedAuthority a : authorities){
-            roles.add(a.getAuthority());
+        List<String> roles = new ArrayList<>();
+        for(GrantedAuthority grantedAuthority : authorities){
+            roles.add(grantedAuthority.getAuthority());
         }
         if(roles.contains("ROLE_RENTER")){
             url = "/renter/dashboard";

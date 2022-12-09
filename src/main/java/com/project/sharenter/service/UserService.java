@@ -6,6 +6,9 @@ import com.project.sharenter.model.User;
 import java.util.Optional;
 
 public interface UserService {
+    //Registers a user
     void registerUser(UserDto user);
+    //Find user by its email
+    Optional<User> findUserByEmail(String email);
 
-}
+    }

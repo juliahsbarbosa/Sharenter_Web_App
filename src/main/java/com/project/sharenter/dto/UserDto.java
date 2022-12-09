@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-//Dto with Validation for register user form
+//User DTO (Data Transfer Object) to transfer form data between the controller layer and view layer,
+//Improves security and reduces data leaks
 @Data
 @RequiredArgsConstructor
 public class UserDto {

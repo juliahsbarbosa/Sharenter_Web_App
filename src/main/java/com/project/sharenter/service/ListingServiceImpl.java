@@ -18,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -41,19 +40,20 @@ public class ListingServiceImpl implements ListingService {
     private String walkApiKey;
 
 
-    //Method creates a listing
+    //Map ListingDto to entity Listing, saving the record in the database
     @Override
     public void createListing(ListingDto listingDto){
         Listing listing = new Listing();
 
-        //Handles the update
+
+        //Handles the listing update
         if (listingDto.getId() != null){
             listing.setId(listingDto.getId());
         }
 
-        //Map ListingDto to entity Listing, saving the record in the database
         listing.setTitle(listingDto.getTitle());
         listing.setRent(listingDto.getRent());
+        listing.setDescription(listingDto.getDescription());
         listing.setLandlordOccupied(listingDto.isLandlordOccupied());
         listing.setBillsIncluded(listingDto.isBillsIncluded());
         listing.setParking(listingDto.isParking());
@@ -63,7 +63,7 @@ public class ListingServiceImpl implements ListingService {
         listing.setNumHousemates(listingDto.getNumHousemates());
         listing.setImageUrl(listingDto.getImageUrl());
 
-        //Role is set according to the specific Role Enum
+        //Room type is set according to the specific enum
         switch (listingDto.getRoomType()) {
             case Single -> listing.setRoomType(RoomType.Single);
             case Double -> listing.setRoomType(RoomType.Double);
@@ -108,15 +108,8 @@ public class ListingServiceImpl implements ListingService {
         listingRepository.save(listing);
     }
 
-    //Returns a list with all the listings
-    @Override
-    public List<Listing> getAllListings() {
-        final List<Listing> listings = listingRepository.findAll();
-        return listings;
-    }
 
-
-    //Returns a listing based on its id
+    //Get a listing based on its id
     @Override
     public Listing getListingById(long id) {
         Optional<Listing> optional = listingRepository.findById(id);
@@ -149,7 +142,7 @@ public class ListingServiceImpl implements ListingService {
     }
 
 
-    //Implements pagination and sorting for listings that match the county searched
+    //Implements pagination and sorting for the listings that contain the county searched in their address
     @Override
     public Page<Listing> countySearchPaginated(String searchedCounty, int pageNo, int pageSize, String sortField, String sortBy) {
         Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
@@ -160,7 +153,7 @@ public class ListingServiceImpl implements ListingService {
 
     }
 
-    //Implements pagination and sorting on listings of the same user
+    //Implements pagination and sorting for the listings created by a specific user
     public Page<Listing> getAllByUserEmail(String email, int pageNo, int pageSize, String sortField, String sortBy){
         Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
@@ -168,5 +161,6 @@ public class ListingServiceImpl implements ListingService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.listingRepository.findListingByCreatedBy(email, pageable);
     }
+
 
 }

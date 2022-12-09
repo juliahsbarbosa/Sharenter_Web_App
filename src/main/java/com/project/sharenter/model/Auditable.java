@@ -10,9 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
-import static java.sql.JDBCType.TIMESTAMP;
-
-//Class
+//Abstract class used to define when an entity was created and/or modified and by whom
 @MappedSuperclass
 @Getter
 @Setter

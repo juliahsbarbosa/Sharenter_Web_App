@@ -25,6 +25,9 @@ public class Listing extends Auditable<String>{
     @Column(name = "title")
     private String title;
 
+    @Column(name = "description", columnDefinition = "LONGTEXT")
+    private String description;
+
     @Column(name = "rent")
     private BigDecimal rent;
 
@@ -34,8 +37,34 @@ public class Listing extends Auditable<String>{
     @Column(name = "imageUrl")
     private String imageUrl;
 
-    @Column(name = "address")
+    @Column(name = "numHousemates")
+    private int numHousemates;
+
+    @Column(nullable=false, columnDefinition = "boolean default false")
+    private boolean privateBathroom;
+
+    @Column(nullable=false, columnDefinition = "boolean default false")
+    private boolean petFriendly;
+
+    @Column(nullable=false, columnDefinition = "boolean default false")
+    private boolean suitableForCouples;
+
+    @Column(nullable=false, columnDefinition = "boolean default false")
+    private boolean billsIncluded;
+
+    @Column(nullable=false, columnDefinition = "boolean default false")
+    private boolean parking;
+
+    @Column(nullable=false, columnDefinition = "boolean default false")
+    private boolean landlordOccupied;
+
+    private Boolean available = true;
+
+    @OneToMany(mappedBy = "listing")
+    private List<Inquiry> contacts;
+
     //Google Geocoding API results
+    @Column(name = "address")
     private String address;
 
     @Column(name = "lat")
@@ -50,31 +79,5 @@ public class Listing extends Auditable<String>{
 
     @Column(name = "walkscoreDescription")
     private String walkscoreDescription;
-
-    @Column(name = "numHousemates")
-    private int numHousemates;
-
-    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean privateBathroom;
-
-    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean petFriendly;
-
-    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean suitableForCouples;
-
-    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean billsIncluded;
-
-    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean parking;
-
-    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean landlordOccupied;
-
-    private Boolean available = true;
-
-    private int count;
-
 
 }

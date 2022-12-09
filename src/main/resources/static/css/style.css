@@ -1,32 +1,62 @@
 /*Global styling*/
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+    overflow-x: hidden;
+}
 
-*{
+* {
     color: #192f44;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6 {
     color: #192f44;
 }
+
+a {
+    text-decoration: none;
+    color: #192f44;
+
+}
+
+.img-index {
+    width: 100%;
+    height: 350px;
+    border-radius: 0.5em;
+}
+
+.card-index p {
+    font-size: 15px;
+}
+
 
 /*Defining default style to buttons*/
-.btn:hover{
+.btn:hover {
     background-color: #008080;
     color: white;
 }
 
-.btn{
-    background-color:#00ca90;
-    color:white ;
+
+.btn {
+    background-color: #00ca90;
+    color: white;
 }
 
-.blue-btn{
+.blue-btn {
     background-color: #00596c;
     color: white;
 }
 
+.card {
+    border-radius: 1.5em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+
 
 /*Default style for navbar*/
-header{
+header {
     margin-bottom: 93px;
 }
 
@@ -34,21 +64,56 @@ header{
     border-bottom: 3px solid #00ca90;
 }
 
-.nav-item a{
+.nav-item a {
     color: #192f44;
     font-weight: normal;
 }
 
+/*.sharer-dash{*/
+/*    width: 400px;*/
+/*}*/
+
+.img-sharer-dash {
+    width: 100%;
+    height: 400px;
+}
+
+
+.pagination > li > a {
+    background-color: white;
+    color: #008080;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+    color: #008080;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a {
+    color: white;
+    background-color: #008080;
+    border: solid 1px #008080;
+}
+
+.pagination > .active > a:hover {
+    background-color: #008080;
+    border: solid 1px #008080;
+}
+
 .navbar-nav {
-    float:none;
-    margin:0 auto;
+    float: none;
+    margin: 0 auto;
     display: block;
     text-align: center;
 }
 
 .navbar-nav > li {
     display: inline-block;
-    float:none;
+    float: none;
 }
 
 .nav-link:hover,
@@ -58,9 +123,13 @@ header{
 
 
 /*Footer Styling*/
-footer{
+footer {
     background-color: #192f44;
     color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
 }
 
 /*Default styling for form input*/
@@ -69,40 +138,79 @@ footer{
     box-shadow: 0 0 0 0.2rem #00ca90;
 }
 
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+main {
+    position: relative;
+    min-height: 100vh;
 }
 
-
-/*Index page styling*/
-.index-container{
-    background: url(../img/room.jpg) no-repeat center center;
-    background-size: cover;
-}
-
-
-/*New Listing styling*/
-.new-listing{
-    margin-top: 50px;
-
-}
-
-.index-header {
-    color: white;
-}
-
-/*.img-thumbnail {*/
-/*    display: block;*/
-/*    width: 100%;*/
-/*    height: 500px; //change as per your requirement*/
-/*}*/
-
-img-card{
+.img-about {
+    height: 600px;
     width: 100%;
-    height: 100%;
 }
 
+.img-browse {
+    width: 100%;
+    height: 400px;
+    border-radius: 0.5em;
+
+}
+
+.img-details {
+    width: 100%;
+    height: 500px;
+    border-radius: 0.5em;
+}
+
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+    }
+
+
+    /*Index page styling*/
+    .index-container {
+        background: url(../img/room.jpg) no-repeat center center;
+        background-size: 100% 100%;
+        height: 700px;
+    }
+
+
+    /*New Listing styling*/
+    .new-listing {
+        margin-top: 50px;
+
+    }
+
+    .index-header {
+        color: white;
+    }
+
+
+    .denied {
+        background-color: #00596c;
+    }
+
+    .denied-wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .denied-title {
+        font-size: 5em;
+        font-weight: 700;
+        color: white;
+    !important;
+    }
+
+    .denied-subtitle {
+        font-size: 40px;
+        font-weight: 700;
+        color: #00ca90;
+    !important;
+    }

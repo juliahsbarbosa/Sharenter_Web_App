@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -49,5 +51,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findByEmail(email).orElseThrow(
                 ()-> new UsernameNotFoundException(email));
     }
+
+
+    //Implements find user by email
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 
 }

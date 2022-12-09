@@ -1,148 +1,208 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!--Required Meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+
+    <!--Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!-- Custom CSS Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <title> Renter - Browse Listings </title>
+
 </head>
 <body>
 
+<!--Header Fragment-->
+<header th:replace="fragments/header.html :: header"></header>
+
+<main>
+
+    <!--Listings-->
+    <div class="container browsing">
+        <h1 class="text-center pt-2 mt-5" th:text="${listing.title}"></h1>
+        <div class="row">
+
+            <div class="col-8">
+                <!--Listing info card-->
+                <div class="card my-5 details-card">
+                    <div class="row">
+                        <div class="col-12">
+                            <img class="img-details" th:src="${listing.imageUrl}">
+                        </div>
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="details-content-wrap">
+                                    <div class="d-flex flex-row justify-content-between  align-items-center">
+                                        <div>
+                                            <h3 th:text="${listing.address}"></h3>
+                                        </div>
+                                        <div class="text-end">
+                                            <span class="d-block">
+                                                <span class="h2 fw-600">&euro;<span class="rent"
+                                                                                    th:text="${listing.rent}"></span></span>
+                                                <span class="h6 fw-400">/month<br>
+                                                    <span class="card-text" th:if="${listing.billsIncluded == true }">Bills included</span>
+                                                    <span class="card-text"
+                                                          th:unless="${listing.billsIncluded == true}">Bills not included</span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <hr>
 
 
+                                    <div class="mt-3">
+                                        <h5 class="card-text"> Room Description: </h5>
+                                        <div class="card-text text-justify fw-250 p-2"
+                                             th:text="${listing.description}"></div>
+                                    </div>
 
-<div class="api-branding text-center" style="width: 190px;">
-    <div id="walkscore" class="justify-between">
-        <img src="https://cdn.walk.sc/images/api-logo.png"><p th:text="${listing.getWalkscore()}">
-        <p th:text="${listing.getWalkscoreDescription()}" />
-    </div>
-</div>
-</div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" th:onClick="onClick()">
-    Launch demo modal
-</button>
+                                    <hr>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="card-text"> Room Overview </h5>
+                                    <div class="container px-2">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="pt-5">
+                                                    <img th:src="@{/img/bed.png}" alt="roomType">
+                                                    <span class="card-text"
+                                                          th:text="${listing.roomType} + ' Room'"></span>
+                                                </div>
+
+                                                <div class="pt-5">
+                                                    <img th:src="@{/img/housemates.png}" alt="housemates">
+                                                    <span class="card-text"
+                                                          th:text="${listing.numHousemates} + ' Housemates'"></span>
+                                                </div>
+
+                                                <div class="pt-5">
+                                                    <img th:src="@{/img/bills.png}" alt="bathroom">
+                                                    <span class="card-text" th:if="${listing.privateBathroom == true }">Bills included</span>
+                                                    <span class="card-text"
+                                                          th:unless="${listing.privateBathroom == true}">Bills not included</span>
+                                                </div>
+
+                                                <div class="pt-5">
+                                                    <img th:src="@{/img/parking.png}" alt="parking">
+                                                    <span class="card-text"
+                                                          th:if="${listing.parking == true }">Parking</span>
+                                                    <span class="card-text"
+                                                          th:unless="${listing.parking == true}">No Parking</span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-6">
+                                                <div class="pt-5">
+                                                    <img th:src="@{/img/landlord.png}" alt="occupied">
+                                                    <span class="card-text"
+                                                          th:if="${listing.landlordOccupied == true }">Landlord Occupied</span>
+                                                    <span class="card-text"
+                                                          th:unless="${listing.landlordOccupied == true}">Not Landlord Occupied</span>
+                                                </div>
+
+                                                <div class="pt-5">
+                                                    <img th:src="@{/img/couple.png}" alt="occupied">
+                                                    <span class="card-text"
+                                                          th:if="${listing.suitableForCouples == true }">Suitable for couple</span>
+                                                    <span class="card-text"
+                                                          th:unless="${listing.suitableForCouples == true}">Not Suitable for couples</span>
+                                                </div>
+
+                                                <div class="pt-5">
+                                                    <img th:src="@{/img/paw.png}" alt="occupied">
+                                                    <span class="card-text"
+                                                          th:if="${listing.petFriendly == true }">Pet-friendly</span>
+                                                    <span class="card-text" th:unless="${listing.petFriendly == true}">Not pet-friendly</span>
+                                                </div>
+                                            </div><!--End col-->
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between pt-5 pb-3">
+                                        <div>
+                                            <span class="card-text fw-bold">Created by:</span>
+                                            <span class="card-text" th:text="${listing.createdBy}"></span>
+                                        </div>
+                                        <div>
+                                            <span class="card-text fw-bold">Created on:</span>
+                                            <span class="card-text" th:text="${listing.creationDate}"></span>
+                                        </div>
+                                    </div>
+                                </div><!--End card-body-->
+                            </div><!--End col-->
+                        </div><!--End row-->
+                    </div><!--End card-->
+                </div><!--End col-->
             </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-<!--            <input id="clicks" th:field="${listing.count}"> 0</input>-->
-            <p id="clicks" th:field="${listing.count}"></p>
 
+
+            <div class="col-4">
+                <div class="card mt-5 details-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center fw-600">Listing Inquiry</h5>
+                        <p class="text-center">Inquiry about the room availability and book a viewing</p>
+                        <div class="row">
+                            <div class="col">
+                                <div class="contact">
+                                    <form class="form" name="inquiry" method="post">
+                                        <div class="row">
+                                            <div class="mb-3 col-12">
+                                                <input type="text" name="name" class="form-control"
+                                                       placeholder="Name"
+                                                       required="required">
+                                            </div>
+                                            <div class="mb-3 col-12">
+                                                <input type="email" name="email" class="form-control"
+                                                       placeholder="Email"
+                                                       required="required">
+                                            </div>
+                                            <div class="mb-3 col-12">
+                                                <input type="text" name="subject" class="form-control"
+                                                       placeholder="Subject"
+                                                       required="required">
+                                            </div>
+                                            <div class="mb-3 col-12">
+                                        <textarea rows="10" name="message" class="form-control"
+                                                  placeholder="Your Message" required="required"></textarea>
+                                            </div>
+                                            <div class="col-12 text-center">
+                                                <button type="submit" value="Send message" name="submit"
+                                                        id="submitButton"
+                                                        class="btn rounded-pill" title="Submit Your Message!">Send
+                                                    Message
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
 
-<script th:inline="javascript">
-    var clicks = 0;
+<!--Footer Fragment-->
+<footer th:replace="fragments/footer.html :: footer"></footer>
 
-    function onClick() {
-        clicks += 1;
-        document.getElementById("clicks").innerHTML = clicks;
-    };
-</script>
+</body>
+</html>
 
 
-
-
-<!--<div onload="showIndividualMap(this)">-->
-<!--    <div th:data-title="${listing.title}"></div>-->
-<!--    <div th:data-latitude="${listing.lat}"></div>-->
-<!--    <div th:data-latitude="${listing.lng}"></div>-->
-<!--    <div th:data-address="${listing.address}"></div>-->
-<!--<div id="listing-map" style="width:500px; height: 550px; margin-bottom: 30px;"></div>-->
-<!--</div>-->
-
-<!--<p>-->
-<!--                                <span class="card-text"-->
-<!--                                      th:if="${listings.privateBathroom == true }">Private Bathroom</span>-->
-<!--    <span class="card-text" th:unless="${listings.privateBathroom == true}"></span>-->
-<!--</p>-->
-
-<!--<p>-->
-<!--    <span class="card-text" th:if="${listings.parking == true }">Have Parking</span>-->
-<!--    <span class="card-text" th:unless="${listings.parking == true}">No Parking</span>-->
-<!--</p>-->
-
-
-
-
-
-
-<!--<div class="container d-flex mt-50 mb-50">-->
-<!--    <h1>Browse listings</h1>-->
-<!--    <table class="table table-striped table-responsive-md">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th>-->
-<!--                <a th:href="@{'/renter/browse-listings/' + ${currentPage} + '?sortField=title&sortBy=' + ${reverseSortBy}}">-->
-<!--                    Title</a>-->
-<!--            </th>-->
-<!--            <th>-->
-<!--                <a th:href="@{'/renter/browse-listings/' + ${currentPage} + '?sortField=rent&sortBy=' + ${reverseSortBy}}">-->
-<!--                    Rent</a>-->
-<!--            </th>-->
-<!--            <th>Created by</th>-->
-<!--            <th>Posted on</th>-->
-<!--            <th>Number of housemates</th>-->
-<!--            <th>Room type</th>-->
-<!--            <th>Landlord Occupied</th>-->
-<!--            <th>Bills included</th>-->
-<!--            <th>Parking</th>-->
-<!--            <th>Pet-friendly</th>-->
-<!--            <th>Private Bathroom</th>-->
-<!--            <th>Suitable for couples</th>-->
-
-
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="listing : ${displayListings}">-->
-<!--            <td th:text="${listing.title}"></td>-->
-<!--            <td th:text="${listing.rent}"></td>-->
-<!--            <td th:text="${listing.getCreatedBy()}"></td>-->
-<!--            <td th:text="${listing.getCreationDate()}"></td>-->
-<!--            <td th:text="${listing.housemates}"></td>-->
-<!--            <td th:text="${listing.getRoomType()}"></td>-->
-<!--            <td th:text="${listing.landlordOccupied}"></td>-->
-<!--            <td th:text="${listing.billsIncluded}"></td>-->
-<!--            <td th:text="${listing.parking}"></td>-->
-<!--            <td th:text="${listing.petFriendly}"></td>-->
-<!--            <td th:text="${listing.privateBathroom}"></td>-->
-<!--            <td th:text="${listing.suitableForCouples}"></td>-->
-
-
-<!--            <td><a th:href="@{//sharer/edit-listing/{id}(id=${listing.id})}" class="btn btn-primary">Update</a>-->
-<!--                <a th:href="@{//sharer/edit-listing/{id}(id=${listing.id})}" class="btn btn-danger">Delete</a>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-
-
-<!--Bootstrap Bundle (JavaScript and Popper)-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-
-<script th:src="@{/js/index.js}" type="text/javascript"></script>
-
-<script th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${mapsApiKey} + '&amp;callback=initMap&amp;v=weekly'}"></script>
 </body>
 </html>
