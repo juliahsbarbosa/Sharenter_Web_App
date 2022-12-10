@@ -32,17 +32,16 @@
                 <!-- Card -->
                 <div class="card shadow-lg new-listing">
 
-                    <!-- Error message-->
+                    <!-- Success message-->
                     <div th:if="${param.success}">
                         <div class="alert alert-success">Listed created successfully!</div>
                     </div>
 
+
                     <!-- Card body-->
                     <div class="card-body p-5">
                         <h1 class="fs-4 card-title text-center fw-bold mb-4">Create a New Listing</h1>
-
                         <p class="text-center small">Enter the details of the accomodation you would like to advert</p>
-
 
                         <!--New Listing Form-->
                         <form th:action="@{/sharer/new-listing}" id="newListingForm" th:object="${listing}"

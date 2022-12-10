@@ -33,7 +33,7 @@ public class Inquiry extends Auditable<String> {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "message")
+    @Column(name = "inquiry", columnDefinition ="LONGTEXT")
     private String inquiry;
 
     @ManyToOne(cascade = CascadeType.MERGE)

@@ -54,5 +54,4 @@ public class ListingDto {
     private boolean parking;
 
     private boolean landlordOccupied;
-
 }

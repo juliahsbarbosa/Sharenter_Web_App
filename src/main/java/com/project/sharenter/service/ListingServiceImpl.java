@@ -40,6 +40,8 @@ public class ListingServiceImpl implements ListingService {
     private String walkApiKey;
 
 
+    InquiryService inquiryService;
+
     //Map ListingDto to entity Listing, saving the record in the database
     @Override
     public void createListing(ListingDto listingDto){
@@ -50,6 +52,8 @@ public class ListingServiceImpl implements ListingService {
         if (listingDto.getId() != null){
             listing.setId(listingDto.getId());
         }
+
+//        long count = inquiryService.countInquiriesByListing(listing.getId());
 
         listing.setTitle(listingDto.getTitle());
         listing.setRent(listingDto.getRent());

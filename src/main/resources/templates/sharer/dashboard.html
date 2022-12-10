@@ -27,14 +27,14 @@
 <header th:replace="fragments/header.html :: header"></header>
 
 <main>
-    <div class="container">
+    <div class="container ">
         <h1 class="text-center">Sharer Dashboard</h1>
 
         <!-- Current logged in user email -->
-        <h4 class="text-center my-3" th:text="'Welcome back ' + ${currentEmail} + '!'"></h4>
+        <h5 class="my-3 text-center" th:text="'Welcome back ' + ${currentEmail} + '!'"></h5>
 
-        <div class="row mt-5">
-            <div class="col">
+        <div class="row mt-5 d-flex justify-content-center">
+            <div class="col-8">
 
                 <!--List of all listings created by the logged in user-->
                 <h2 class="text-center py-3">My Listings</h2>
@@ -47,16 +47,14 @@
 
                     <!--Page sorting for Creation Date-->
                     <div class="col">
-                        <a th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty='
-                        + searchedCounty + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=creationDate' +
+                        <a th:href="@{'/sharer/dashboard?page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=creationDate' +
                         '&sortBy=' + ${reverseSortBy}}">Creation Date<img th:src="@{/img/sort.png}" aria-label="logo"
                                                                           alt="sort"></a>
                     </div>
 
                     <!--Page sorting for Rent price-->
                     <div class="col">
-                        <a th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty='
-                        + searchedCounty + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=rent'
+                        <a th:href="@{'/sharer/dashboard?page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=rent'
                         +'&sortBy=' + ${reverseSortBy }}">Rent<img th:src="@{/img/sort.png}" aria-label="logo"
                                                                    alt="sort"></a>
                     </div>
@@ -69,7 +67,7 @@
 
                         <!--Room Image-->
                         <div class="col-md-12">
-                            <img class="img-index" th:src="${listings.imageUrl}">
+                            <img class="img-sharer-dash" th:src="${listings.imageUrl}">
                         </div>
 
                         <div class="col-md-12">
@@ -96,11 +94,14 @@
                                         <span class="card-text" th:unless="${listings.billsIncluded == true}">, bills not included</span></span>
                                     </span>
                                 </div>
+
                                 <div class="d-flex justify-content-around">
                                     <!--Button redirects to the edit page-->
                                     <a th:href="@{/sharer/edit-listing/{id}(id=${listings.id})}">
                                         <button class="btn rounded-pill mx-3" type="button">Update</button>
                                     </a>
+
+
 
                                     <!--Button deletes the listing-->
                                     <a th:href="@{/sharer/delete-listing/{id}(id=${listings.id})}">
@@ -117,8 +118,7 @@
                     <ul class="pagination">
                         <li class="page-item">
                             <a class="page-link"
-                               th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
-                           + 'page=1' + '&size=' + ${pageSize}
+                               th:href="@{'/sharer/dashboard?page=1' + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
                                 <<
                             </a>
@@ -126,8 +126,7 @@
                         <li class="page-item font-weight-bold"
                             th:classappend="${currentPage == 1} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
-                           + 'page=' + ${currentPage - 1} + '&size=' + ${pageSize}
+                               th:href="@{'/sharer/dashboard?page=' + ${currentPage - 1} + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
                                 Previous
                             </a>
@@ -138,8 +137,7 @@
                         <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
                             th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
                             <a class="page-link"
-                               th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
-                           + 'page=' + ${page} + '&size=' + ${pageSize}
+                               th:href="@{'/sharer/dashboard?page=' + ${page} + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
                                 [[${page}]]
                             </a>
@@ -151,27 +149,20 @@
                         <li class="page-item font-weight-bold"
                             th:classappend="${currentPage == totalPages} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
-                           + 'page=' + ${currentPage + 1} + '&size=' + ${pageSize}
+                               th:href="@{'/sharer/dashboard?page=' + ${currentPage + 1} + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
                                 Next
                             </a>
                         </li>
                         <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty=' + searchedCounty + '&' : ''}
-                           + 'page=' + ${totalPages} + '&size=' + ${pageSize}
+                               th:href="@{'/sharer/dashboard?page=' + ${totalPages} + '&size=' + ${pageSize}
                            + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">Last Page</a>
                         </li>
                     </ul>
 
                 </nav><!--End pagination-->
             </div><!--End col-->
-
-            <div class="col">
-                <h2 class="text-center py-3">Listings favorite</h2>
-            </div>
-
         </div><!--End row -->
     </div><!--End container-->
 </main>

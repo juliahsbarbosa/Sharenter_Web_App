@@ -32,9 +32,9 @@
                 <!-- Card -->
                 <div class="card shadow-lg new-listing">
 
-                    <!-- Error message-->
+                    <!-- Success message-->
                     <div th:if="${param.success}">
-                        <div class="alert alert-success">Listed created successfully!</div>
+                        <div class="alert alert-success">Listed updated successfully!</div>
                     </div>
 
                     <!-- Card body-->
@@ -48,7 +48,7 @@
                               method="POST">
 
 
-                            <!-- Add hidden form field to handle update -->
+                            <!-- Hidden id field to handle update -->
                             <input type="hidden" th:field="*{id}"/>
 
 
@@ -183,9 +183,9 @@
                                 </label>
                             </div>
 
-                            <!--Create button-->
+                            <!--Update button-->
                             <div class="col-12 pt-3">
-                                <button id="createListingBtn" class="btn w-100 mt-3" type="submit">Create New Listing
+                                <button id="createListingBtn" class="btn w-100 mt-3" type="submit">Update Listing
                                 </button>
                             </div>
                         </form>

@@ -161,6 +161,7 @@
                                             <span class="card-text fw-bold">Created by:</span>
                                             <span class="card-text" th:text="${listing.createdBy}"></span>
                                         </div>
+
                                         <div>
                                             <span class="card-text fw-bold">Created on:</span>
                                             <span class="card-text" th:text="${listing.creationDate}"></span>
@@ -181,31 +182,39 @@
                         <div class="row">
                             <div class="col">
                                 <div class="contact">
-                                    <form class="form" th:action="@{/renter/listing-details/{id}(id=${listing.id})}" th:object="${inquiry}" name="inquiry" method="post">
+                                    <form class="form" th:action="@{/renter/listing-details/{id}(id=${listing.id})}"
+                                          th:object="${inquiry}" name="inquiry" method="post">
                                         <div class="row">
+
+                                            <input hidden name="id" id="id" th:value="${listing.getId()}">
+
                                             <div class="mb-3 col-12">
-
-
-                                                <input name="id" id="id" th:value="${listing.getId()}">
-
-
                                                 <input type="text" name="name" class="form-control"
                                                        placeholder="Name"
-                                                       th:field="${inquiry.name}">
+                                                       th:field="${inquiry.name}"  th:errorclass="is-invalid">
+                                                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
+                                                     th:errors="*{name}"></div>
                                             </div>
                                             <div class="mb-3 col-12">
                                                 <input type="email" name="email" class="form-control"
                                                        placeholder="Email"
-                                                       th:field="${inquiry.email}">
+                                                       th:field="${inquiry.email}"th:errorclass="is-invalid">
+                                                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
+                                                     th:errors="*{email}"></div>
                                             </div>
                                             <div class="mb-3 col-12">
                                                 <input type="text" name="phone" class="form-control"
                                                        placeholder="Phone"
-                                                       th:field="${inquiry.phone}">
+                                                       th:field="${inquiry.phone}"th:errorclass="is-invalid">
+                                                <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}"
+                                                     th:errors="*{phone}"></div>
                                             </div>
                                             <div class="mb-3 col-12">
                                         <textarea rows="10" name="message" class="form-control"
-                                                  placeholder="Your Message" required="required" th:field="${inquiry.inquiry}"></textarea>
+                                                  placeholder="Your Message"
+                                                  th:field="${inquiry.inquiry}" th:errorclass="is-invalid"></textarea>
+                                                <div class="invalid-feedback" th:if="${#fields.hasErrors('inquiry')}"
+                                                     th:errors="*{inquiry}"></div>
                                             </div>
                                             <div class="col-12 text-center">
                                                 <button type="submit" value="Send message" name="submit"
@@ -213,26 +222,35 @@
                                                         class="btn rounded-pill" title="Submit Your Message!">Send
                                                     Message
                                                 </button>
-                                            </div>
-                                        </div>
+                                            </div><!--End col-->
+                                        </div><!--End row-->
                                     </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div><!--End row-->
 
-<!--    <form th:action="@{'/catalog/item/' + ${book.getCode()}  + '/addToFavorites'}"-->
-<!--          method="post" th:if="${!itemService.isInFavorite(#authentication.getName(), book)}">-->
-<!--        <input type="hidden" name="calledFrom" value="home">-->
-<!--        <button class="action-button" type="submit">-->
-<!--            <img th:src="@{/img/common/notFavorite.png}">-->
-<!--        </button>-->
-<!--    </form>-->
+                                </div><!--End contact-->
+                            </div><!--End col-->
+                        </div><!--End row-->
+                    </div><!--End card body-->
+
+                    <!--Card footer-->
+                    <div class="card-footer py-2 border-0">
+
+                        <!--Displays the number of inquiries made-->
+                        <div class="text-center pb-2">
+                            <span class="card-text fw-bold">Number of inquiries:</span>
+                            <span class="card-text" th:text="${count}"></span>
+                        </div>
+
+                        <!--Displays a warning if the number of inquiries is high-->
+                        <div class="card-text text-center alert alert-warning fw-bold" th:if="${count > 2}">
+                            <p> This Listing has more than 2 inquiries.</p>
+                            <p>The Sharer will probably not answer your message</p>
+                        </div>
+                    </div> <!--End card footer-->
+
+                </div><!--End card-->
+
+            </div><!--End col-->
+        </div><!--End row-->
     </div><!--End container-->
 </main>
 

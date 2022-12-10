@@ -29,7 +29,7 @@ public class InquiryController {
     @Autowired
     ListingService listingService;
 
-//    @RequestMapping(value = "/renter/listing-details/{id}", method = {RequestMethod.GET, RequestMethod.POST})
+
     @PostMapping("/renter/listing-details/{id}")
     public String registerUser(@PathVariable("id")Long id, Model model,@ModelAttribute("listing") Listing listing, @Valid @ModelAttribute("inquiry") InquiryDto inquiryDto, BindingResult bindingResult){
 

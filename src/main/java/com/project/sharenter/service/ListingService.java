@@ -26,4 +26,6 @@ public interface ListingService {
     //Returns all listings created by a user(identified by their email), paginated
     Page<Listing> getAllByUserEmail(String email, int pageNo, int pageSize, String sortField, String sortBy);
 
+
+
 }

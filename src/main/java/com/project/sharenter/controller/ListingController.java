@@ -3,6 +3,7 @@ package com.project.sharenter.controller;
 import com.project.sharenter.dto.ListingDto;
 import com.project.sharenter.model.Inquiry;
 import com.project.sharenter.model.Listing;
+import com.project.sharenter.service.InquiryService;
 import com.project.sharenter.service.ListingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class ListingController {
     private String mapsApiKey;
 
 
+    @Autowired
+    InquiryService inquiryService;
 
     //GET method, display a specific listing details according to its id
     @GetMapping("/renter/listing-details/{id}")
@@ -40,11 +43,16 @@ public class ListingController {
 //
 //        listing.setInquiryList(inquiries);
 
+        long count = inquiryService.countInquiriesByListing(id);
 
 
 
-            model.addAttribute("listing", listing);
-            model.addAttribute("inquiry", new Inquiry());
+        model.addAttribute("listing", listing);
+        model.addAttribute("listing", listing);
+        model.addAttribute("count", count);
+
+
+        model.addAttribute("inquiry", new Inquiry());
 
         return "renter/listing-details";
     }

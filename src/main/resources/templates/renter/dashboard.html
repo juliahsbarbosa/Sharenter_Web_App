@@ -31,20 +31,88 @@
 
 <main>
     <div class="container">
-        <h1 class="text-center">Renter Dashboard</h1>
-        <h4 class="text-center my-3" th:text="'Welcome back ' + ${currentEmail} + '!'"></h4>
+        <h1 class="text-center"> Renter Dashboard</h1>
+
+        <!-- Current logged in user email -->
+        <h5 class="my-3" th:text="'Welcome back ' + ${currentEmail} + '!'"></h5>
+
+        <h2 class="text-center py-3">Inquiries made</h2>
 
 
-        <div class="row mt-5">
-            <div class="col">
-                <h2 class="py-3">Inquiries Sent: </h2>
+        <!--Enquiries List Table-->
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"><a th:href="@{'/renter/dashboard?page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=id' +
+                        '&sortBy=' + ${reverseSortBy}}">Id<img th:src="@{/img/sort.png}" aria-label="logo"
+                                                               alt="sort"></a></th>
+                <th scope="col">Message</th>
+                <th scope="col"><a th:href="@{'/renter/dashboard?page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=creationDate' +
+                        '&sortBy=' + ${reverseSortBy}}">Sent Date<img th:src="@{/img/sort.png}" aria-label="logo"
+                                                                      alt="sort"></a></th>
+                <th scope="col">Listing</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inquiry : ${inquiries}">
+                <th scope="row" th:text="${inquiry.id}"></th>
+                <td th:text="${inquiry.inquiry}"></td>
+                <td th:text="${inquiry.creationDate}"></td>
+                <td><a th:href="@{/renter/listing-details/{id}(id=${inquiry.listing.id})}">
+                    <button class="btn rounded-pill mx-3" type="button">Details of the Listing</button>
+                </a></td>
+            </tr>
+            </tbody>
+        </table>
 
-            </div>
-            <div class="col">
+        <!--Pagination-->
+        <nav aria-label="Pagination" th:if="${totalPages > 1}" class="mt-3">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link"
+                       th:href="@{'/renter/dashboard?page=1&size=' + ${pageSize}
+                           + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
+                        <<
+                    </a>
+                </li>
+                <li class="page-item font-weight-bold"
+                    th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{'/renter/dashboard?page=' + ${currentPage - 1} + '&size=' + ${pageSize}
+                           + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
+                        Previous
+                    </a>
+                </li>
+                <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+                <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                    th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                    <a class="page-link"
+                       th:href="@{'/renter/dashboard?page=' + ${page} + '&size=' + ${pageSize}
+                           + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
+                        [[${page}]]
+                    </a>
 
-
-            </div><!--End col -->
-        </div><!--End row -->
+                </li>
+                <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+                <li class="page-item font-weight-bold"
+                    th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{'/renter/dashboard?page=' + ${currentPage + 1} + '&size=' + ${pageSize}
+                           + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">
+                        Next
+                    </a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{'/renter/dashboard?page=' + ${totalPages} + '&size=' + ${pageSize}
+                           + ${sortField!=null ? '&sort=' + sortField + ',' + sortBy : ''}}">Last Page</a>
+                </li>
+            </ul>
+        </nav><!--End pagination-->
     </div><!--End container-->
 </main>
 

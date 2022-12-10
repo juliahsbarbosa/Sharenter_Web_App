@@ -1,8 +1,10 @@
 package com.project.sharenter.controller;
 
+import com.project.sharenter.model.Inquiry;
 import com.project.sharenter.model.Listing;
 import com.project.sharenter.model.User;
 import com.project.sharenter.repository.ListingRepository;
+import com.project.sharenter.service.InquiryService;
 import com.project.sharenter.service.ListingService;
 import com.project.sharenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,11 +77,34 @@ public class MainController {
         return "sharer/dashboard";
     }
 
-    @GetMapping("/renter/dashboard")
-    public String renterDashboard(Model model, Principal principal) {
-        String currentEmail = principal.getName();
-        model.addAttribute("currentEmail", currentEmail);
+    @Autowired
+    InquiryService inquiryService;
 
+    @GetMapping("/renter/dashboard")
+    public String renterDashboard(Model model, Principal principal,
+                                  @RequestParam(defaultValue = "1") int page,
+                                  @RequestParam(defaultValue = "5") int size,
+                                  @RequestParam(defaultValue = "creationDate") String sortField,
+                                  @RequestParam(defaultValue = "sortBy") String sortBy) {
+
+        //Returns the email of the current logged in user
+        String currentEmail = principal.getName();
+
+        Page<Inquiry> findByEmail = inquiryService.allInquiriesByCreatedBy(currentEmail, page, size, sortField, sortBy);
+
+        model.addAttribute("email", currentEmail);
+
+        List<Inquiry> inquiries = findByEmail.getContent();
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", findByEmail.getTotalPages());
+        model.addAttribute("totalItems", findByEmail.getTotalElements());
+        model.addAttribute("pageSize", size);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("reverseSortBy", sortBy.equals("asc") ? "desc" : "asc");
+        model.addAttribute("currentEmail", currentEmail);
+        model.addAttribute("inquiries", inquiries);
 
         return "renter/dashboard";
     }

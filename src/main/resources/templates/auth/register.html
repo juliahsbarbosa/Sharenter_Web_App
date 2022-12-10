@@ -16,111 +16,115 @@
     <title>Register</title>
 </head>
 <body>
+<main>
+    <!--Container-->
+    <div class="container h-100">
+        <div class="row justify-content-sm-center">
+            <div class="col-xxl-5 col-xl-6 col-lg-7 col-md-8 col-sm-9">
 
-<!--Container-->
-<div class="container h-100">
-    <div class="row justify-content-sm-center">
-        <div class="col-xxl-5 col-xl-6 col-lg-7 col-md-8 col-sm-9">
-
-            <!-- Logo - redirects to homepage -->
-            <div class="text-center my-5">
-                <a th:href="@{/}">
-                    <img th:src="@{/img/logo.png}" width="300" alt="logo">
-                </a>
-            </div>
-
-            <!-- Card -->
-            <div class="card shadow-lg">
-
-                <!-- Error message-->
-                <div th:if="${param.success}">
-                    <div class="alert alert-success">You've successfully registered
-                        to our app!</div>
+                <!-- Logo - redirects to homepage -->
+                <div class="text-center my-5">
+                    <a th:href="@{/}">
+                        <img th:src="@{/img/logo.png}" width="300" alt="logo">
+                    </a>
                 </div>
+
+                <!-- Card -->
+                <div class="card shadow-lg">
+
+                    <!-- Error message-->
+                    <div th:if="${param.success}">
+                        <div class="alert alert-success">You've successfully registered
+                            to our app!
+                        </div>
+                    </div>
 
 
                     <!-- Card body-->
                     <div class="card-body p-5">
-                    <h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+                        <h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
 
-                    <!--Register form -->
-                    <form th:action="@{/register}" th:object="${user}" method="post">
+                        <!--Register form -->
+                        <form th:action="@{/register}" th:object="${user}" method="post">
 
-                        <!--First Name-->
-                        <div class="mb-3">
-                            <label class="mb-2" for="firstName"> First Name</label>
-                            <input id="firstName" type="text" class="form-control"
-                                   th:field="*{firstName}" th:errorclass="is-invalid">
-                            <div class="invalid-feedback"
-                                 th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                            <!--First Name-->
+                            <div class="mb-3">
+                                <label class="mb-2" for="firstName"> First Name</label>
+                                <input id="firstName" type="text" class="form-control"
+                                       th:field="*{firstName}" th:errorclass="is-invalid">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                            </div>
+
+                            <!--Last Name-->
+                            <div class="mb-3">
+                                <label class="mb-2" for="lastName">Last Name</label>
+                                <input id="lastName" type="text" class="form-control"
+                                       th:field="*{lastName}" th:errorclass="is-invalid">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                            </div>
+
+                            <!--Phone-->
+                            <div class="mb-3">
+                                <label class="mb-2" for="phone">Phone number</label>
+                                <input id="phone" type="tel" class="form-control"
+                                       th:field="*{phone}" th:errorclass="is-invalid">
+                                <p class="invalid-feedback"
+                                   th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+                            </div>
+
+                            <!--Email-->
+                            <div class="form-group mb-3">
+                                <label class="mb-2" for="email">E-mail Address</label>
+                                <input id="email" type="email" class="form-control"
+                                       th:field="*{email}" th:errorclass="is-invalid">
+                                <div th:errors="*{email}" class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('email')}"></div>
+                            </div>
+
+                            <!--Password-->
+                            <div class="mb-3">
+                                <label class="mb-2" for="password">Password</label>
+                                <input id="password" type="password" class="form-control"
+                                       th:field="*{password}" th:errorclass="is-invalid">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                                     th:errors="*{password}"></div>
+                            </div>
+
+                            <!--Register Form Role-->
+                            <div class="mb-3">
+                                <label class="mb-2" for="role">Are you a Sharer or a Renter?</label>
+                                <select id="role" class="w-100 form-control" th:field="*{role}"
+                                        th:errorclass="is-invalid">
+                                    <option value="" class="text-muted">Select</option>
+                                    <option value="ROLE_SHARER" name="Sharer">Sharer</option>
+                                    <option value="ROLE_RENTER" name="Renter">Renter</option>
+                                </select>
+                                <div class="error-message" th:if="${#fields.hasErrors('role')}"
+                                     th:errors="*{role}"></div>
+                            </div>
+
+                            <!--Login button-->
+                            <div class="col-12 pt-3">
+                                <button class="btn w-100 mt-3" type="submit" th:text="Register"></button>
+                            </div>
+                        </form>
+                    </div><!--End card body -->
+
+                    <!--Card footer-->
+                    <div class="card-footer py-3 border-0">
+                        <div class="text-center">
+                            Already have an account? <a th:href="@{|/login|}" th:text="'Log in'"
+                                                        class="text-dark"></a>
                         </div>
-
-                        <!--Last Name-->
-                        <div class="mb-3">
-                            <label class="mb-2" for="lastName">Last Name</label>
-                            <input id="lastName" type="text" class="form-control"
-                                   th:field="*{lastName}" th:errorclass="is-invalid">
-                            <div class="invalid-feedback"
-                                 th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
-                        </div>
-
-                        <!--Phone-->
-                        <div class="mb-3">
-                            <label class="mb-2" for="phone">Phone number</label>
-                            <input id="phone" type="tel" class="form-control"
-                                   th:field="*{phone}" th:errorclass="is-invalid">
-                            <p class="invalid-feedback"
-                                 th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
-                        </div>
-
-                        <!--Email-->
-                        <div class="form-group mb-3">
-                            <label class="mb-2" for="email">E-mail Address</label>
-                            <input id="email" type="email" class="form-control"
-                                   th:field="*{email}" th:errorclass="is-invalid">
-                            <div th:errors="*{email}" class="invalid-feedback" th:if="${#fields.hasErrors('email')}" ></div>
-                        </div>
-
-                        <!--Password-->
-                        <div class="mb-3">
-                            <label class="mb-2" for="password">Password</label>
-                            <input id="password" type="password" class="form-control"
-                                   th:field="*{password}" th:errorclass="is-invalid">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-                        </div>
-
-                        <!--Register Form Role-->
-                        <div class="mb-3">
-                            <label class="mb-2" for="role">Are you a Sharer or a Renter?</label>
-                            <select id="role" class="w-100 form-control" th:field="*{role}" th:errorclass="is-invalid">
-                                <option value="" class="text-muted">Select</option>
-                                <option value="ROLE_SHARER" name="Sharer">Sharer</option>
-                                <option value="ROLE_RENTER" name="Renter">Renter</option>
-                            </select>
-                            <div class="error-message" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
-                        </div>
-
-                        <!--Login button-->
-                        <div class="col-12 pt-3">
-                            <button class="btn w-100 mt-3" type="submit" th:text="Register"></button>
-                        </div>
-                    </form>
-                </div><!--End card body -->
-
-                <!--Card footer-->
-                <div class="card-footer py-3 border-0">
-                    <div class="text-center">
-                        Already have an account? <a th:href="@{|/login|}" th:text="'Log in'"
-                                                    class="text-dark"></a>
                     </div>
-                </div>
+                </div><!--End card-->
 
-
-            </div><!--End card-->
-
-        </div><!--End col-->
-    </div><!--End row-->
-</div><!--End container-->
+            </div><!--End col-->
+        </div><!--End row-->
+    </div><!--End container-->
+</main>
 
 <!--Footer Fragment-->
 <footer th:replace="fragments/footer.html :: footer"></footer>
