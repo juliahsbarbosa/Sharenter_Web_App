@@ -11,4 +11,6 @@ public interface UserService {
     //Find user by its email
     Optional<User> findUserByEmail(String email);
 
+//    Optional<User> findUserByRoleAndEmail(String role, String email);
+
     }

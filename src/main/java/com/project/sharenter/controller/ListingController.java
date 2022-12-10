@@ -1,6 +1,7 @@
 package com.project.sharenter.controller;
 
 import com.project.sharenter.dto.ListingDto;
+import com.project.sharenter.model.Inquiry;
 import com.project.sharenter.model.Listing;
 import com.project.sharenter.service.ListingService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,12 +28,23 @@ public class ListingController {
     @Value("${maps.api.key}")
     private String mapsApiKey;
 
+
+
     //GET method, display a specific listing details according to its id
     @GetMapping("/renter/listing-details/{id}")
     public String listingDetails(@PathVariable("id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
 
-        model.addAttribute("listing", listing);
+//        ArrayList<Inquiry> inquiries = new ArrayList<Inquiry>();
+//        inquiries.add(inquiry);
+//
+//        listing.setInquiryList(inquiries);
+
+
+
+
+            model.addAttribute("listing", listing);
+            model.addAttribute("inquiry", new Inquiry());
 
         return "renter/listing-details";
     }

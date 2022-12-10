@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 //User Entity, which can be Sharer  or a Renter type of user
@@ -46,7 +47,10 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private Boolean enabled = true;
 
-    //Implementing custom UserDetails methods
+//    @OneToMany(mappedBy = "sharer")
+//    private List<Listing> listingList;
+
+    //Implementing custom UserDetails custom methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());

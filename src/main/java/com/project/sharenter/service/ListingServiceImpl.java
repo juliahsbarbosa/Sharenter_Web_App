@@ -63,6 +63,10 @@ public class ListingServiceImpl implements ListingService {
         listing.setNumHousemates(listingDto.getNumHousemates());
         listing.setImageUrl(listingDto.getImageUrl());
 
+//        //Trying to Set the OnetoMany relatioship
+//        Inquiry inquiry= new Inquiry();
+//        listing.getInquiryList().add(inquiry);
+
         //Room type is set according to the specific enum
         switch (listingDto.getRoomType()) {
             case Single -> listing.setRoomType(RoomType.Single);
@@ -112,10 +116,10 @@ public class ListingServiceImpl implements ListingService {
     //Get a listing based on its id
     @Override
     public Listing getListingById(long id) {
-        Optional<Listing> optional = listingRepository.findById(id);
+        Optional<Listing> listingOpt = listingRepository.findById(id);
         Listing listing = null;
-        if (optional.isPresent()) {
-            listing = optional.get();
+        if (listingOpt.isPresent()) {
+            listing = listingOpt.get();
         } else {
             throw new RuntimeException("Listing not found for id : " + id);
         }

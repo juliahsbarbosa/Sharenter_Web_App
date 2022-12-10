@@ -181,11 +181,13 @@
                         <div class="row">
                             <div class="col">
                                 <div class="contact">
-                                    <form class="form" th:action="@{/renter/message}" th:object="${inquiry}" name="inquiry" method="post">
+                                    <form class="form" th:action="@{/renter/listing-details/{id}(id=${listing.id})}" th:object="${inquiry}" name="inquiry" method="post">
                                         <div class="row">
                                             <div class="mb-3 col-12">
 
-                                                <input hidden th:text="${inquiry.setListing(listing.id)}">
+
+                                                <input name="id" id="id" th:value="${listing.getId()}">
+
 
                                                 <input type="text" name="name" class="form-control"
                                                        placeholder="Name"
@@ -194,16 +196,16 @@
                                             <div class="mb-3 col-12">
                                                 <input type="email" name="email" class="form-control"
                                                        placeholder="Email"
-                                                       th:text="${inquiry.email}">
+                                                       th:field="${inquiry.email}">
                                             </div>
                                             <div class="mb-3 col-12">
                                                 <input type="text" name="phone" class="form-control"
                                                        placeholder="Phone"
-                                                       th:text="${inquiry.phone}">
+                                                       th:field="${inquiry.phone}">
                                             </div>
                                             <div class="mb-3 col-12">
                                         <textarea rows="10" name="message" class="form-control"
-                                                  placeholder="Your Message" required="required" th:text="${inquiry.message}"></textarea>
+                                                  placeholder="Your Message" required="required" th:field="${inquiry.inquiry}"></textarea>
                                             </div>
                                             <div class="col-12 text-center">
                                                 <button type="submit" value="Send message" name="submit"
@@ -224,13 +226,13 @@
     </div>
     </div><!--End row-->
 
-    <form th:action="@{'/catalog/item/' + ${book.getCode()}  + '/addToFavorites'}"
-          method="post" th:if="${!itemService.isInFavorite(#authentication.getName(), book)}">
-        <input type="hidden" name="calledFrom" value="home">
-        <button class="action-button" type="submit">
-            <img th:src="@{/img/common/notFavorite.png}">
-        </button>
-    </form>
+<!--    <form th:action="@{'/catalog/item/' + ${book.getCode()}  + '/addToFavorites'}"-->
+<!--          method="post" th:if="${!itemService.isInFavorite(#authentication.getName(), book)}">-->
+<!--        <input type="hidden" name="calledFrom" value="home">-->
+<!--        <button class="action-button" type="submit">-->
+<!--            <img th:src="@{/img/common/notFavorite.png}">-->
+<!--        </button>-->
+<!--    </form>-->
     </div><!--End container-->
 </main>
 

@@ -79,8 +79,7 @@ public class Listing extends Auditable<String>{
     @Column(name = "walkscoreDescription")
     private String walkscoreDescription;
 
-//    @OneToMany
-//    @JoinColumn(name="inquiry_id", nullable=false)
-//    private Set<Inquiry> inquirySet;
+    @OneToMany(mappedBy = "listing" , fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private List<Inquiry> inquiryList = new ArrayList<>();
 
 }

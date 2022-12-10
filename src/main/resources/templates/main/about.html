@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:fill="http://www.w3.org/1999/xhtml"></html>
+      xmlns:fill="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html"></html>
 <head>
     <!--Required Meta tags-->
     <meta charset="utf-8">
@@ -26,21 +26,48 @@
 
 <main>
     <div class="container pb-2">
-        <h1 class="py-2 text-center">About Us</h1>
+        <h1 class="py-2 text-center">About</h1>
         <div class="row pt-3">
             <div class="col-sm-6">
                 <img th:src="@{/img/about.jpg}" class="img-about" alt="about">
             </div>
             <div class="col-sm-6">
-                <p>Sharenter was founded because of the difficulty in finding a place to live in Dublin.
-                    The platform helps people find and rent rooms in shared houses.
-                    We offer a wide range of rooms to choose from, makes it easier for people to find and rent rooms in
-                    shared houses.
-                    and to find the perfect housemate.</p>
-                <p>We believe that everyone should have access to affordable,
-                    safe, and comfortable housing. We are committed to providing the best possible experience for our
-                    users,
-                    and we hope that you will choose Sharenter for your next house share.</p>
+                <h4 class="text-center"> INITIAL PROPOSAL </h4>
+                <p>The goal of my web application was to improve the renting process of shared
+                    accommodations in Ireland, which has grown in popularity as a result of the housing crisis,
+                    by addressing issues identified in similar housing applications in the Irish market, such as the
+                    lack of scheduling functionality for property viewings.</p>
+                <p>Two main users are able to access my application:</p>
+                <p>
+                    • Sharer user – allowed to create listings of shared accommodations by inputting its
+                    detailed information, such as address, price, type of room, number of house mates, and
+                    viewing time slots availability. When all the viewing timeslots have been filled, the listing will
+                    become immediately unavailable. In the Sharer Dashboard this user will be able to view, edit
+                    or delete their listings and manage the viewings that have been scheduled by renter users.
+                </p>
+                <p>
+                    • Renter – allowed to browse the accommodations listed, being able to search by
+                    location and apply advanced filtering options. After selecting the preferred listing and
+                    viewing their details, they will be able to choose the timeslot preferred and submit their
+                    contact details to the sharer. In the Renter Dashboard, the user will be able to view,
+                    reschedule or cancel all their viewings.
+                </p>
+
+                <h4 class="text-center"> MODIFICATIONS </h4>
+                <p>
+                    I've tried implementing the scheduling functionality in my application, but because of its complexity
+                    and after professor Keith guidance I decided to implement a contact form in the listing details page,
+                    in which the Renter user would be able to send a message containing their contact information and inquiry message.
+                    I would then use the repository Count function to count how many contact inquiries were made by listing and use this
+                    number to sort the results the browse-listings page, to avoid people from seeing listings that have a lot of inquiries,
+                    since they would propably not get answered.
+                </p>
+                <p>
+                    Unfortunaly I could not implement this functionality, because I had problems tring to implement and setting the id
+                    of @OneToMany and @ManytoOne relatioships.
+
+                </p>
+
             </div>
         </div>
     </div>
