@@ -15,10 +15,6 @@
 
     <!-- Custom CSS Stylesheet -->
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
-
-    <script type="module" th:src="@{/js/index.js}"></script>
 
     <title> Sharer - Dashboard </title>
 
@@ -31,14 +27,16 @@
 <header th:replace="fragments/header.html :: header"></header>
 
 <main>
-
     <div class="container">
         <h1 class="text-center">Sharer Dashboard</h1>
-        <h4 class="text-center my-3" th:text="'Welcome back ' + ${currentEmail} + '!'"></h4>
 
+        <!-- Current logged in user email -->
+        <h4 class="text-center my-3" th:text="'Welcome back ' + ${currentEmail} + '!'"></h4>
 
         <div class="row mt-5">
             <div class="col">
+
+                <!--List of all listings created by the logged in user-->
                 <h2 class="text-center py-3">My Listings</h2>
 
                 <!--Page sorting-->
@@ -46,12 +44,16 @@
                     <div class="col">
                         <p class="fw-bold">Sort by:</p>
                     </div>
+
+                    <!--Page sorting for Creation Date-->
                     <div class="col">
                         <a th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty='
                         + searchedCounty + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=creationDate' +
                         '&sortBy=' + ${reverseSortBy}}">Creation Date<img th:src="@{/img/sort.png}" aria-label="logo"
                                                                           alt="sort"></a>
                     </div>
+
+                    <!--Page sorting for Rent price-->
                     <div class="col">
                         <a th:href="@{'/sharer/dashboard?' + ${searchedCounty!=null && searchedCounty!=''? 'searchedCounty='
                         + searchedCounty + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=rent'
@@ -61,7 +63,7 @@
                 </div><!--End row sorting-->
 
 
-                <!-- Card -->
+                <!-- Listing card-->
                 <div class="card my-3 sharer-dash rounded" th:each="listings : ${listingsByUser}">
                     <div class="row">
 
@@ -72,48 +74,36 @@
 
                         <div class="col-md-12">
                             <div class="card-body">
+
                                 <!--Listing title-->
                                 <h5 class="card-title text-center" th:text="${listings.title}"></h5>
 
-                                <!--Listing rent price-->
-                                <p class="my-0 py-0 text-sm-start">
-                                    <span class="card-text bold">Rent: </span>
-                                    <span class="card-text" th:text="${listings.rent}"></span>
-                                </p>
 
                                 <!--Listing address-->
-                                <p class="my-0 py-0 text-sm-start">
+                                <p class="fw-bold">
                                     <span class="card-text bold">Address:</span>
                                     <span class="card-text" th:text="${listings.address}"></span>
                                 </p>
 
 
-                                <!--Listing room type-->
-                                <!--Displays if the bathroom is private or not-->
-                                <p class="my-0 py-0 text-sm-start">
-                                    <img class="pr-1" th:src="@{/img/bed.png}" alt="bed"><span class="card-text"
-                                                                                               th:text="${listings.roomType}"></span><span> Room</span>
-                                    <img class="pl-5" th:src="@{/img/bathroom.png}" alt="bathroom">
-                                    <span class="card-text"
-                                          th:if="${listings.privateBathroom == true }">Private Bathroom</span>
-                                    <span class="card-text"
-                                          th:unless="${listings.privateBathroom == true}">Shared Bathroom</span>
-                                </p>
+                                <!--Listing title-->
+                                <div>
+                                    <span class="d-block pb-5">
+                                        <span class="card-text fw-bold">Rent: </span>
+                                        <span class="h6">&euro;<span class="rent"
+                                                                     th:text="${listings.rent} + '/month'"></span></span>
+                                        <span class="card-text" th:if="${listings.billsIncluded == true }">, bills included</span>
+                                        <span class="card-text" th:unless="${listings.billsIncluded == true}">, bills not included</span></span>
+                                    </span>
+                                </div>
 
-                                <p>
-                                    <span class="card-text">Created by:</span>
-                                    <span class="card-text" th:text="${listings.createdBy}"></span>
-                                </p>
-                                <p>
-                                    <span class="card-text">Created on:</span>
-                                    <span class="card-text" th:text="${listings.creationDate}"></span>
-                                </p>
-                                <!--              <a th:href="@{/renter/listing-details/{id}(id=${listings.id})}"-->
-                                <!--                     class="btn">Details</a>-->
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-around">
+                                    <!--Button redirects to the edit page-->
                                     <a th:href="@{/sharer/edit-listing/{id}(id=${listings.id})}">
                                         <button class="btn rounded-pill mx-3" type="button">Update</button>
                                     </a>
+
+                                    <!--Button deletes the listing-->
                                     <a th:href="@{/sharer/delete-listing/{id}(id=${listings.id})}">
                                         <button class="btn rounded-pill mx-3 btn-blue" type="button">Delete</button>
                                     </a>
@@ -179,9 +169,8 @@
                 </nav><!--End pagination-->
             </div><!--End col-->
 
-
             <div class="col">
-                <h2 class="text-center py-3">Messages Received</h2>
+                <h2 class="text-center py-3">Listings favorite</h2>
             </div>
 
         </div><!--End row -->

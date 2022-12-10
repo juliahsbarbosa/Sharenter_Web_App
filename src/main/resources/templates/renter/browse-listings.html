@@ -34,12 +34,17 @@
                 <form th:action="@{/renter/browse-listings}" method="get" class="d-flex w-100" role="search">
                     <select class="form-control me-2 rounded-pill w-100" type="text"
                             name="searchedCounty" id="searchedCounty" th:value="${searchedCounty}">
-                        <option class="text-muted" value="" disabled selected="true">Search by County</option>
-                        <option th:value="'Dublin'" name="Dublin">Dublin County</option>
-                        <option th:value="'Wicklow'" name="Wicklow">Wicklow County</option>
-                        <option th:value="'Galway'" name="Galway">Galway County</option>
+                        <option class="text-muted" value="" selected disabled>Search by County</option>
+                        <option th:value="'Clare'" name="Clare">Clare County</option>
                         <option th:value="'Cork'" name="Cork">Cork County</option>
+                        <option th:value="'Donegal'" name="Donegal">Donegal County</option>
+                        <option th:value="'Dublin'" name="Dublin">Dublin County</option>
+                        <option th:value="'Galway'" name="Galway">Galway County</option>
+                        <option th:value="'Kildare'" name="Kildare">Kildare County</option>
                         <option th:value="'Limerick'" name="Limerick">Limerick County</option>
+                        <option th:value="'Mayo'" name="Mayo">Mayo County</option>
+                        <option th:value="'Sligo'" name="Sligo">Sligo County</option>
+                        <option th:value="'Wicklow'" name="Wicklow">Wicklow County</option>
                     </select>
                     <button type="submit" class="btn rounded-pill">
                         Search

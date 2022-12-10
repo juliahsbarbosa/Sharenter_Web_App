@@ -7,7 +7,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -60,9 +62,6 @@ public class Listing extends Auditable<String>{
 
     private Boolean available = true;
 
-    @OneToMany(mappedBy = "listing")
-    private List<Inquiry> contacts;
-
     //Google Geocoding API results
     @Column(name = "address")
     private String address;
@@ -79,5 +78,9 @@ public class Listing extends Auditable<String>{
 
     @Column(name = "walkscoreDescription")
     private String walkscoreDescription;
+
+//    @OneToMany
+//    @JoinColumn(name="inquiry_id", nullable=false)
+//    private Set<Inquiry> inquirySet;
 
 }

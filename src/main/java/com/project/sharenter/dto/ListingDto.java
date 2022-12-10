@@ -2,6 +2,7 @@ package com.project.sharenter.dto;
 
 import com.project.sharenter.model.*;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.DecimalMin;

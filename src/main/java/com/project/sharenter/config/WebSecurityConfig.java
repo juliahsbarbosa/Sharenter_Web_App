@@ -52,7 +52,7 @@ public class WebSecurityConfig {
 
                 //Based on a user's role, it defines the access permissions to specified URL paths
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/register", "/about", "/how").permitAll()
+                .antMatchers("/", "/login", "/register", "/about", "/how", "/actuator/**").permitAll()
                 .antMatchers("/renter/**").hasAnyAuthority("ROLE_RENTER")
                 .antMatchers("/sharer/**").hasAnyAuthority("ROLE_SHARER")
                 .anyRequest().authenticated()

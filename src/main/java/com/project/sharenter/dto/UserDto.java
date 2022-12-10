@@ -13,7 +13,6 @@ import javax.validation.constraints.*;
 //User DTO (Data Transfer Object) to transfer form data between the controller layer and view layer,
 //Improves security and reduces data leaks
 @Data
-@RequiredArgsConstructor
 public class UserDto {
     @NotBlank(message = "Please enter your first name")
     private String firstName;

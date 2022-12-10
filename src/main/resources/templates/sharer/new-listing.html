@@ -15,14 +15,8 @@
 
     <!-- Custom CSS Stylesheet -->
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
-
-    <script type="module" th:src="@{/js/index.js}"></script>
-
 
     <title> Sharer - New Listing </title>
-
 
 </head>
 <body>
@@ -89,7 +83,7 @@
 
                             <!-- Listing Description-->
                             <div class="mb-3">
-                                <label class="mb-2" for="title">Listing description: </label>
+                                <label class="mb-2" for="description">Listing description: </label>
                                 <textarea id="description" rows="10" class="form-control"
                                           th:field="*{description}" th:errorclass="is-invalid"></textarea>
                                 <div class="invalid-feedback"
@@ -113,9 +107,9 @@
 
                             <!-- Image URL -->
                             <div class="mb-3">
-                                <label class="mb-2" for="rent">Add an image of the room by entering an image URL: </label>
+                                <label class="mb-2" for="imageUrl">Add an image of the room by entering an image URL: </label>
                                 <input id="imageUrl" type="url" class="form-control"
-                                       th:field="*{imageUrl}" th:errorclass="is-invalid">
+                                       th:field="*{imageUrl}" th:errorclass="is-invalid" >
                                 <div class="invalid-feedback"
                                      th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></div>
                             </div>
@@ -129,8 +123,10 @@
                                      th:if="${#fields.hasErrors('numHousemates')}" th:errors="*{numHousemates}"></div>
                             </div>
 
-                            <!-- Accommodation amenities -->
-                            <p>Please select the amenities and features of the room: </p>
+                            <!-- Accommodation amenities and features -->
+                            <p>Please select all of the amenities and features provided by the accommodation:</p>
+
+                            <!-- Private bathroom -->
                             <div class="form-check">
                                 <input class="form-check-input " th:field="*{privateBathroom}"
                                        th:checked="${isPrivateBathroom}" type="checkbox" id="privateBathroom">
@@ -139,6 +135,7 @@
                                 </label>
                             </div>
 
+                            <!-- Pet-friendly-->
                             <div class="form-check">
                                 <input class="form-check-input" th:field="*{petFriendly}"
                                        th:checked="${isPetFriendly}" type="checkbox" id="petFriendly">
@@ -147,7 +144,7 @@
                                 </label>
                             </div>
 
-
+                            <!-- Suitable for couples-->
                             <div class="form-check">
                                 <input class="form-check-input " th:field="*{suitableForCouples}"
                                        th:checked="${isSuitableForCouples}" type="checkbox" id="suitableForCouples">
@@ -156,6 +153,8 @@
                                 </label>
                             </div>
 
+
+                            <!-- Bills included-->
                             <div class="form-check">
                                 <input class="form-check-input " th:field="*{billsIncluded}"
                                        th:checked="${isBillsIncluded}" type="checkbox" id="billsIncluded">
@@ -164,6 +163,7 @@
                                 </label>
                             </div>
 
+                            <!--Parking-->
                             <div class="form-check">
                                 <input class="form-check-input " th:field="*{parking}"
                                        th:checked="${isParking}" type="checkbox" id="parking">
@@ -172,6 +172,7 @@
                                 </label>
                             </div>
 
+                            <!-- Landlord occupied-->
                             <div class="form-check">
                                 <input class="form-check-input " th:field="*{landlordOccupied}"
                                        th:checked="${isLandlordOccupied}" type="checkbox" id="landlordOccupied">
@@ -186,11 +187,11 @@
                                 </button>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </div><!-- End card-body-->
+                </div><!-- End card-->
+            </div><!-- End col-->
+        </div><!-- End row-->
+    </div><!-- End container-->
 </main>
 
 <!--Footer Fragment-->

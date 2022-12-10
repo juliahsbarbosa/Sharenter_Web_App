@@ -27,29 +27,35 @@
 <main>
 
     <!--Listings-->
-    <div class="container browsing">
+    <div class="container details">
         <h1 class="text-center pt-2 mt-5" th:text="${listing.title}"></h1>
         <div class="row">
-
             <div class="col-8">
-                <!--Listing info card-->
+
+                <!--Listing detailed info card-->
                 <div class="card my-5 details-card">
                     <div class="row">
                         <div class="col-12">
-                            <img class="img-details" th:src="${listing.imageUrl}">
+                            <img class="img-details" th:src="${listing.imageUrl}" alt="listingImg">
                         </div>
                         <div class="col-12">
                             <div class="card-body">
                                 <div class="details-content-wrap">
                                     <div class="d-flex flex-row justify-content-between  align-items-center">
+
+                                        <!--Address-->
                                         <div>
                                             <h3 th:text="${listing.address}"></h3>
                                         </div>
                                         <div class="text-end">
                                             <span class="d-block">
+
+                                                <!--Rent-->
                                                 <span class="h2 fw-600">&euro;<span class="rent"
                                                                                     th:text="${listing.rent}"></span></span>
                                                 <span class="h6 fw-400">/month<br>
+
+                                                    <!--Bills Included or Not-->
                                                     <span class="card-text" th:if="${listing.billsIncluded == true }">Bills included</span>
                                                     <span class="card-text"
                                                           th:unless="${listing.billsIncluded == true}">Bills not included</span>
@@ -58,34 +64,39 @@
                                         </div>
                                     </div>
 
+
                                     <hr>
 
-
+                                    <!--Room Description-->
                                     <div class="mt-3">
                                         <h5 class="card-text"> Room Description: </h5>
                                         <div class="card-text text-justify fw-250 p-2"
                                              th:text="${listing.description}"></div>
                                     </div>
 
-
                                     <hr>
 
-                                    <h5 class="card-text"> Room Overview </h5>
-                                    <div class="container px-2">
+                                    <!--Room Overview, with its amenities and features-->
+                                    <h5 class="card-text text-center"> Room Overview </h5>
+                                    <div class="container px-5">
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-6 pl-5">
+
+                                                <!--Type of room-->
                                                 <div class="pt-5">
                                                     <img th:src="@{/img/bed.png}" alt="roomType">
                                                     <span class="card-text"
                                                           th:text="${listing.roomType} + ' Room'"></span>
                                                 </div>
 
+                                                <!--Number of housemates-->
                                                 <div class="pt-5">
                                                     <img th:src="@{/img/housemates.png}" alt="housemates">
                                                     <span class="card-text"
                                                           th:text="${listing.numHousemates} + ' Housemates'"></span>
                                                 </div>
 
+                                                <!--Private or Shared Bathroom-->
                                                 <div class="pt-5">
                                                     <img th:src="@{/img/bills.png}" alt="bathroom">
                                                     <span class="card-text" th:if="${listing.privateBathroom == true }">Bills included</span>
@@ -93,6 +104,7 @@
                                                           th:unless="${listing.privateBathroom == true}">Bills not included</span>
                                                 </div>
 
+                                                <!--Parking or No Parking-->
                                                 <div class="pt-5">
                                                     <img th:src="@{/img/parking.png}" alt="parking">
                                                     <span class="card-text"
@@ -103,6 +115,7 @@
                                             </div>
 
 
+                                            <!--Landlord occupied or not-->
                                             <div class="col-6">
                                                 <div class="pt-5">
                                                     <img th:src="@{/img/landlord.png}" alt="occupied">
@@ -112,6 +125,7 @@
                                                           th:unless="${listing.landlordOccupied == true}">Not Landlord Occupied</span>
                                                 </div>
 
+                                                <!--Suitable for couples or not-->
                                                 <div class="pt-5">
                                                     <img th:src="@{/img/couple.png}" alt="occupied">
                                                     <span class="card-text"
@@ -120,16 +134,28 @@
                                                           th:unless="${listing.suitableForCouples == true}">Not Suitable for couples</span>
                                                 </div>
 
+                                                <!--Pet-Friendly or Not-->
                                                 <div class="pt-5">
                                                     <img th:src="@{/img/paw.png}" alt="occupied">
                                                     <span class="card-text"
                                                           th:if="${listing.petFriendly == true }">Pet-friendly</span>
                                                     <span class="card-text" th:unless="${listing.petFriendly == true}">Not pet-friendly</span>
                                                 </div>
-                                            </div><!--End col-->
-                                        </div>
-                                    </div>
 
+                                                <!--Walkscore API Results-->
+                                                <div class="pt-5">
+                                                    <img th:src="@{/img/walkscore.png}" alt="walkscore">
+                                                    <span class="card-text" th:text="${listing.walkscore}"></span>
+                                                    <span class="card-text"
+                                                          th:text="${listing.walkscoreDescription}"></span>
+                                                </div>
+
+                                            </div><!--End col-->
+                                        </div><!--End row-->
+                                    </div><!--End container-->
+
+
+                                    <!--Created by User and Creation Date-->
                                     <div class="d-flex justify-content-between pt-5 pb-3">
                                         <div>
                                             <span class="card-text fw-bold">Created by:</span>
@@ -140,14 +166,13 @@
                                             <span class="card-text" th:text="${listing.creationDate}"></span>
                                         </div>
                                     </div>
-                                </div><!--End card-body-->
-                            </div><!--End col-->
-                        </div><!--End row-->
-                    </div><!--End card-->
-                </div><!--End col-->
-            </div>
 
-
+                                </div><!--End wrap-->
+                            </div><!--End card-body-->
+                        </div><!--End col-->
+                    </div><!--End row-->
+                </div><!--End card-->
+            </div><!--End col-->
             <div class="col-4">
                 <div class="card mt-5 details-card">
                     <div class="card-body">
@@ -156,26 +181,29 @@
                         <div class="row">
                             <div class="col">
                                 <div class="contact">
-                                    <form class="form" name="inquiry" method="post">
+                                    <form class="form" th:action="@{/renter/message}" th:object="${inquiry}" name="inquiry" method="post">
                                         <div class="row">
                                             <div class="mb-3 col-12">
+
+                                                <input hidden th:text="${inquiry.setListing(listing.id)}">
+
                                                 <input type="text" name="name" class="form-control"
                                                        placeholder="Name"
-                                                       required="required">
+                                                       th:field="${inquiry.name}">
                                             </div>
                                             <div class="mb-3 col-12">
                                                 <input type="email" name="email" class="form-control"
                                                        placeholder="Email"
-                                                       required="required">
+                                                       th:text="${inquiry.email}">
                                             </div>
                                             <div class="mb-3 col-12">
-                                                <input type="text" name="subject" class="form-control"
-                                                       placeholder="Subject"
-                                                       required="required">
+                                                <input type="text" name="phone" class="form-control"
+                                                       placeholder="Phone"
+                                                       th:text="${inquiry.phone}">
                                             </div>
                                             <div class="mb-3 col-12">
                                         <textarea rows="10" name="message" class="form-control"
-                                                  placeholder="Your Message" required="required"></textarea>
+                                                  placeholder="Your Message" required="required" th:text="${inquiry.message}"></textarea>
                                             </div>
                                             <div class="col-12 text-center">
                                                 <button type="submit" value="Send message" name="submit"
@@ -194,15 +222,20 @@
             </div>
         </div>
     </div>
-</main>
+    </div><!--End row-->
 
+    <form th:action="@{'/catalog/item/' + ${book.getCode()}  + '/addToFavorites'}"
+          method="post" th:if="${!itemService.isInFavorite(#authentication.getName(), book)}">
+        <input type="hidden" name="calledFrom" value="home">
+        <button class="action-button" type="submit">
+            <img th:src="@{/img/common/notFavorite.png}">
+        </button>
+    </form>
+    </div><!--End container-->
+</main>
 
 <!--Footer Fragment-->
 <footer th:replace="fragments/footer.html :: footer"></footer>
-
-</body>
-</html>
-
 
 </body>
 </html>

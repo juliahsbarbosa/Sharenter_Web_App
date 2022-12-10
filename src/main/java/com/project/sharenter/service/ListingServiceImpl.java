@@ -154,6 +154,7 @@ public class ListingServiceImpl implements ListingService {
     }
 
     //Implements pagination and sorting for the listings created by a specific user
+    @Override
     public Page<Listing> getAllByUserEmail(String email, int pageNo, int pageSize, String sortField, String sortBy){
         Sort sort = sortBy.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
@@ -161,6 +162,5 @@ public class ListingServiceImpl implements ListingService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.listingRepository.findListingByCreatedBy(email, pageable);
     }
-
 
 }

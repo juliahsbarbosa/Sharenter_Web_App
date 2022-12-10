@@ -21,6 +21,7 @@ public class ListingController {
     @Autowired
     private ListingService listingService;
 
+
     @Value("${maps.api.key}")
     private String mapsApiKey;
 
@@ -28,10 +29,13 @@ public class ListingController {
     @GetMapping("/renter/listing-details/{id}")
     public String listingDetails(@PathVariable("id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
+
         model.addAttribute("listing", listing);
-        model.addAttribute("mapsApiKey", mapsApiKey);
+
         return "renter/listing-details";
     }
+
+
 
 
     //GET method, displays the browse listings page with pagination, search and sorting functionalities
@@ -88,8 +92,8 @@ public class ListingController {
     @GetMapping("/sharer/edit-listing/{id}")
     public String editListing(@PathVariable(value = "id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
+
         model.addAttribute("listing", listing);
-        model.addAttribute("mapsApiKey", mapsApiKey);
         return "sharer/edit-listing";
     }
 

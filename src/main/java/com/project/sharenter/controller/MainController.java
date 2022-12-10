@@ -57,7 +57,6 @@ public class MainController {
         //Returns the email of the current logged in user
         String currentEmail = principal.getName();
 
-
         Page<Listing> findByEmail = listingService.getAllByUserEmail(currentEmail, page, size, sortField, sortBy);
 
         model.addAttribute("email", currentEmail);
@@ -94,6 +93,8 @@ public class MainController {
     public String howItWorks() {
         return "main/how";
     }
+
+
 
 
 }
