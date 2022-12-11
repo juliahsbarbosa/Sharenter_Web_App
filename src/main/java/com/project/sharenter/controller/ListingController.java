@@ -31,7 +31,7 @@ public class ListingController {
     @Autowired
     InquiryService inquiryService;
 
-    //GET method, display a specific listing details according to its id
+    //HTTP GET Request, display a specific listing details according to its id
     @GetMapping("/renter/listing-details/{id}")
     public String listingDetails(@PathVariable("id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
@@ -48,7 +48,7 @@ public class ListingController {
     }
 
 
-    //GET method, displays the browse listings page with pagination, search and sorting functionalities
+    //HTTP GET Request, displays the browse listings page with pagination, search and sorting functionalities
     @GetMapping("/renter/browse-listings")
     public String listingPaginated(Model model, @RequestParam(required = false) String searchedCounty,
                                    @RequestParam(defaultValue = "1") int page,
@@ -82,7 +82,7 @@ public class ListingController {
         return "renter/browse-listings";
     }
 
-    //GET method display the new listing form
+    //HTTP GET Request, method display the new listing form
     @GetMapping("/sharer/new-listing")
     public String newListing(Model model) {
         model.addAttribute("listing", new Listing());
@@ -90,7 +90,7 @@ public class ListingController {
         return "sharer/new-listing";
     }
 
-    //POST method, saves the new listing in the database
+    //HTTP POST Request, saves the new listing in the database
     @PostMapping(value = "/sharer/new-listing")
     public String saveListing(@Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
 
@@ -102,7 +102,7 @@ public class ListingController {
         return "redirect:/sharer/new-listing?success";
     }
 
-    //GET method, displays the edit listing form according to the listing id
+    //HTTP GET Request, displays the edit listing form according to the listing id
     @GetMapping("/sharer/edit-listing/{id}")
     public String editListing(@PathVariable(value = "id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
@@ -111,7 +111,7 @@ public class ListingController {
         return "sharer/edit-listing";
     }
 
-    //POST method, saves the edited listing to the database
+    //HTTP POST Request, saves the edited listing to the database
     @PostMapping(value = "/sharer/edit-listing")
     public String updateListing(@Valid @ModelAttribute("listing") ListingDto listingDto,  BindingResult bindingResult) {
 
@@ -123,11 +123,10 @@ public class ListingController {
         return "redirect:/sharer/dashboard";
     }
 
-    //GET method, deletes a listing according to its id
+    //HTTP GET Request, deletes a listing according to its id
     @GetMapping("/sharer/delete-listing/{id}")
     public String deleteListing(@PathVariable(value = "id") long id) {
 
-        // call delete listing method
         this.listingService.deleteListingById(id);
         return "redirect:/sharer/dashboard";
     }

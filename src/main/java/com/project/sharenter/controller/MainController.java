@@ -34,7 +34,7 @@ public class MainController {
     InquiryService inquiryService;
 
 
-    //GET method, displays the homepage and the search form
+    //HTTP GET Request, displays the homepage and the search form
     @GetMapping("/")
     public String home(Model model){
 
@@ -45,7 +45,7 @@ public class MainController {
     }
 
 
-    //HTTP GET Requests, displays the sharer's dashboard to the user who is currently logged in
+    //HTTP GET Request, displays the sharer's dashboard to the user who is currently logged in
     @GetMapping("/sharer/dashboard")
     public String sharerDashboard(Model model, Principal principal,
                                   @RequestParam(defaultValue = "1") int page,
