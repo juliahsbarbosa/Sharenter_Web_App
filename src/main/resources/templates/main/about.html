@@ -33,41 +33,24 @@
             </div>
             <div class="col-sm-6">
                 <h4 class="text-center"> INITIAL PROPOSAL </h4>
-                <p>The goal of my web application was to improve the renting process of shared
-                    accommodations in Ireland, which has grown in popularity as a result of the housing crisis,
-                    by addressing issues identified in similar housing applications in the Irish market, such as the
-                    lack of scheduling functionality for property viewings.</p>
-                <p>Two main users are able to access my application:</p>
-                <p>
-                    • Sharer user – allowed to create listings of shared accommodations by inputting its
-                    detailed information, such as address, price, type of room, number of house mates, and
-                    viewing time slots availability. When all the viewing timeslots have been filled, the listing will
-                    become immediately unavailable. In the Sharer Dashboard this user will be able to view, edit
-                    or delete their listings and manage the viewings that have been scheduled by renter users.
-                </p>
-                <p>
-                    • Renter – allowed to browse the accommodations listed, being able to search by
-                    location and apply advanced filtering options. After selecting the preferred listing and
-                    viewing their details, they will be able to choose the timeslot preferred and submit their
-                    contact details to the sharer. In the Renter Dashboard, the user will be able to view,
-                    reschedule or cancel all their viewings.
-                </p>
+                <p>The goal of my web application was to help people looking for a room to rent as well as those looking
+                    to advertise a room, as shared accommodations have become more popular in Ireland because of the
+                    housing crisis.</p>
+                <p>The Renter user of this application would be able to search for rooms by location (with advanced
+                    filtering options), schedule and manage viewings. While a Sharer would be able to list a room and
+                    manage its listings and viewings. </p>
+                <p>The Google Maps API will be used to get the coordinates of the listings and then used as input in
+                    the Walker Score API, which will display how walkable the area is.</p>
 
                 <h4 class="text-center"> MODIFICATIONS </h4>
                 <p>
-                    I've tried implementing the scheduling functionality in my application, but because of its complexity
-                    and after professor Keith guidance I decided to implement a contact form in the listing details page,
-                    in which the Renter user would be able to send a message containing their contact information and inquiry message.
-                    I would then use the repository Count function to count how many contact inquiries were made by listing and use this
-                    number to sort the results the browse-listings page, to avoid people from seeing listings that have a lot of inquiries,
-                    since they would propably not get answered.
-                </p>
+                    I tried to implement the scheduling functionality into my application, but due to its complexity
+                    and on Professor Keith's recommendation, I decided to add a contact form to the listing details
+                    page instead so that Renter users could send inquiring messages instead.</p>
                 <p>
-                    Unfortunaly I could not implement this functionality, because I had problems tring to implement and setting the id
-                    of @OneToMany and @ManytoOne relatioships.
-
+                    When a listing receives more inquiries than a predetermined number, a warning is given in the
+                    inquiry form informing users that the Sharer is likely to disregard their contact.
                 </p>
-
             </div>
         </div>
     </div>

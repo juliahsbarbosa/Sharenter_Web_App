@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -81,5 +80,9 @@ public class Listing extends Auditable<String>{
 
     @OneToMany(mappedBy = "listing" , fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Inquiry> inquiryList = new ArrayList<>();
+
+//    @ManyToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name="sharer_id", referencedColumnName = "id", nullable = false)
+//    private User sharer;
 
 }

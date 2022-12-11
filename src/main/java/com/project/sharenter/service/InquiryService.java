@@ -15,9 +15,6 @@ public interface InquiryService {
     //Renter Dashboard
     Page<Inquiry> allInquiriesByCreatedBy(String email, int pageNo, int pageSize, String sortField, String sortBy);
 
-    //Sharer Dashboard
-//    Page<Listing> allInquiriesByCreatedByAndListingId(String email, Long id, int pageNo, int pageSize, String sortField, String sortBy);
-
     //Count by Listing Id
     long countInquiriesByListing (Long id);
 

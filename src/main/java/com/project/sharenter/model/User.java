@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -47,8 +48,8 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private Boolean enabled = true;
 
-//    @OneToMany(mappedBy = "sharer")
-//    private List<Listing> listingList;
+//    @OneToMany(mappedBy = "sharer" , fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+//    private List<Listing> listingList = new ArrayList<>();
 
     //Implementing custom UserDetails custom methods
     @Override

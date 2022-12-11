@@ -13,12 +13,9 @@ main {
 }
 
 
-* {
-    color: #192f44;
-}
-
 h1, h2, h3, h4, h5, h6 {
-    color: #192f44;
+    color: #008080;
+    font-weight: bold;
 }
 
 a {
@@ -195,7 +192,8 @@ input:-webkit-autofill:active {
 /*Images Styling*/
 .img-sharer-dash {
     width: 100%;
-    height: 600px;
+    height: 100%;
+    border-radius: 0.5em;
 }
 
 

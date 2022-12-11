@@ -6,7 +6,6 @@ import com.google.maps.model.GeocodingResult;
 import com.project.sharenter.dto.ListingDto;
 import com.project.sharenter.model.*;
 import com.project.sharenter.repository.ListingRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,7 +21,6 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@RequiredArgsConstructor
 public class ListingServiceImpl implements ListingService {
 
     @Autowired
@@ -52,8 +50,6 @@ public class ListingServiceImpl implements ListingService {
         if (listingDto.getId() != null){
             listing.setId(listingDto.getId());
         }
-
-//        long count = inquiryService.countInquiriesByListing(listing.getId());
 
         listing.setTitle(listingDto.getTitle());
         listing.setRent(listingDto.getRent());
@@ -106,6 +102,7 @@ public class ListingServiceImpl implements ListingService {
 
             RestTemplate restTemplate = new RestTemplate();
             WalkScore walkScore = restTemplate.getForObject(walkUrl, WalkScore.class);
+
 
             //Saving Walkscore results on the Listing database
             listing.setWalkscore(walkScore.getWalkscore());

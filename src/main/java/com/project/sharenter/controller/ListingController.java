@@ -15,9 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,26 +36,16 @@ public class ListingController {
     public String listingDetails(@PathVariable("id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
 
-//        ArrayList<Inquiry> inquiries = new ArrayList<Inquiry>();
-//        inquiries.add(inquiry);
-//
-//        listing.setInquiryList(inquiries);
 
+        //Counts the number of inquiries by listing Id
         long count = inquiryService.countInquiriesByListing(id);
 
-
-
-        model.addAttribute("listing", listing);
         model.addAttribute("listing", listing);
         model.addAttribute("count", count);
-
-
         model.addAttribute("inquiry", new Inquiry());
 
         return "renter/listing-details";
     }
-
-
 
 
     //GET method, displays the browse listings page with pagination, search and sorting functionalities
@@ -70,9 +58,12 @@ public class ListingController {
 
 
         Page<Listing> listingPage;
+
+        //If user doesn't search by county, display all listings
         if (searchedCounty == null) {
             listingPage = listingService.allListingsPaginated(page, size, sortField, sortBy);
 
+            //Else display according to the searched county
         } else {
             listingPage = listingService.countySearchPaginated(searchedCounty, page, size, sortField, sortBy);
             model.addAttribute("searchedCounty", searchedCounty);
@@ -94,15 +85,16 @@ public class ListingController {
     //GET method display the new listing form
     @GetMapping("/sharer/new-listing")
     public String newListing(Model model) {
-        //Model attribute to bind form data
         model.addAttribute("listing", new Listing());
         model.addAttribute("mapsApiKey", mapsApiKey);
         return "sharer/new-listing";
     }
 
-    //POST method saves the new listing
+    //POST method, saves the new listing in the database
     @PostMapping(value = "/sharer/new-listing")
     public String saveListing(@Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
+
+        //If there is any validation errors, display form again
         if (bindingResult.hasErrors()) {
             return "sharer/new-listing";
         }
@@ -110,7 +102,7 @@ public class ListingController {
         return "redirect:/sharer/new-listing?success";
     }
 
-    //GET method display the edit listing form, according to the listing id
+    //GET method, displays the edit listing form according to the listing id
     @GetMapping("/sharer/edit-listing/{id}")
     public String editListing(@PathVariable(value = "id") long id, Model model) {
         Listing listing = listingService.getListingById(id);
@@ -119,9 +111,11 @@ public class ListingController {
         return "sharer/edit-listing";
     }
 
-    //POST method, saves the edited listing
+    //POST method, saves the edited listing to the database
     @PostMapping(value = "/sharer/edit-listing")
-    public String updateListing(@Valid @ModelAttribute("listing") ListingDto listingDto, BindingResult bindingResult) {
+    public String updateListing(@Valid @ModelAttribute("listing") ListingDto listingDto,  BindingResult bindingResult) {
+
+        //If there is any validation error, display form again
         if (bindingResult.hasErrors()) {
             return "sharer/edit-listing";
         }

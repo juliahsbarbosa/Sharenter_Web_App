@@ -33,16 +33,18 @@ public class AuthController {
         return  "auth/register";
     }
 
-    //POST method, saves the user
+    //POST method, registers the user, saving them in the database
     @PostMapping("/register")
     public String registerUser(Model model, @Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult){
 
+        //If User email is already registered, display error message
         Optional<User> existingUserEmail = userService.findUserByEmail(userDto.getEmail());
         if(existingUserEmail.isPresent()) {
             bindingResult.rejectValue("email", null,
                     "There is already an account registered with the same email");
         }
 
+        //If there is any validation error, display form again
         if(bindingResult.hasErrors()){
             model.addAttribute("user", userDto );
             return  "auth/register";

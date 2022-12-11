@@ -2,27 +2,20 @@ package com.project.sharenter.controller;
 
 import com.project.sharenter.model.Inquiry;
 import com.project.sharenter.model.Listing;
-import com.project.sharenter.model.User;
-import com.project.sharenter.repository.ListingRepository;
+
 import com.project.sharenter.service.InquiryService;
 import com.project.sharenter.service.ListingService;
 import com.project.sharenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -37,8 +30,11 @@ public class MainController {
     @Autowired
     ListingService listingService;
 
+    @Autowired
+    InquiryService inquiryService;
 
-    //Controller method to display the homepage and the search form
+
+    //GET method, displays the homepage and the search form
     @GetMapping("/")
     public String home(Model model){
 
@@ -48,6 +44,8 @@ public class MainController {
         return "index";
     }
 
+
+    //HTTP GET Requests, displays the sharer's dashboard to the user who is currently logged in
     @GetMapping("/sharer/dashboard")
     public String sharerDashboard(Model model, Principal principal,
                                   @RequestParam(defaultValue = "1") int page,
@@ -77,9 +75,7 @@ public class MainController {
         return "sharer/dashboard";
     }
 
-    @Autowired
-    InquiryService inquiryService;
-
+    //HTTP GET Request, displays the renter dashboard to the user who is currently logged in
     @GetMapping("/renter/dashboard")
     public String renterDashboard(Model model, Principal principal,
                                   @RequestParam(defaultValue = "1") int page,
@@ -109,17 +105,17 @@ public class MainController {
         return "renter/dashboard";
     }
 
+    //HTTP GET Request, displays the about page
     @GetMapping("/about")
-    public String aboutUs() {
+    public String about() {
         return "main/about";
     }
 
+    //HTTP GET Request, displays the how page
     @GetMapping("/how")
     public String howItWorks() {
         return "main/how";
     }
-
-
 
 
 }

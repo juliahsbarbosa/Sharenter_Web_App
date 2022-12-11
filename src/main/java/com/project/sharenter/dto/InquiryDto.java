@@ -14,7 +14,7 @@ public class InquiryDto {
     @NotBlank(message = "Please enter your name")
     private String Name;
 
-    @NotBlank(message = "Please enter a valid email format")
+    @Email(message = "Please enter a valid email format")
     @NotBlank(message = "Please enter your name")
     private String email;
 

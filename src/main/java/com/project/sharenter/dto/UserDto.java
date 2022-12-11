@@ -2,12 +2,7 @@ package com.project.sharenter.dto;
 
 import com.project.sharenter.model.Role;
 import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Value;
 
-import javax.persistence.*;
 import javax.validation.constraints.*;
 
 //User DTO (Data Transfer Object) to transfer form data between the controller layer and view layer,

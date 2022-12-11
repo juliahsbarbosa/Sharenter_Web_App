@@ -43,19 +43,14 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col"><a th:href="@{'/renter/dashboard?page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=id' +
-                        '&sortBy=' + ${reverseSortBy}}">Id<img th:src="@{/img/sort.png}" aria-label="logo"
-                                                               alt="sort"></a></th>
                 <th scope="col">Message</th>
                 <th scope="col"><a th:href="@{'/renter/dashboard?page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=creationDate' +
-                        '&sortBy=' + ${reverseSortBy}}">Sent Date<img th:src="@{/img/sort.png}" aria-label="logo"
-                                                                      alt="sort"></a></th>
+                        '&sortBy=' + ${reverseSortBy}}">Sent Date<img th:src="@{/img/sort.png}" aria-label="sort" alt="sort"></a></th>
                 <th scope="col">Listing</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="inquiry : ${inquiries}">
-                <th scope="row" th:text="${inquiry.id}"></th>
                 <td th:text="${inquiry.inquiry}"></td>
                 <td th:text="${inquiry.creationDate}"></td>
                 <td><a th:href="@{/renter/listing-details/{id}(id=${inquiry.listing.id})}">

@@ -28,19 +28,23 @@
 
 <main>
     <div class="container ">
-        <h1 class="text-center">Sharer Dashboard</h1>
+        <h1 class="text-center">SHARER DASHBOARD</h1>
 
         <!-- Current logged in user email -->
-        <h5 class="my-3 text-center" th:text="'Welcome back ' + ${currentEmail} + '!'"></h5>
+        <div>
+            <h6 class="my-3" th:text="'Welcome back ' + ${currentEmail} + '!'"></h6>
+            <p>We're glad to see you again. Thank you for choosing our platform!</p>
+            <p> Take a look on your most recent listings</p>
+        </div>
 
-        <div class="row mt-5 d-flex justify-content-center">
+        <div class="row mt-5">
             <div class="col-8">
 
                 <!--List of all listings created by the logged in user-->
-                <h2 class="text-center py-3">My Listings</h2>
+                <h2 class="py-3">My Listings</h2>
 
                 <!--Page sorting-->
-                <div class="row sorting d-flex justify-content-start">
+                <div class="row">
                     <div class="col">
                         <p class="fw-bold">Sort by:</p>
                     </div>
@@ -54,15 +58,16 @@
 
                     <!--Page sorting for Rent price-->
                     <div class="col">
-                        <a th:href="@{'/sharer/dashboard?page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=rent'
-                        +'&sortBy=' + ${reverseSortBy }}">Rent<img th:src="@{/img/sort.png}" aria-label="logo"
-                                                                   alt="sort"></a>
+                        <a th:href="@{'/sharer/dashboard?page=' + ${currentPage} + '&size=' + ${pageSize} + '&sortField=lastModifiedDate'
+                        +'&sortBy=' + ${reverseSortBy }}">Last Modified Date<img th:src="@{/img/sort.png}"
+                                                                                 aria-label="logo"
+                                                                                 alt="sort"></a>
                     </div>
                 </div><!--End row sorting-->
 
 
                 <!-- Listing card-->
-                <div class="card my-3 sharer-dash rounded" th:each="listings : ${listingsByUser}">
+                <div class="card mb-5 sharer-dash" th:each="listings : ${listingsByUser}">
                     <div class="row">
 
                         <!--Room Image-->
@@ -78,29 +83,29 @@
 
 
                                 <!--Listing address-->
-                                <p class="fw-bold">
-                                    <span class="card-text bold">Address:</span>
+                                <p>
+                                    <span class="card-text fw-bold">Address:</span>
                                     <span class="card-text" th:text="${listings.address}"></span>
                                 </p>
 
 
-                                <!--Listing title-->
-                                <div>
-                                    <span class="d-block pb-5">
-                                        <span class="card-text fw-bold">Rent: </span>
-                                        <span class="h6">&euro;<span class="rent"
-                                                                     th:text="${listings.rent} + '/month'"></span></span>
-                                        <span class="card-text" th:if="${listings.billsIncluded == true }">, bills included</span>
-                                        <span class="card-text" th:unless="${listings.billsIncluded == true}">, bills not included</span></span>
-                                    </span>
-                                </div>
+                                <!--Creation date-->
+                                <p>
+                                    <span class="card-text fw-bold">Creation Date:</span>
+                                    <span class="card-text" th:text="${listings.creationDate}"></span>
+                                </p>
+
+                                <!-- Modified date-->
+                                <p>
+                                    <span class="card-text fw-bold">Modified Date:</span>
+                                    <span class="card-text" th:text="${listings.lastModifiedDate}"></span>
+                                </p>
 
                                 <div class="d-flex justify-content-around">
                                     <!--Button redirects to the edit page-->
                                     <a th:href="@{/sharer/edit-listing/{id}(id=${listings.id})}">
                                         <button class="btn rounded-pill mx-3" type="button">Update</button>
                                     </a>
-
 
 
                                     <!--Button deletes the listing-->

@@ -50,8 +50,6 @@ public class InquiryServiceImpl implements InquiryService{
 
     @Override
     public long countInquiriesByListing(Long id) {
-
-
         return this.inquiryRepository.countByListingId(id);
     }
 }

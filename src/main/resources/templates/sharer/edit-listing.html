@@ -30,7 +30,7 @@
             <div class="col-xxl-6 col-xl-8 col-lg-8 col-md-9 col-sm-9">
 
                 <!-- Card -->
-                <div class="card shadow-lg new-listing">
+                <div class="card shadow-lg new-listing my-5">
 
                     <!-- Success message-->
                     <div th:if="${param.success}">
@@ -78,7 +78,7 @@
                             </div>
 
                             <!-- Display Google Maps Javascript API with Autocomplete search box-->
-                            <div id="new-listing" style="height: 500px;width: 600px;">
+                            <div id="new-listing">
 
                             </div>
 
@@ -204,13 +204,12 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-
 <!--Custom javascript-->
 <script th:src="@{/js/index.js}" type="text/javascript"></script>
 
 <!--Google Maps Javascript API URL -->
-<script th:src="@{'https://maps.googleapis.com/maps/api/js?key=' + ${mapsApiKey} + '&amp;callback=initAutocomplete&amp;libraries=places&amp;v=weekly'}"
+<!--Maps API key was inserted directly to avoid Javascript invalid key error when there are errors in the form-->
+<script th:src="@{'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-5zYOpiVL169ZvqntLNiRb2kXRylvn2M&amp;callback=initAutocomplete&amp;libraries=places&amp;v=weekly'}"
         async="async" defer="defer"></script>
 
 </body>
