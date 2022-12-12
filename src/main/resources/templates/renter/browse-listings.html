@@ -111,8 +111,8 @@
 
                                 <div>
                                     <img class="pl-5" th:src="@{/img/bathroom.png}" alt="bathroom">
-                                    <span class="card-text" th:if="${listings.privateBathroom == true }">Bills included</span>
-                                    <span class="card-text" th:unless="${listings.privateBathroom == true}">Bills not included</span>
+                                    <span class="card-text" th:if="${listings.privateBathroom == true }">Private</span>
+                                    <span class="card-text" th:unless="${listings.privateBathroom == true}">Shared</span>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between">

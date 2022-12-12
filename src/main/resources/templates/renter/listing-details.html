@@ -98,10 +98,10 @@
 
                                                 <!--Private or Shared Bathroom-->
                                                 <div class="pt-5">
-                                                    <img th:src="@{/img/bills.png}" alt="bathroom">
-                                                    <span class="card-text" th:if="${listing.privateBathroom == true }">Bills included</span>
+                                                    <img th:src="@{/img/bathroom.png}" alt="bathroom">
+                                                    <span class="card-text" th:if="${listing.privateBathroom == true }">Private Bathroom</span>
                                                     <span class="card-text"
-                                                          th:unless="${listing.privateBathroom == true}">Bills not included</span>
+                                                          th:unless="${listing.privateBathroom == true}">Shared Bathroom</span>
                                                 </div>
 
                                                 <!--Parking or No Parking-->
