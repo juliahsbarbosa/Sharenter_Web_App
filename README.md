@@ -4,9 +4,9 @@ who want to list a room for rent.
 This application was developed as a fulfillment of the Project module for the Higher Diploma in Science in Computing course at the National College of Ireland.
 
 # Built With
-Backend: Java, Spring Framework (Spring Web, JPA, Spring Security, MySQL, Lombok, Thymeleaf)
-Frontend: HTML5, Bootstrap, CSS, JavaScript
-APIs: Google Maps Geocoding API, Google Maps JavaScript API, Google Places API, Walk Score API
+* Backend: Java, Spring Framework (Spring Web, JPA, Spring Security, MySQL, Lombok, Thymeleaf).
+* Frontend: HTML5, Bootstrap, CSS, JavaScript
+* APIs: Google Maps Geocoding API, Google Maps JavaScript API, Google Places API, Walk Score API
 
 # Access
 You can access Sharenter at https://sharenter.herokuapp.com/
