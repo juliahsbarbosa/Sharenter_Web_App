@@ -3,6 +3,8 @@ package com.project.sharenter.model;
 
 import lombok.*;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -78,7 +80,7 @@ public class Listing extends Auditable<String>{
     @Column(name = "walkscoreDescription")
     private String walkscoreDescription;
 
-    @OneToMany(mappedBy = "listing" , fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "listing" , fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Inquiry> inquiryList = new ArrayList<>();
 
 //    @ManyToOne(cascade = CascadeType.MERGE)
