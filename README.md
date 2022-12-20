@@ -29,4 +29,3 @@ existing inquiries, since listings with a high volume of inquiries may result in
 
 3. Manage listings: In your dashboard you can edit or delete existing listings.
 
-
